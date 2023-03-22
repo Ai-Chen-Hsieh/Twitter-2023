@@ -1,23 +1,53 @@
-import logo from './logo.svg';
 import './App.scss';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AdminMainPage, AdminPage, AdminUserPage, LoginPage, MainPage, RegisterPage, SettingPage, UserPage, DemoPage, BasePage, AdminBasePage } from 'pages';
+import { UserPageLikeList, UserPageFollowingList, UserPageReplyList, UserPageFollowerList, UserPageTweet} from 'components';
+import 'bootstrap/dist/css/bootstrap-grid.min.css';
 
 function App() {
+  const basename = process.env.PUBLIC_URL;
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learning React
-        </a>
-      </header>
+      <BrowserRouter basename={basename}>
+        <Routes>
+          {/* 前台 */}
+          <Route path='login' element={<LoginPage />} />
+
+          <Route path='register' element={<RegisterPage />} />
+
+          <Route path='main' element={<BasePage />} >
+            <Route index element={<MainPage />} />
+          </Route>
+
+          <Route path='user/:user_id' element={<BasePage />} >
+            <Route path=":tweet_id" element={<UserPageTweet />} />
+            <Route path="reply" element={<UserPageReplyList />} />
+            <Route path="like" element={<UserPageLikeList />} />
+            <Route path="follower" element={<UserPageFollowerList />} />
+            <Route path="following" element={<UserPageFollowingList />} />
+            <Route index element={<UserPage />} />
+          </Route>
+
+          <Route path='setting' element={<BasePage showPopularList={false} />} >
+            <Route index element={<SettingPage />} />
+          </Route>
+          
+          {/* 後台 */}
+          <Route path='admin' element={<AdminPage />} />
+
+          <Route path='admin_main' element={<AdminBasePage />} >
+            <Route index element={<AdminMainPage />} />
+          </Route>
+
+          <Route path='admin_users' element={<AdminBasePage />} >
+            <Route index element={<AdminUserPage />} />
+          </Route>
+
+          {/* Demo */}
+          <Route path='demo' element={<DemoPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
