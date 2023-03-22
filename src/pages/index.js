@@ -6,6 +6,7 @@ import MainPage from "./MainPage"
 import RegisterPage from "./RegisterPage"
 import SettingPage from "./SettingPage"
 import UserPage from "./UserPage"
+import DemoPage from "./DemoPage"
 
 export {
     AdminMainPage,
@@ -15,5 +16,6 @@ export {
     MainPage,
     RegisterPage,
     SettingPage,
-    UserPage
+    UserPage,
+    DemoPage
 }
