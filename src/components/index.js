@@ -24,12 +24,11 @@ import UserEditModal from "./UserEditModal";
 import UserHeader from "./UserHeader";
 import UserProfile from "./UserProfile";
 import UserTweet from "./UserTweet";
-import UserPageTweetList from "./UserPageTweetList";
 import UserPageTweet from "./UserPageTweet";
 import UserPageReplyList from "./UserPageReplyList"
 import UserPageLikeList from "./UserPageLikeList";
 import UserPageFollowerList from "./UserPageFollowerList";
-import UserFollowingList from "./UserPageFollowingList";
+import UserPageFollowingList from "./UserPageFollowingList";
 
 export { 
     AdminTweetItem,
@@ -58,10 +57,9 @@ export {
     UserHeader,          
     UserProfile,
     UserTweet,
-    UserPageTweetList,
     UserPageTweet,
     UserPageReplyList,
     UserPageLikeList,
     UserPageFollowerList,
-    UserFollowingList
+    UserPageFollowingList
 }
