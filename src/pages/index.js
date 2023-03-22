@@ -9,6 +9,7 @@ import UserPage from "./UserPage"
 import DemoPage from "./DemoPage"
 import BasePage from "./BasePage"
 import AdminBasePage from "./AdminBasePage"
+import StyleGuidePage from "./StyleGuidePage"
 
 export {
     AdminMainPage,
@@ -21,5 +22,6 @@ export {
     UserPage,
     DemoPage,
     BasePage,
-    AdminBasePage
+    AdminBasePage,
+    StyleGuidePage
 }
