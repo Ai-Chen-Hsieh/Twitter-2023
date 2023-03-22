@@ -1,14 +1,15 @@
+import 'bootstrap/dist/css/bootstrap-grid.min.css';
+import './reset.css'
 import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AdminMainPage, AdminPage, AdminUserPage, LoginPage, MainPage, RegisterPage, SettingPage, UserPage, DemoPage, BasePage, AdminBasePage } from 'pages';
+import { AdminMainPage, AdminPage, AdminUserPage, LoginPage, MainPage, RegisterPage, SettingPage, UserPage, DemoPage, BasePage, AdminBasePage, StyleGuidePage } from 'pages';
 import { UserPageLikeList, UserPageFollowingList, UserPageReplyList, UserPageFollowerList, UserPageTweet} from 'components';
-import 'bootstrap/dist/css/bootstrap-grid.min.css';
 
 function App() {
   const basename = process.env.PUBLIC_URL;
 
   return (
-    <div className="App">
+    <div>
       <BrowserRouter basename={basename}>
         <Routes>
           {/* 前台 */}
@@ -46,6 +47,7 @@ function App() {
 
           {/* Demo */}
           <Route path='demo' element={<DemoPage />} />
+          <Route path='style_guide' element={<StyleGuidePage />} />
         </Routes>
       </BrowserRouter>
     </div>
