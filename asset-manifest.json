@@ -1,15 +1,16 @@
 {
   "files": {
     "main.css": "/Twitter-2023/static/css/main.3e4c4e0e.css",
-    "main.js": "/Twitter-2023/static/js/main.d8c17e51.js",
+    "main.js": "/Twitter-2023/static/js/main.e09ae0eb.js",
     "static/js/787.f649083d.chunk.js": "/Twitter-2023/static/js/787.f649083d.chunk.js",
+    "static/media/ac-logo.svg": "/Twitter-2023/static/media/ac-logo.86cb7878aa3912fe7937c392959c88cb.svg",
     "index.html": "/Twitter-2023/index.html",
     "main.3e4c4e0e.css.map": "/Twitter-2023/static/css/main.3e4c4e0e.css.map",
-    "main.d8c17e51.js.map": "/Twitter-2023/static/js/main.d8c17e51.js.map",
+    "main.e09ae0eb.js.map": "/Twitter-2023/static/js/main.e09ae0eb.js.map",
     "787.f649083d.chunk.js.map": "/Twitter-2023/static/js/787.f649083d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3e4c4e0e.css",
-    "static/js/main.d8c17e51.js"
+    "static/js/main.e09ae0eb.js"
   ]
 }
