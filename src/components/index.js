@@ -8,7 +8,6 @@ import FollowItem from "./FollowItem";
 import FollowList from "./FollowList";
 import Header from "./Header";
 import Input from "./Input";
-import LinkButton from "./LinkButton";
 import PopularItem from "./PopularItem";
 import PopularList from "./PopularList";
 import ReplyItem from "./ReplyItem";
@@ -38,7 +37,6 @@ export {
     AdminUserList, 
     Avatar,
     Button,
-    LinkButton,
     FollowItem,
     FollowList,
     Header,

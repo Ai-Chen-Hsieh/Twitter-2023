@@ -1,6 +1,6 @@
-// 處理 LoginPage.jsx, RegisterPage.jsx, AdminPage.jsx 的 form 樣式
+// 處理 LoginPage.jsx, RegisterPage.jsx, AdminPage.jsx 的樣式
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-
 
 const StyledLandingFormContainer = styled.main`
   margin-top: 44px;
@@ -31,8 +31,27 @@ const StyledLandingFormTitle = styled.h3`
   }
 `
 
+const StyledLandingLink = styled(Link)`
+  padding: 6px 12px;
+  color: var(--primary);
+  text-align: center;
+  transition: color .5s;
+  &:hover {
+    color: var(--secondary-blue);
+  }
+
+  /* display: 'inline-block' */
+  display: inline-block;
+
+  /* display: 'block */
+  &.block {
+    display: block;
+  }
+`
+
 export {
   StyledLandingFormContainer as LandingFormContainer,
   StyledLandingFormLogoContainer as LandingFormLogoContainer,
-  StyledLandingFormTitle as LandingFormTitle
+  StyledLandingFormTitle as LandingFormTitle,
+  StyledLandingLink as LandingLink
 }

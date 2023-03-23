@@ -1,8 +1,8 @@
 // import styled from "styled-components";
-import { Input, LinkButton } from "components"
+import { Input, Button } from "components"
 import { useState } from "react"
 import { ACLogo } from "assets/images";
-import { LandingFormContainer, LandingFormLogoContainer, LandingFormTitle } from "components/common/landingForm.styled";
+import { LandingFormContainer, LandingFormLogoContainer, LandingFormTitle, LandingLink } from "components/common/landingRelatedPages.styled";
 
 /**
  * [前台] 註冊頁
@@ -17,7 +17,7 @@ const RegisterPage = () => {
 
     return (
         <LandingFormContainer>
-            <form>
+            <form className="mb-3">
                 <LandingFormLogoContainer>
                     <ACLogo />
                 </LandingFormLogoContainer>
@@ -68,8 +68,17 @@ const RegisterPage = () => {
                     onChange={(e) => { setCheckPassword(e.target.value); }}
                 />
 
-                <LinkButton path="/login" text="取消" display="block"/>
+                <Button
+                    type='submit'
+                    size='large'
+                    display='block'
+                    text='註冊'
+                />
             </form>
+
+            <LandingLink to="/login" className="block">
+                取消
+            </LandingLink>
         </LandingFormContainer>
     )
 }
