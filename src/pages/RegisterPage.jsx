@@ -15,9 +15,13 @@ const RegisterPage = () => {
     const [password, setPassword] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
 
+    function handleSubmit(e) {
+        e.preventDefault();
+    }
+
     return (
         <LandingFormContainer>
-            <form className="mb-3">
+            <form className="mb-3" onSubmit={handleSubmit}>
                 <LandingFormLogoContainer>
                     <ACLogo />
                 </LandingFormLogoContainer>
