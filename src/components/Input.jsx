@@ -110,7 +110,7 @@ const Input = ({label='', type='text', name, id=name, value='', placeholder, dis
             </StyledInputContainer>
             <StyledInputNoteContainer>
                 <StyledInputErrorMessage>{errorMessage}</StyledInputErrorMessage>
-                { (maxLength > 0) && <StyledInputValueLength> 0/{maxLength}</StyledInputValueLength> }
+                { (maxLength > 0) && <StyledInputValueLength> {value.length}/{maxLength}</StyledInputValueLength> }
             </StyledInputNoteContainer>
         </>
     )
