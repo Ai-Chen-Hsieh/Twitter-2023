@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import defaultAvatar from "assets/images/ac_default_avatar.png"
+// import defaultAvatar from "assets/images/ac_default_avatar.png"   ac預設avatar
 
 const StyleAvatar = styled.img`
     width: 100%;
