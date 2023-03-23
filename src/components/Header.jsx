@@ -1,6 +1,5 @@
 import { HeaderContainer } from "./common/header.styled"
 
-
 /**
  * 頁首
  * @param {string} text - 頁首標題文字 
