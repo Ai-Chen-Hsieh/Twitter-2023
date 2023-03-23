@@ -2,7 +2,7 @@
 import { Input, Button } from "components"
 import { useState } from "react"
 import { ACLogo } from "assets/images";
-import { LandingFormContainer, LandingFormLogoContainer, LandingFormTitle, LandingLink } from "components/common/landingRelatedPages.styled";
+import { LandingFormContainer, LandingForm, LandingFormLogoContainer, LandingFormTitle, LandingLink } from "components/common/landingRelatedPages.styled";
 
 /**
  * [前台] 註冊頁
@@ -21,7 +21,7 @@ const RegisterPage = () => {
 
     return (
         <LandingFormContainer>
-            <form className="mb-3" onSubmit={handleSubmit}>
+            <LandingForm onSubmit={handleSubmit}>
                 <LandingFormLogoContainer>
                     <ACLogo />
                 </LandingFormLogoContainer>
@@ -78,7 +78,7 @@ const RegisterPage = () => {
                     display='block'
                     text='註冊'
                 />
-            </form>
+            </LandingForm>
 
             <LandingLink to="/login" className="block">
                 取消

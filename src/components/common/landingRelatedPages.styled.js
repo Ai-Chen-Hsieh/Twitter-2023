@@ -15,6 +15,10 @@ const StyledLandingFormContainer = styled.main`
   }
 `
 
+const StyledLandingForm = styled.form`
+  margin-bottom: 16px;
+`
+
 const StyledLandingFormLogoContainer = styled.div`
   margin-left: auto;
   margin-right: auto;
@@ -51,6 +55,7 @@ const StyledLandingLink = styled(Link)`
 
 export {
   StyledLandingFormContainer as LandingFormContainer,
+  StyledLandingForm as LandingForm,
   StyledLandingFormLogoContainer as LandingFormLogoContainer,
   StyledLandingFormTitle as LandingFormTitle,
   StyledLandingLink as LandingLink
