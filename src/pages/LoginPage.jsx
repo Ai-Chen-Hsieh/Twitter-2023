@@ -3,6 +3,7 @@ import { Input, Button } from "components"
 import { useState } from "react"
 import { ACLogo } from "assets/images";
 import { LandingFormContainer, LandingForm, LandingFormLogoContainer, LandingFormTitle, LandingLink } from "components/common/landingRelatedPages.styled";
+import { login } from "api/login";
 
 const StyledLinksContainer = styled.div`
     text-align: right;
@@ -14,11 +15,21 @@ const StyledLinksContainer = styled.div`
  * @returns 
  */
 const LoginPage = () => {
-    const [account, setAccount] = useState('');
+    // const [account, setAccount] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     function handleSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
+        
+    }
+
+    async function handleClick () {
+        const res = await login({
+            email,
+            password
+        })
+        console.log(res)
     }
 
     return (
@@ -30,12 +41,21 @@ const LoginPage = () => {
 
                 <LandingFormTitle>登入 Alphitter</LandingFormTitle>
 
-                <Input
+                {/* <Input
                     label='帳號'
                     name='account'
                     placeholder='請輸入帳號'
                     value={account}
                     onChange={(e) => { setAccount(e.target.value); }}
+                /> */}
+                <Input
+                    label='Email'
+                    name='email'
+                    type='email'
+                    placeholder='請輸入 Email'
+                    value={email}
+                    required={true}
+                    onChange={(e) => { setEmail(e.target.value); }}
                 />
                 <Input
                     label='密碼'
@@ -50,6 +70,7 @@ const LoginPage = () => {
                     size='large'
                     display='block'
                     text='登入'
+                    onClick={handleClick}
                 />
             </LandingForm>
 

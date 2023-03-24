@@ -19,6 +19,9 @@ const RegisterPage = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
+    }
+
+    async function handleClick() {
         const res = await register({
             name,
             account,
@@ -88,6 +91,7 @@ const RegisterPage = () => {
                     size='large'
                     display='block'
                     text='註冊'
+                    onClick={handleClick}
                 />
             </LandingForm>
 
