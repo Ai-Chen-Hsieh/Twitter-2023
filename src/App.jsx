@@ -2,7 +2,8 @@ import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import './reset.css'
 import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AdminMainPage, AdminPage, AdminUserPage, LoginPage, MainPage, RegisterPage, SettingPage, UserPage, DemoPage, BasePage, AdminBasePage, StyleGuidePage } from 'pages';
+import { AdminMainPage, AdminPage, AdminUserPage, LoginPage, MainPage, RegisterPage, SettingPage, UserPage, DemoPage, BasePage, AdminBasePage, StyleGuidePage} from 'pages';
+import { HomePage } from "./pages"
 import { UserPageLikeList, UserPageFollowingList, UserPageReplyList, UserPageFollowerList, UserPageTweet} from 'components';
 
 function App() {
@@ -44,10 +45,12 @@ function App() {
           <Route path='admin_users' element={<AdminBasePage />} >
             <Route index element={<AdminUserPage />} />
           </Route>
-
+          
           {/* Demo */}
           <Route path='demo' element={<DemoPage />} />
           <Route path='style_guide' element={<StyleGuidePage />} />
+          {/* HomePage */}
+          {/* <Route path="home" element={<HomePage />}></Route> */}
         </Routes>
       </BrowserRouter>
     </div>
