@@ -85,11 +85,12 @@ const StyledInputValueLength = styled.small`
  * @param {string} placeholder - 提示文字 (預設：'')
  * @param {boolean} disabled - disabled 屬性值，輸入框是否不可編輯 (預設：false)
  * @param {string} errorMessage - 錯誤訊息 (預設：'')
- * @param {boolean} maxLength - 限制輸入字數長度 (預設：0)
+ * @param {boolean} showValueLength - 是否顯示 value 長度 (預設：false)
+ * @param {number} maxLength - 限制輸入字數長度 (預設：0)
  * @param {function} onChange - 處理當 value 改變
  * @returns 
  */
-const Input = ({label='', type='text', name, id=name, value='', placeholder, disabled=false, errorMessage='', maxLength=0, onChange}) => {
+const Input = ({label='', type='text', name, id=name, value='', placeholder, disabled=false, errorMessage='', showValueLength=false , maxLength=0, onChange}) => {
     return (
         <>
             <StyledInputContainer>
@@ -110,7 +111,7 @@ const Input = ({label='', type='text', name, id=name, value='', placeholder, dis
             </StyledInputContainer>
             <StyledInputNoteContainer>
                 <StyledInputErrorMessage>{errorMessage}</StyledInputErrorMessage>
-                { (maxLength > 0) && <StyledInputValueLength> {value.length}/{maxLength}</StyledInputValueLength> }
+                { (showValueLength) && <StyledInputValueLength> {value.length}/{maxLength}</StyledInputValueLength> }
             </StyledInputNoteContainer>
         </>
     )
