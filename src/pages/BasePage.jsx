@@ -11,17 +11,15 @@ const BasePage = ({showPopularList = true}) => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-12">
-          <p>路徑: {location.pathname} (BasicPage.jsx)</p>
-        </div>
         <div className="col-3">
+          <p>路徑: {location.pathname} (BasicPage.jsx)</p>
           <p>sideBar.jsx (BasicPage.jsx)</p>
         </div>
         <div className="col-6">
           <Outlet />
         </div>
         <div className="col-3">
-          { showPopularList && <p>PopularList.jsx (BasicPage.jsx)</p> }
+          { showPopularList && <p>PopularList.jsx</p> }
         </div>
       </div>
     </div>
