@@ -1,14 +1,20 @@
+import styled from "styled-components"
 import { HeaderContainer } from "./common/header.styled"
+
+const StyledHeaderTitle = styled.h4`
+    padding-left: 24px;
+    padding-right: 24px;
+`
 
 /**
  * 頁首
- * @param {string} text - 頁首標題文字 
+ * @param {string} text - 頁首標題 (預設：'')
  * @returns 
  */
-const Header = ({text=""}) => {
+const Header = ({text=''}) => {
     return(
         <HeaderContainer>
-            <h4>{text}</h4>
+            <StyledHeaderTitle>{text}</StyledHeaderTitle>
         </HeaderContainer>
     )
 }
