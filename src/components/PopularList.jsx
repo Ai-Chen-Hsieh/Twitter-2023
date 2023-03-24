@@ -14,6 +14,7 @@ const StyledPopularList = styled.div`
 
     h1{        
         padding-left: 20px;
+        
         font-size: 1.6rem;
         line-height: 4.5rem;
         text-align: start;
