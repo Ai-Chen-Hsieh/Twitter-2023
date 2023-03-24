@@ -1,16 +1,19 @@
 {
   "files": {
     "main.css": "/Twitter-2023/static/css/main.3e4c4e0e.css",
-    "main.js": "/Twitter-2023/static/js/main.22c2678c.js",
+    "main.js": "/Twitter-2023/static/js/main.f1be3357.js",
     "static/js/787.f649083d.chunk.js": "/Twitter-2023/static/js/787.f649083d.chunk.js",
     "static/media/ac-logo.svg": "/Twitter-2023/static/media/ac-logo.86cb7878aa3912fe7937c392959c88cb.svg",
+    "static/media/comment.svg": "/Twitter-2023/static/media/comment.eb3675d8f832f6929f8834ca13ea5ff8.svg",
+    "static/media/like.svg": "/Twitter-2023/static/media/like.c5e62fb966490545fbf36231b5b08da1.svg",
     "index.html": "/Twitter-2023/index.html",
+    "static/media/liked.svg": "/Twitter-2023/static/media/liked.5e5d892842ae545d6d81b84cec2019b6.svg",
     "main.3e4c4e0e.css.map": "/Twitter-2023/static/css/main.3e4c4e0e.css.map",
-    "main.22c2678c.js.map": "/Twitter-2023/static/js/main.22c2678c.js.map",
+    "main.f1be3357.js.map": "/Twitter-2023/static/js/main.f1be3357.js.map",
     "787.f649083d.chunk.js.map": "/Twitter-2023/static/js/787.f649083d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3e4c4e0e.css",
-    "static/js/main.22c2678c.js"
+    "static/js/main.f1be3357.js"
   ]
 }
