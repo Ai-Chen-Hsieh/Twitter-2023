@@ -1,11 +1,13 @@
+//尚未完成
+// 1. 點擊回復icon 跳出replyModal的功能
+// 2. 限制露端回傳的資料只有幾筆?? 超過會破版or下拉滾軸
+
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 import { Avatar } from "."
 import { ReactComponent as Comment } from "assets/images/comment.svg"
 import { ReactComponent as Like } from "assets/images/like.svg"
-
-
-// 點擊回復icon 跳出replyModal的功能尚未完成
+import { ReactComponent as Liked } from "assets/images/liked.svg"
 
 const StyledTweetItem = styled.div`
     width: 100%;
@@ -19,7 +21,12 @@ const StyledTweetItem = styled.div`
         .avatar{
             width: 50px;
             height: 50px;
+            border-radius: 50%;
             margin: 0  10px;
+            &:hover {
+                opacity: 0.8;
+                cursor: pointer;
+            }
         }
         .post-item{
             width: 400px;
@@ -56,7 +63,7 @@ const StyledTweetItem = styled.div`
 
     .content{
         width: 100%;
-        height: 60%;
+        height: 85px;
         font-size: 1.6rem;
         padding: 3px 0;
         display:-webkit-box;
@@ -75,41 +82,43 @@ const StyledTweetItem = styled.div`
             line-height: 1.4rem;
             vertical-align: center;
         }
-        .comment-count, .like-count{
+        .reply-count, .like-count{
             margin-left: 5px;
         }
     }
 
 `
 
-const TweetItem = ( {item} ) => {
+const TweetItem = ({item, onLikeToggle}) => {
     const navigate = useNavigate()
     return (
         <StyledTweetItem>
             <div className="post-section">
-                <div className="avatar">
-                    <Avatar 
-                        imageUrl={item.avatar}
-                    />
+                <div    
+                    onClick={()=>{navigate(`/user/${item.UserId}`)}}
+                    className="avatar">
+                    <Avatar imageUrl={item.avatar} />
                 </div>
                 <div className="post-item">
                     <div className="account-info">
                         <span
-                            onClick={()=>{ navigate(`/user/${item.id}`) }} 
+                            onClick={()=>{navigate(`/user/${item.UserId}`)}} 
                             className="name">{item.name}</span>
                         <span className="account">{item.account} · {item.createdAt}</span>
                     </div>
                     <div 
-                        onClick={()=> { navigate(`/user/${item.tweet_id}`) }}
-                        className="content">{item.content}</div>
+                        onClick={()=> {navigate(`/user/${item.id}`)}}
+                        className="content">{item.description}</div>
                     <div className="response-section">
-                        <span className="response comment">
+                        <span className="response reply">
                             <Comment />
-                            <span className="comment-count">{item.replyCount}</span>
+                            <span className="reply-count">{item.repliedCount}</span>
                         </span>
-                        <span className="response like">
-                            <Like stroke="yellow"/>
-                            <span className="like-count">{item.likeCount}</span>
+                        <span
+                            onClick={()=>{onLikeToggle(item.id)}}
+                            className="response like">
+                            {item.isLike ? <Liked /> : <Like />}
+                            <span className="like-count">{item.likedCount}</span>
                         </span>
 
                     </div>

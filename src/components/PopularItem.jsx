@@ -72,9 +72,7 @@ const PopularItem = ({ item, onToggleFollow }) => {
     return(
         <StyledPopularContainer>
             <StyledPopularItem 
-                onClick={(e)=>{
-                navigate(`/user/${item.id}`)
-            }}>
+                onClick={(e)=> {navigate(`/user/${item.id}`)}}>
                 <div className="avatar">
                     <Avatar 
                         imageUrl={item.image}

@@ -1,6 +1,9 @@
+//尚未完成增加"like"數量
+
 import styled from "styled-components"
+import { useState } from "react"
 import { TweetItem } from "."
-import { dummyAllTweet } from "testData/dummyUserReplyList"
+import { dummyAllTweet } from "testData/dummyAllTweet"
 
 const StyledTweetList = styled.div`
     width: 500px;
@@ -8,13 +11,32 @@ const StyledTweetList = styled.div`
 `
 
 const TweetList = () => {
+    const [ tweets, setTweets ] = useState(dummyAllTweet)
+
+    function handleLikeToggle(id) {
+        const currentItem = tweets.find(tweet => tweet.id === id )
+        console.log(currentItem)
+        setTweets((prevTweets) => {
+            return prevTweets.map((tweet) => {
+                if(tweet.id === id){
+                    return{
+                        ...tweet,
+                        isLike: !currentItem.isLike
+                    }
+                }
+                return tweet
+            })
+        })
+    }
+
     return (
         <StyledTweetList>
-            {dummyAllTweet.map(user_tweet => {
+            {tweets.map(tweet => {
                 return(
                 <TweetItem 
-                    key={user_tweet.tweet_id}
-                    item={user_tweet}
+                    key={tweet.id}
+                    item={tweet}
+                    onLikeToggle={handleLikeToggle}
                 />
                 )
             })}

@@ -35,7 +35,6 @@ const PopularList = () => {
                 return user
             })
         })
-
     }
 
     return (
