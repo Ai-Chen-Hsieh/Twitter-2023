@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { PopularList } from "../components";
 
 /**
  * [前台] 放置前台所有頁面（不包含前台登入頁、註冊頁）共用 Component
@@ -21,7 +22,8 @@ const BasePage = ({showPopularList = true}) => {
           <Outlet />
         </div>
         <div className="col-3">
-          { showPopularList && <p>PopularList.jsx (BasicPage.jsx)</p> }
+          {/* { showPopularList && <p>PopularList.jsx (BasicPage.jsx)</p> } */}
+          <PopularList />
         </div>
       </div>
     </div>
