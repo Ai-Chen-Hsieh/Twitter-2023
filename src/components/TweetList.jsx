@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import { TweetItem } from "."
+import { dummyAllTweet } from "testData/dummyUserReplyList"
 
 const StyledTweetList = styled.div`
-    //mainPage display: flex; flex:1 max-height
     width: 500px;
     height: 600px;
 `
@@ -10,8 +10,15 @@ const StyledTweetList = styled.div`
 const TweetList = () => {
     return (
         <StyledTweetList>
-            <TweetItem />
-            <TweetItem />
+            {dummyAllTweet.map(user_tweet => {
+                return(
+                <TweetItem 
+                    key={user_tweet.tweet_id}
+                    item={user_tweet}
+                />
+                )
+            })}
+            
         </StyledTweetList>
     )
 }
