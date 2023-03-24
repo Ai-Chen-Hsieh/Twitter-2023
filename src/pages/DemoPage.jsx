@@ -1,4 +1,4 @@
-import { Header } from "components";
+import { UserHeader, UserProfile } from "components";
 
 /**
  * [Demo] 共用 Component
@@ -9,7 +9,10 @@ const DemoPage = () => {
     <div className="container">
       <div className="row">
         <div className="col-6">
-          <Header text="首頁"/>
+          <UserHeader
+            name="John"
+            tweetCount={25}/>
+          <UserProfile/>
         </div>
       </div>
     </div>
@@ -17,3 +20,4 @@ const DemoPage = () => {
 }
 
 export default DemoPage;
+
