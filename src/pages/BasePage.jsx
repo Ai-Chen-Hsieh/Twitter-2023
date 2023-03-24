@@ -22,8 +22,7 @@ const BasePage = ({showPopularList = true}) => {
           <Outlet />
         </div>
         <div className="col-3">
-          {/* { showPopularList && <p>PopularList.jsx (BasicPage.jsx)</p> } */}
-          <PopularList />
+          { showPopularList && <PopularList /> }
         </div>
       </div>
     </div>

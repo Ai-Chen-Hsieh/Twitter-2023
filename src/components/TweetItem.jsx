@@ -29,12 +29,12 @@ const StyledTweetItem = styled.div`
             }
         }
         .post-item{
-            width: 400px;
+            width: calc(100% - 70px);
         }
     }
     
     .account-info{
-        width: 400px;
+        width: 100%;
         line-height: 2.6rem;
         display: flex;
         .name{
@@ -104,7 +104,7 @@ const TweetItem = ({item, onLikeToggle}) => {
                         <span
                             onClick={()=>{navigate(`/user/${item.UserId}`)}} 
                             className="name">{item.name}</span>
-                        <span className="account">{item.account} · {item.createdAt}</span>
+                        <span className="account">@{item.account} · {item.createdAt}</span>
                     </div>
                     <div 
                         onClick={()=> {navigate(`/user/${item.id}`)}}

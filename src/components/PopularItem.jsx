@@ -1,6 +1,6 @@
 
 import styled from "styled-components"
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Avatar } from "."
 import { Button } from "."
 
@@ -14,15 +14,15 @@ const StyledPopularContainer = styled.div`
     &:hover{
         cursor: pointer;
         background-color: var(--dark-30);
-        transition: background .1s ease-out;
+        transition: background-color .1s ease-out;
     }
 `
 
 const StyledPopularItem = styled.div`
     flex: 1;
     display:flex;
-    text-decoration : none;
-    &: hover{
+    text-decoration: none;
+    &:hover{
         .name{
             text-decoration: underline;
         }
@@ -72,9 +72,10 @@ const PopularItem = ({ item, onToggleFollow }) => {
     return(
         <StyledPopularContainer>
             <StyledPopularItem 
-                onClick={(e)=> {navigate(`/user/${item.id}`)}}>
+                onClick={(e)=> {
+                    navigate(`/user/${item.id}`)}}>
                 <div className="avatar">
-                    <Avatar 
+                    <Avatar
                         imageUrl={item.image}
                     />
                 </div>
@@ -88,7 +89,6 @@ const PopularItem = ({ item, onToggleFollow }) => {
                 <Button
                     text="正在追隨"
                     onClick={(e)=>{
-                        e.stopPropagation()
                         onToggleFollow(item.id)
                     }}
                 /> : 
@@ -96,7 +96,6 @@ const PopularItem = ({ item, onToggleFollow }) => {
                     styled="outlined" 
                     text="追隨"
                     onClick={(e)=>{
-                        e.stopPropagation()
                         onToggleFollow(item.id)
                     }}
                 />}

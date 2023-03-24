@@ -6,8 +6,9 @@ import { TweetItem } from "."
 import { dummyAllTweet } from "testData/dummyAllTweet"
 
 const StyledTweetList = styled.div`
-    width: 500px;
-    height: 600px;
+    width:100%;
+    max-width: 500px;
+    min-height: 600px;
 `
 
 const TweetList = () => {
@@ -15,7 +16,6 @@ const TweetList = () => {
 
     function handleLikeToggle(id) {
         const currentItem = tweets.find(tweet => tweet.id === id )
-        console.log(currentItem)
         setTweets((prevTweets) => {
             return prevTweets.map((tweet) => {
                 if(tweet.id === id){

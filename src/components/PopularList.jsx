@@ -5,8 +5,10 @@ import { PopularItem } from "."
 import { dummyUsers } from "testData/dummyRecommendUser"
 
 const StyledPopularList = styled.div`
-    width: 270px;
-    height: 730px;
+    width: 100%;
+    height: 100%;
+    max-width: 270px;
+    min-height: 730px;
     border-radius: 10px;
     background: var(--dark-20);
 
