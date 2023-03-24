@@ -1,7 +1,8 @@
-// import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { Input, Button } from "components"
 import { useState } from "react"
 import { ACLogo } from "assets/images";
+import { register } from "api/register";
 import { LandingFormContainer, LandingForm, LandingFormLogoContainer, LandingFormTitle, LandingLink } from "components/common/landingRelatedPages.styled";
 
 /**
@@ -14,9 +15,18 @@ const RegisterPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [checkPassword, setCheckPassword] = useState('');
+    let navigate = useNavigate();
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
+        const res = await register({
+            name,
+            account,
+            email,
+            password,
+            checkPassword
+        })
+        console.log(res)
     }
 
     return (
@@ -33,6 +43,7 @@ const RegisterPage = () => {
                     name='account'
                     placeholder='請輸入帳號'
                     value={account}
+                    required={true}
                     onChange={(e) => { setAccount(e.target.value); }}
                 />
                 <Input
@@ -40,7 +51,7 @@ const RegisterPage = () => {
                     name='name'
                     placeholder='請輸入使用者名稱'
                     value={name}
-                    errorMessage=''
+                    required={true}
                     maxLength={50}
                     onChange={(e) => { setName(e.target.value); }}
                 />
@@ -50,7 +61,7 @@ const RegisterPage = () => {
                     type='email'
                     placeholder='請輸入 Email'
                     value={email}
-                    errorMessage=''
+                    required={true}
                     onChange={(e) => { setEmail(e.target.value); }}
                 />
                 <Input
@@ -59,7 +70,7 @@ const RegisterPage = () => {
                     type='password'
                     placeholder='請設定密碼'
                     value={password}
-                    errorMessage=''
+                    required={true}
                     onChange={(e) => { setPassword(e.target.value); }}
                 />
                 <Input
@@ -68,7 +79,7 @@ const RegisterPage = () => {
                     type='password'
                     placeholder='請再次輸入密碼'
                     value={checkPassword}
-                    errorMessage=''
+                    required={true}
                     onChange={(e) => { setCheckPassword(e.target.value); }}
                 />
 
