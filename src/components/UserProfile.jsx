@@ -7,6 +7,11 @@ const StyledUserProfileContainer = styled.div`
   border: 1px solid #E6ECF0;
   background-color: #fff;
   position: relative;
+  .button {
+  position: absolute;
+  right: 16px;
+  bottom: 122px;
+  }
 `;
 
 const StyledUserProfileBackground = styled.div`
@@ -24,11 +29,15 @@ const StyledAvatarContainer = styled.div`
   left: 16.13px;
 `
 
+const StyledUserInfo = styled.div`
+  width: 95px;
+  height: 48px;
+  
+`
 
 
 
-
-const UserProfile = () => {
+const UserProfile = ({name='John Doe', account='heyjhon'}) => {
     return (
         <StyledUserProfileContainer>
             <StyledUserProfileBackground>
@@ -36,7 +45,14 @@ const UserProfile = () => {
             <StyledAvatarContainer>
               <Avatar imageUrl="https://cdn.sanity.io/images/0vv8moc6/dvm360/e9b7c5bc00c41167ab8d607d02e11385fba9dec5-5200x3550.jpg/AdobeStock_41610815.jpeg?w=1500&fit=max&auto=format"/>
             </StyledAvatarContainer>
-          <Button text='編輯個人資料' styled='outlined'/>
+          <div className ="button">
+            <Button text='編輯個人資料' styled='outlined'/>
+          </div>
+          <StyledUserInfo>
+            <h5>{name}</h5>
+            <p className="text-fz-secondary color-secondary">{account}</p>
+            <p>Qui similique aut voluptas explicabo illum impedit ut quod fugit.</p>
+          </StyledUserInfo>          
         </StyledUserProfileContainer>
     )
 };
