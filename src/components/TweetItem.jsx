@@ -17,7 +17,9 @@ const StyledTweetItem = styled.div`
     .post-section{
         display: flex;
         text-align: start;
-        padding-top: 10px;        
+        padding-top: 10px;
+        padding-right: 10px;
+        padding-left: 10px;        
         .avatar{
             width: 50px;
             height: 50px;

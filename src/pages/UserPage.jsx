@@ -1,4 +1,4 @@
-import { UserHeader } from "components"
+import { UserHeader, ReplyList } from "components"
 
 /**
  * [前台] 使用者資料頁（推文）
@@ -12,6 +12,7 @@ const UserPage = () => {
                 tweetCount={10}
             />
             <p>UserPage.jsx</p>
+            <ReplyList />
         </>
     )
 }
