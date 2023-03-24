@@ -66,6 +66,8 @@ const Button = ({type='button', display='inline-block', size='regular', styled='
           className={`${display} ${size} ${styled}`}
           onClick={(onClick) ? onClick : undefined}
           disabled={disabled}
+          title={text}
+          aria-label={text}
         >
           {text}
         </StyledButton>
