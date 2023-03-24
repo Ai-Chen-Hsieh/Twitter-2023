@@ -7,7 +7,6 @@ import { dummyAllTweet } from "testData/dummyAllTweet"
 
 const StyledTweetList = styled.div`
     width:100%;
-    max-width: 500px;
     min-height: 600px;
 `
 
