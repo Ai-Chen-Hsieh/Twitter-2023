@@ -1,16 +1,16 @@
 import styled from "styled-components"
 import { Button, Avatar } from "."
 
+
 const StyledUserProfileContainer = styled.div`
   width: 100%;
-  height: 378px;
   border: 1px solid #E6ECF0;
   background-color: #fff;
   position: relative;
   .userinfo-button {
     position: absolute;
     right: 16px;
-    bottom: 122px;
+    top: 216px;
   }
   .background-image {
      width:100%;
@@ -36,16 +36,18 @@ const StyledUserProfileContainer = styled.div`
 `
 
 const StyledUserInfoContainer = styled.div`
- padding:16px;
+ padding:72px 16px 0 16px;
  width:100%;
- height:178px;
+ height:100%;
  position:relative;
+//  border: 1px solid green;
 `
 
 const StyledUserInfo =styled.div`
 // border: 1px solid blue;
- position:absolute;
- bottom:0; 
+// margin-top:72px;
+//  position:absolute;
+//  top:72px;
 `
 
 const StyledFollowContainer = styled.div`
@@ -58,14 +60,15 @@ const StyledFollowContainer = styled.div`
  }
 `
 
-const UserProfile = ({name='John Doe', account='@heyjhon', backgroundImageURL='https://cdn.sanity.io/images/0vv8moc6/dvm360/e9b7c5bc00c41167ab8d607d02e11385fba9dec5-5200x3550.jpg/AdobeStock_41610815.jpeg?w=1500&fit=max&auto=format', followingCount='20', followerCount='20'}) => {
-    return (
+const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, followingCount, followerCount}) => {
+
+  return (
         <StyledUserProfileContainer>
           <div className="background-image">
-            <img src={backgroundImageURL} alt='' />
+            <img src={backgroundImageUrl} alt='' />
           </div>
           <div className="avatar">
-            <Avatar imageUrl="https://fastly.picsum.photos/id/287/200/300.jpg?grayscale&hmac=vDcG2Au5xmOPJLLfeyiDcZqpgw18oNXxUMXmL8kEVEU"/>
+            <Avatar imageUrl={imageUrl}/>
           </div>
           <div className ="userinfo-button">
             <Button text='編輯個人資料' styled='outlined'/>
@@ -76,7 +79,7 @@ const UserProfile = ({name='John Doe', account='@heyjhon', backgroundImageURL='h
             <h5>{name}</h5>
             <p className="text-fz-secondary color-secondary">{account}</p>
           </div>
-          <p className="text-fz-secondary">Qui similique aut voluptas explicabo illum impedit ut quod fugit.</p>
+          <p className="user-description text-fz-secondary">{description}</p>
           <StyledFollowContainer>
           <div className ="following-link">
             <span className="following-count">{`${followingCount} 個`}</span>
@@ -93,7 +96,5 @@ const UserProfile = ({name='John Doe', account='@heyjhon', backgroundImageURL='h
     )
 };
 
-export default UserProfile
-
-
+export default UserProfile;
 

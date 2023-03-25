@@ -1,18 +1,29 @@
 import { UserHeader, UserProfile } from "components";
+import { user } from "testData/dummyUserInfo";
+
 
 /**
  * [Demo] 共用 Component
  * @returns 
  */
 const DemoPage = () => {
+
   return (
     <div className="container">
       <div className="row">
         <div className="col-6">
           <UserHeader
-            name="John"
+            name='John'
             tweetCount={25}/>
-          <UserProfile/>
+          <UserProfile
+            name={user[0].name}
+            account={user[0].account}
+            backgroundImageUrl={user[0].backgroundImageUrl}
+            imageUrl={user[0].imageUrl}
+            description={user[0].description}
+            followingCount={user[0].followingCount}
+            followerCount={user[0].followerCount}
+          />
         </div>
       </div>
     </div>
