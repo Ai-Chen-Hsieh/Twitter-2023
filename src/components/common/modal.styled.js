@@ -3,12 +3,19 @@ import styled from "styled-components";
 const StyledModalContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
+    flex: 1 0 auto;
     max-width: 650px;
-    max-height: 500px;
+    min-height: 200px;
     border:1px solid var(--gray-20); 
     border-radius: 10px;
+    background-color: var(--dark-0);
+    z-index: 99;
+    /*position*/
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    margin: auto;
 `
 
 const StyledModalHeader = styled.div`
@@ -42,7 +49,6 @@ const StyledCloseButton = styled.div`
         content: "\u0058";
         color: var(--main);
     }
-    
 `
 
 const StyledModalContent = styled.div`
