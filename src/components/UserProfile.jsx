@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Button, Avatar } from "components"
+import { Button, Avatar } from "."
 
 const StyledUserProfileContainer = styled.div`
   width: 100%;
@@ -7,15 +7,20 @@ const StyledUserProfileContainer = styled.div`
   border: 1px solid #E6ECF0;
   background-color: #fff;
   position: relative;
-  .edit-userinfo-button {
+  .userinfo-button {
     position: absolute;
     right: 16px;
     bottom: 122px;
   }
-  // img {
-     width: 100%;
+  .background-image {
+     width:100%;
      height:200px;
-     object-fit:cover;
+     border: 1px solid red;
+    img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
   }
   .avatar {
     width:140px;
@@ -39,24 +44,26 @@ const StyledUserInfo = styled.div`
  width:100%;
  height:178px;
  border: 1px solid green;
-
 `
 
 const StyledFollowContainer = styled.div`
  border: 1px solid red;
- font-size: var(--fz-secondary)
+ font-size: var(--fz-secondary);
+ display:flex;
 `
 
 
 
-const UserProfile = ({name='John Doe', account='@heyjhon', backgroundImageURL='', followingCount='10', followerCount='20'}) => {
+const UserProfile = ({name='John Doe', account='@heyjhon', backgroundImageURL='https://cdn.sanity.io/images/0vv8moc6/dvm360/e9b7c5bc00c41167ab8d607d02e11385fba9dec5-5200x3550.jpg/AdobeStock_41610815.jpeg?w=1500&fit=max&auto=format', followingCount='20', followerCount='20'}) => {
     return (
         <StyledUserProfileContainer>
-          <img src={backgroundImageURL} alt='' />
-          <div className="avatar">
-            <Avatar imageUrl="https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI"/>
+          <div className="background-image">
+            <img src={backgroundImageURL} alt='' />
           </div>
-          <div className ="edit-userinfo-button">
+          <div className="avatar">
+            <Avatar imageUrl="https://fastly.picsum.photos/id/287/200/300.jpg?grayscale&hmac=vDcG2Au5xmOPJLLfeyiDcZqpgw18oNXxUMXmL8kEVEU"/>
+          </div>
+          <div className ="userinfo-button">
             <Button text='編輯個人資料' styled='outlined'/>
           </div>
         <StyledUserInfo>   
@@ -66,12 +73,14 @@ const UserProfile = ({name='John Doe', account='@heyjhon', backgroundImageURL=''
           </div>
           <p className="text-fz-secondary">Qui similique aut voluptas explicabo illum impedit ut quod fugit.</p>
           <StyledFollowContainer>
-            <>
-          <span className="following">{`${followingCount}個`}</span><span className="color-secondary">跟隨中</span>
-          </>
-          <>
-          <span className="follower">{`${followerCount}個`}</span><span className="color-secondary">跟隨者</span>
-          </>
+          <div className ="following">
+            <span className="following">{`${followingCount}個`}</span>
+            <span className="color-secondary">跟隨中</span>
+          </div>
+          <div className ="follower">
+            <span className="follower">{`${followerCount}個`}</span>
+            <span className="color-secondary">跟隨者</span>
+          </div>
         </StyledFollowContainer>   
         </StyledUserInfo>          
         </StyledUserProfileContainer>
@@ -79,4 +88,6 @@ const UserProfile = ({name='John Doe', account='@heyjhon', backgroundImageURL=''
 };
 
 export default UserProfile
+
+
 
