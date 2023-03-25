@@ -39,47 +39,21 @@ const StyledTweetModal = styled.div`
     }
 `
 
-const ButtonPanel = (inputValue) => {
-    if(inputValue.length === 0) {
-        return(
-        <>
-            <ModalWarning>字數不可超過140字</ModalWarning>
-            <Button 
-                disabled={true}
-                text="推文"
-            />
-        </>
-        )
-    } else if (inputValue.length > 140 ){
-        return(
-            <>
-                <ModalWarning>字數不可超過140字</ModalWarning>
-                <Button 
-                    disabled={true}
-                    text="推文"
-                />
-            </>
-            )
-    } else{
-        return(
-            <Button 
-                text="推文"
-            />
-        )
-    }
-}
-
 const TweetModal = ({onClose}) => {
-    const [ inputValue, setInputValue ] = useState('initial')
+    const [ inputValue, setInputValue ] = useState('')
     const [ errorMessage, setErrorMessage ] = useState('')
 
     function handleClick(){
         if(inputValue.length === 0){
+            console.log(inputValue.length)
             setErrorMessage('內容不可空白')
             return
-        } else if(inputValue.length >= 5){
+        } else if(inputValue.length === 140 ){
+            console.log(inputValue.length)
             setErrorMessage('字數不可超過140字')
             return
+        } else {
+            setErrorMessage('')
         }
         
     }
@@ -101,7 +75,7 @@ const TweetModal = ({onClose}) => {
                             </div>
                             <div className="tweetInput">
                                 <textarea 
-                                maxLength={5}
+                                maxLength={140}
                                 className="tweetInputValue" 
                                 onChange={(event)=>{
                                     setInputValue(event.target.value)
@@ -114,7 +88,7 @@ const TweetModal = ({onClose}) => {
                         </div>
                     </ModalContent>
                     <ModalFooter>
-                        {(errorMessage.length > 0) && 
+                        {(errorMessage.length > 0 ) && 
                             <ModalWarning>{errorMessage}</ModalWarning>
                         }
                             <Button 
