@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { Button, Avatar } from "."
+import { useNavigate, useParams } from "react-router-dom"
 
 
 const StyledUserProfileContainer = styled.div`
@@ -62,6 +63,10 @@ const StyledFollowContainer = styled.div`
 
 const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, followingCount, followerCount}) => {
 
+
+  const navigate = useNavigate()
+  const { user_id } = useParams();
+
   return (
         <StyledUserProfileContainer>
           <div className="background-image">
@@ -81,11 +86,11 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
           </div>
           <p className="user-description text-fz-secondary">{description}</p>
           <StyledFollowContainer>
-          <div className ="following-link">
+          <div className ="following-link" onClick={()=> {navigate(`/user/${user_id}/following`)}}>
             <span className="following-count">{`${followingCount} 個`}</span>
             <span className="following color-secondary">跟隨中</span>
           </div>
-          <div className ="follower-link">
+          <div className ="follower-link" onClick={()=> {navigate(`/user/${user_id}/follower`)}}>
             <span className="follower-count">{`${followerCount} 個`}</span>
             <span className="follower color-secondary">跟隨者</span>
           </div>
