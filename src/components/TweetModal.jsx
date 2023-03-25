@@ -71,6 +71,18 @@ const ButtonPanel = (inputValue) => {
 
 const TweetModal = ({onClose}) => {
     const [ inputValue, setInputValue ] = useState('initial')
+    const [ errorMessage, setErrorMessage ] = useState('')
+
+    function handleClick(){
+        if(inputValue.length === 0){
+            setErrorMessage('內容不可空白')
+            return
+        } else if(inputValue.length >= 5){
+            setErrorMessage('字數不可超過140字')
+            return
+        }
+        
+    }
 
     return (
         <>
@@ -89,6 +101,7 @@ const TweetModal = ({onClose}) => {
                             </div>
                             <div className="tweetInput">
                                 <textarea 
+                                maxLength={5}
                                 className="tweetInputValue" 
                                 onChange={(event)=>{
                                     setInputValue(event.target.value)
@@ -101,22 +114,13 @@ const TweetModal = ({onClose}) => {
                         </div>
                     </ModalContent>
                     <ModalFooter>
-                        <ButtonPanel
-                            onClick={inputValue}
-                        />
-                        {/* {limitedText ? (
-                            <>
-                                <ModalWarning>字數不可超過140字</ModalWarning>
-                                <Button 
-                                    disabled={true}
-                                    text="推文"
-                                />
-                            </>
-                        ) : (
+                        {(errorMessage.length > 0) && 
+                            <ModalWarning>{errorMessage}</ModalWarning>
+                        }
                             <Button 
+                                onClick={handleClick}
                                 text="推文"
                             />
-                        )} */}
                     </ModalFooter>
                 </Modal>
             </ModalWrapper>
