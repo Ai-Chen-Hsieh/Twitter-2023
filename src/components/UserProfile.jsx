@@ -8,19 +8,13 @@ const StyledUserProfileContainer = styled.div`
   border: 1px solid #E6ECF0;
   background-color: #fff;
   position: relative;
-  .userinfo-button {
-    position: absolute;
-    right: 16px;
-    top: 216px;
-  }
   .background-image {
-     width:100%;
-     height:200px;
-    //  border: 1px solid red;
+    width:100%;
+    height:200px;
     img {
-      width:100%;
-      height:100%;
-      object-fit:cover;
+    width:100%;
+    height:100%;
+    object-fit:cover;
     }
   }
   .avatar {
@@ -29,6 +23,8 @@ const StyledUserProfileContainer = styled.div`
     position:absolute;
     top:124px;
     left:16px;
+    border: 4px solid #fff;
+    border-radius: 50%;
   }
   .user-info {
     width: 95px;
@@ -36,45 +32,56 @@ const StyledUserProfileContainer = styled.div`
   }
 `
 
-const StyledUserInfoContainer = styled.div`
- padding:72px 16px 0 16px;
- width:100%;
- height:100%;
- position:relative;
-//  border: 1px solid green;
+const StyledUserInfo =styled.div`
+  .user-description {
+    line-height: 2.2rem;
+    padding-top: 6px;
+  }
 `
 
-const StyledUserInfo =styled.div`
-// border: 1px solid blue;
+const StyledButtonWrapper =styled.div`
+   position: absolute;
+   right: 16px;
+   top: 216px;
+   z-index:1;
+   Button {
+     z-index: 99;  
+    }   
 `
+      
+const StyledUserInfoContainer = styled.div`
+   padding:72px 16px 0 16px;
+   width:100%;
+   height:100%;
+   position:relative;
+`
+
 
 const StyledFollowContainer = styled.div`
-//  border: 1px solid red;
   font-size: var(--fz-secondary);
   display:flex;
-   .follower-link {
-  margin-left:20px;
-   &:hover {
-    cursor:pointer;
-    color:var(--main);
-    }
-  };
+    .follower-link {
+      margin-left:20px;
+      &:hover {
+        cursor:pointer;
+        color:var(--main);
+      }
+    };
    .following-link {
-   &:hover {
-    cursor:pointer;
-    color:var(--main);
+       &:hover {
+        cursor:pointer;
+        color:var(--main);
     }
   }
  }
 `
 
 const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, followingCount, followerCount}) => {
-
-
-  const navigate = useNavigate()
+  
+  const navigate = useNavigate();
   const { user_id } = useParams();
-
-  return (
+  
+    return (
         <StyledUserProfileContainer>
           <div className="background-image">
             <img src={backgroundImageUrl} alt='' />
@@ -82,16 +89,16 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
           <div className="avatar">
             <Avatar imageUrl={imageUrl}/>
           </div>
-          <div className ="userinfo-button">
+          <StyledButtonWrapper>
             <Button text='編輯個人資料' styled='outlined'/>
-          </div>
-         <StyledUserInfoContainer> 
+          </StyledButtonWrapper>  
+          <StyledUserInfoContainer> 
              <StyledUserInfo>  
                <div className ="user-info">
-                 <h5>{name}</h5>
-                  <p className="text-fz-secondary color-secondary">{account}</p>
+                  <h5>{name}</h5>
+                  <p className="account text-fz-secondary color-secondary">{account}</p>
                </div>
-                  <p className="user-description text-fz-secondary">{description}</p>
+               <p className="user-description text-fz-secondary">{description}</p>
                <StyledFollowContainer>
                   <div className ="following-link" onClick={()=> {navigate(`/user/${user_id}/following`)}}>
                     <span className="following-count">{`${followingCount} 個`}</span>
@@ -109,6 +116,3 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
 };
 
 export default UserProfile;
-
-
-

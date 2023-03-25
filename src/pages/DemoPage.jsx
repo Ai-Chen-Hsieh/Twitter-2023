@@ -17,13 +17,13 @@ const DemoPage = () => {
             name='John'
             tweetCount={25}/>
           <UserProfile
-            name={user[1].name}
-            account={user[1].account}
-            backgroundImageUrl={user[1].backgroundImageUrl}
-            imageUrl={user[1].imageUrl}
-            description={user[1].description}
-            followingCount={user[1].followingCount}
-            followerCount={user[1].followerCount}
+            name={user[0].name}
+            account={user[0].account}
+            backgroundImageUrl={user[0].backgroundImageUrl}
+            imageUrl={user[0].imageUrl}
+            description={user[0].description}
+            followingCount={user[0].followingCount}
+            followerCount={user[0].followerCount}
           />      
         </div>
       </div>
