@@ -24,7 +24,7 @@ const DemoPage = () => {
             description={user[1].description}
             followingCount={user[1].followingCount}
             followerCount={user[1].followerCount}
-          />
+          />      
         </div>
       </div>
     </div>
