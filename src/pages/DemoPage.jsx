@@ -22,6 +22,10 @@ const DemoPage = () => {
               setShowModal(true)
             }}
           />
+          <br />
+          <Button
+            text="編輯個人資料"
+          />
           {showModal && createPortal(
             <TweetModal onClose={() => setShowModal(false)}/>,
             document.body

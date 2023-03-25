@@ -1,4 +1,4 @@
-//字數限制140
+//尚未完成推文不能空白
 import { useState } from "react";
 import styled from "styled-components";
 import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalWarning } from "../components/common/modal.styled";
@@ -39,17 +39,38 @@ const StyledTweetModal = styled.div`
     }
 `
 
-const TweetModal = ({onClose}) => {
-    const [ limitedText, setLimitedText ] = useState(false)
-
-    function handleOnChange (event) {
-        const textValue = event.target.value;
-        if(textValue.length > 140){
-            setLimitedText(true)
-        } else{
-            setLimitedText(false)
-        }      
+const ButtonPanel = (inputValue) => {
+    if(inputValue.length === 0) {
+        return(
+        <>
+            <ModalWarning>字數不可超過140字</ModalWarning>
+            <Button 
+                disabled={true}
+                text="推文"
+            />
+        </>
+        )
+    } else if (inputValue.length > 140 ){
+        return(
+            <>
+                <ModalWarning>字數不可超過140字</ModalWarning>
+                <Button 
+                    disabled={true}
+                    text="推文"
+                />
+            </>
+            )
+    } else{
+        return(
+            <Button 
+                text="推文"
+            />
+        )
     }
+}
+
+const TweetModal = ({onClose}) => {
+    const [ inputValue, setInputValue ] = useState('initial')
 
     return (
         <>
@@ -69,7 +90,9 @@ const TweetModal = ({onClose}) => {
                             <div className="tweetInput">
                                 <textarea 
                                 className="tweetInputValue" 
-                                onChange={handleOnChange} 
+                                onChange={(event)=>{
+                                    setInputValue(event.target.value)
+                                }} 
                                 cols="30" 
                                 rows="8" 
                                 placeholder="有什麼新鮮事?"
@@ -78,7 +101,10 @@ const TweetModal = ({onClose}) => {
                         </div>
                     </ModalContent>
                     <ModalFooter>
-                        {limitedText ? (
+                        <ButtonPanel
+                            onClick={inputValue}
+                        />
+                        {/* {limitedText ? (
                             <>
                                 <ModalWarning>字數不可超過140字</ModalWarning>
                                 <Button 
@@ -90,7 +116,7 @@ const TweetModal = ({onClose}) => {
                             <Button 
                                 text="推文"
                             />
-                        )}
+                        )} */}
                     </ModalFooter>
                 </Modal>
             </ModalWrapper>
