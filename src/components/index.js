@@ -14,6 +14,8 @@ import ReplyItem from "./ReplyItem";
 import ReplyList from "./ReplyList";
 import ReplyModal from "./ReplyModal";
 import SideBar from "./SideBar";
+import SideBarList from "./SideBarList";
+import SideBarItem from "./SideBarItem";
 import TabItem from "./TabItem";
 import TabList from "./TabList";
 import Tweet from "./Tweet";
@@ -47,6 +49,8 @@ export {
     ReplyList,
     ReplyModal,
     SideBar,
+    SideBarList,
+    SideBarItem,
     TabItem,
     TabList,
     Tweet,
