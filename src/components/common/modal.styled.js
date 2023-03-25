@@ -1,6 +1,18 @@
 import styled from "styled-components";
 
-const StyledModalContainer = styled.div`
+const StyledModalWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+
+    /*position*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+`
+
+const StyledModal = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
@@ -9,6 +21,7 @@ const StyledModalContainer = styled.div`
     border:1px solid var(--gray-20); 
     border-radius: 10px;
     background-color: var(--dark-0);
+
     z-index: 99;
     /*position*/
     position: absolute;
@@ -56,6 +69,7 @@ const StyledModalContent = styled.div`
     flex: 1;
     
 `
+
 const StyledModalFooter = styled.div`
     width: 100%;
     height: 50px;
@@ -85,7 +99,8 @@ const StyledModalFooterWarning = styled.span`
 `
 
 export { 
-    StyledModalContainer as ModalContainer,
+    StyledModalWrapper as ModalWrapper,
+    StyledModal as Modal,
     StyledModalHeader as ModalHeader,
     StyledCloseButton as ModalCloseButton,
     StyledModalContent as ModalContent,

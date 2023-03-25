@@ -1,36 +1,24 @@
-//opacity 問題
 //字數限制140
-
+import { useState } from "react";
 import styled from "styled-components";
-import { ModalContainer, ModalHeader, ModalCloseButton, ModalContent, ModalFooter } from "../components/common/modal.styled";
+import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalWarning } from "../components/common/modal.styled";
 import { Button, Avatar } from "../components"
 
 
-const StyledModal = styled.div`
-    width: 100%;
-    height: 100%;
-    background-color: var(--dark-70);
-    opacity: 0.9;
-
-    /*position*/
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-
+const StyledTweetModal = styled.div`
     .modalInput{
         width:100%;
         height: 100%;
         padding: 10px;
         display: flex;
     }
+
     .avatar{
         width: 50px;
         height: 50px;
         border-radius: 50%;
     }
+
     .tweetInput{
         color: var(--secondary);
         margin-top: 10px;
@@ -51,33 +39,62 @@ const StyledModal = styled.div`
     }
 `
 
-const TweetModal = ({onClose, onTextChange}) => {
+const TweetModal = ({onClose}) => {
+    const [ limitedText, setLimitedText ] = useState(false)
+
+    function handleOnChange (event) {
+        const textValue = event.target.value;
+        if(textValue.length > 140){
+            setLimitedText(true)
+        } else{
+            setLimitedText(false)
+        }      
+    }
+
     return (
         <>
-        <StyledModal>
-            <ModalContainer>
-                <ModalHeader>
-                    <ModalCloseButton onClick={onClose}/>
-                </ModalHeader>
-                <ModalContent>
-                    <div className="modalInput">
-                        <div className="avatar">
-                        <Avatar
-                            imageUrl="https://picsum.photos/id/237/200/300"
-                        />
+        <StyledTweetModal>
+            <ModalWrapper>
+                <Modal>
+                    <ModalHeader>
+                        <ModalCloseButton onClick={onClose}/>
+                    </ModalHeader>
+                    <ModalContent>
+                        <div className="modalInput">
+                            <div className="avatar">
+                            <Avatar
+                                imageUrl="https://picsum.photos/id/237/200/300"
+                            />
+                            </div>
+                            <div className="tweetInput">
+                                <textarea 
+                                className="tweetInputValue" 
+                                onChange={handleOnChange} 
+                                cols="30" 
+                                rows="8" 
+                                placeholder="有什麼新鮮事?"
+                                ></textarea>
+                            </div>
                         </div>
-                        <div className="tweetInput">
-                            <textarea className="tweetInputValue" onChange={onTextChange} cols="30" rows="8" placeholder="有什麼新鮮事?"></textarea>
-                        </div>
-                    </div>
-                </ModalContent>
-                <ModalFooter>
-                    <Button 
-                        text="推文"
-                    />
-                </ModalFooter>
-            </ModalContainer>
-        </StyledModal>  
+                    </ModalContent>
+                    <ModalFooter>
+                        {limitedText ? (
+                            <>
+                                <ModalWarning>字數不可超過140字</ModalWarning>
+                                <Button 
+                                    disabled={true}
+                                    text="推文"
+                                />
+                            </>
+                        ) : (
+                            <Button 
+                                text="推文"
+                            />
+                        )}
+                    </ModalFooter>
+                </Modal>
+            </ModalWrapper>
+        </StyledTweetModal>  
         </>
     )
 }
