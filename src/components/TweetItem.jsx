@@ -76,18 +76,19 @@ const StyledTweetItem = styled.div`
             cursor: pointer;
         }
     }
-    .response-section{
-        color: var(--secondary);
-        .response{
-            display: inline-block;
-            width: 80px;
-            line-height: 1.4rem;
-            vertical-align: center;
-        }
-        .reply-count, .like-count{
-            margin-left: 5px;
-        }
+`
+const StyledResponse = styled.div`
+    color: var(--secondary);
+
+    .response{
+        display: inline-block;
+        width: 80px;
+        line-height: 1.4rem;
+        vertical-align: center;
     }
+    .reply-count, .like-count{
+        margin-left: 5px;
+}
 
 `
 
@@ -111,7 +112,7 @@ const TweetItem = ({item, onLikeToggle}) => {
                     <div 
                         onClick={()=> {navigate(`/user/${item.id}`)}}
                         className="content">{item.description}</div>
-                    <div className="response-section">
+                    <StyledResponse>
                         <span className="response reply">
                             <Comment />
                             <span className="reply-count">{item.repliedCount}</span>
@@ -122,8 +123,7 @@ const TweetItem = ({item, onLikeToggle}) => {
                             {item.isLike ? <Liked /> : <Like />}
                             <span className="like-count">{item.likedCount}</span>
                         </span>
-
-                    </div>
+                    </StyledResponse>
                 </div>
             </div>
         </StyledTweetItem>
@@ -131,3 +131,4 @@ const TweetItem = ({item, onLikeToggle}) => {
 }
 
 export default TweetItem
+export{ StyledTweetItem as TweetItem }
