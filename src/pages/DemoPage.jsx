@@ -1,6 +1,7 @@
 import { UserHeader, UserProfile } from "components";
 import { user } from "testData/dummyUserInfo";
 
+/* 透過切換 user[0] 或 user[1] 查看不同 User/ 
 
 /**
  * [Demo] 共用 Component
@@ -16,13 +17,13 @@ const DemoPage = () => {
             name='John'
             tweetCount={25}/>
           <UserProfile
-            name={user[0].name}
-            account={user[0].account}
-            backgroundImageUrl={user[0].backgroundImageUrl}
-            imageUrl={user[0].imageUrl}
-            description={user[0].description}
-            followingCount={user[0].followingCount}
-            followerCount={user[0].followerCount}
+            name={user[1].name}
+            account={user[1].account}
+            backgroundImageUrl={user[1].backgroundImageUrl}
+            imageUrl={user[1].imageUrl}
+            description={user[1].description}
+            followingCount={user[1].followingCount}
+            followerCount={user[1].followerCount}
           />
         </div>
       </div>

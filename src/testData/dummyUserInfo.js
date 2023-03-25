@@ -1,17 +1,8 @@
+// ＵserProfile 假資料
+
 const user = [
     {
         id: 1,
-        name: "John",
-        account:"@hiJohn",
-        backgroundImageUrl:"https://fastly.picsum.photos/id/287/200/300.jpg?grayscale&hmac=vDcG2Au5xmOPJLLfeyiDcZqpgw18oNXxUMXmL8kEVEU",
-        imageUrl:"https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg",
-        description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint ullamco est sit aliqua.",
-        followingCount:30,
-        followerCount:80
-    },
-
-    {
-        id: 2,
         name: "Jane",
         account:"@janebeauty",
         backgroundImageUrl:"https://fastly.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI",
@@ -20,6 +11,17 @@ const user = [
         followingCount:40,
         followerCount:90
    
+    },
+
+    {
+        id: 2,
+        name: "John",
+        account:"@hiJohn",
+        backgroundImageUrl:"https://fastly.picsum.photos/id/287/200/300.jpg?grayscale&hmac=vDcG2Au5xmOPJLLfeyiDcZqpgw18oNXxUMXmL8kEVEU",
+        imageUrl:"https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_4x3.jpg",
+        description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint ullamco est sit aliqua.",
+        followingCount:30,
+        followerCount:80
     }
 ]
 

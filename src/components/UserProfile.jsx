@@ -46,18 +46,25 @@ const StyledUserInfoContainer = styled.div`
 
 const StyledUserInfo =styled.div`
 // border: 1px solid blue;
-// margin-top:72px;
-//  position:absolute;
-//  top:72px;
 `
 
 const StyledFollowContainer = styled.div`
 //  border: 1px solid red;
- font-size: var(--fz-secondary);
- display:flex;
- .follower-link {
-  // border: 1px solid pink;
+  font-size: var(--fz-secondary);
+  display:flex;
+   .follower-link {
   margin-left:20px;
+   &:hover {
+    cursor:pointer;
+    color:var(--main);
+    }
+  };
+   .following-link {
+   &:hover {
+    cursor:pointer;
+    color:var(--main);
+    }
+  }
  }
 `
 
@@ -78,28 +85,30 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
           <div className ="userinfo-button">
             <Button text='編輯個人資料' styled='outlined'/>
           </div>
-        <StyledUserInfoContainer> 
-          <StyledUserInfo>  
-          <div className ="user-info">
-            <h5>{name}</h5>
-            <p className="text-fz-secondary color-secondary">{account}</p>
-          </div>
-          <p className="user-description text-fz-secondary">{description}</p>
-          <StyledFollowContainer>
-          <div className ="following-link" onClick={()=> {navigate(`/user/${user_id}/following`)}}>
-            <span className="following-count">{`${followingCount} 個`}</span>
-            <span className="following color-secondary">跟隨中</span>
-          </div>
-          <div className ="follower-link" onClick={()=> {navigate(`/user/${user_id}/follower`)}}>
-            <span className="follower-count">{`${followerCount} 個`}</span>
-            <span className="follower color-secondary">跟隨者</span>
-          </div>
-        </StyledFollowContainer>
-        </StyledUserInfo>   
-        </StyledUserInfoContainer>          
+         <StyledUserInfoContainer> 
+             <StyledUserInfo>  
+               <div className ="user-info">
+                 <h5>{name}</h5>
+                  <p className="text-fz-secondary color-secondary">{account}</p>
+               </div>
+                  <p className="user-description text-fz-secondary">{description}</p>
+               <StyledFollowContainer>
+                  <div className ="following-link" onClick={()=> {navigate(`/user/${user_id}/following`)}}>
+                    <span className="following-count">{`${followingCount} 個`}</span>
+                    <span className="following color-secondary">跟隨中</span>
+                  </div>
+                  <div className ="follower-link" onClick={()=> {navigate(`/user/${user_id}/follower`)}}>
+                    <span className="follower-count">{`${followerCount} 個`}</span>
+                    <span className="follower color-secondary">跟隨者</span>
+                  </div>
+               </StyledFollowContainer>
+             </StyledUserInfo>   
+           </StyledUserInfoContainer>          
         </StyledUserProfileContainer>
     )
 };
 
 export default UserProfile;
+
+
 
