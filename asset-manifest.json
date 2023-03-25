@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Twitter-2023/static/css/main.3e4c4e0e.css",
-    "main.js": "/Twitter-2023/static/js/main.d765be1a.js",
+    "main.js": "/Twitter-2023/static/js/main.45dc72a8.js",
     "static/js/787.f649083d.chunk.js": "/Twitter-2023/static/js/787.f649083d.chunk.js",
     "static/media/ac-logo.svg": "/Twitter-2023/static/media/ac-logo.86cb7878aa3912fe7937c392959c88cb.svg",
     "static/media/comment.svg": "/Twitter-2023/static/media/comment.eb3675d8f832f6929f8834ca13ea5ff8.svg",
@@ -9,11 +9,11 @@
     "index.html": "/Twitter-2023/index.html",
     "static/media/liked.svg": "/Twitter-2023/static/media/liked.5e5d892842ae545d6d81b84cec2019b6.svg",
     "main.3e4c4e0e.css.map": "/Twitter-2023/static/css/main.3e4c4e0e.css.map",
-    "main.d765be1a.js.map": "/Twitter-2023/static/js/main.d765be1a.js.map",
+    "main.45dc72a8.js.map": "/Twitter-2023/static/js/main.45dc72a8.js.map",
     "787.f649083d.chunk.js.map": "/Twitter-2023/static/js/787.f649083d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3e4c4e0e.css",
-    "static/js/main.d765be1a.js"
+    "static/js/main.45dc72a8.js"
   ]
 }
