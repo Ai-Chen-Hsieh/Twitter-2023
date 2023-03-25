@@ -16,17 +16,7 @@ const StyledModalHeader = styled.div`
     height: 50px;
     border-bottom: 1px solid var(--gray-20);
     display: flex;
-    align-items: center;
-
-    .title{
-        display: inline-block;
-        line-height: 50px;
-        width: calc(100% - 130px);
-        margin-left: 5px;
-        font-size: 1.8rem;
-        font-weight: 700;
-    }
-    
+    align-items: center;    
 `
 
 const StyledCloseButton = styled.div`
@@ -67,16 +57,25 @@ const StyledModalFooter = styled.div`
     align-items: center;
     justify-content: flex-end;
     padding: 0 5px;
+`
 
-    .warning{
-        display: inline-block;
-        line-height: 50px;
-        text-align: end;
-        width: calc(100% - 130px);
-        margin: 0 10px;
-        font-size: 1.5rem;
-        color: var(--error);
-    }
+const StyledModalHeaderTitle = styled.span`
+    display: inline-block;
+    line-height: 50px;
+    width: calc(100% - 130px);
+    margin-left: 5px;
+    font-size: 1.8rem;
+    font-weight: 700;
+`
+
+const StyledModalFooterWarning = styled.span`
+    display: inline-block;
+    line-height: 50px;
+    text-align: end;
+    width: calc(100% - 130px);
+    margin: 0 10px;
+    font-size: 1.5rem;
+    color: var(--error);
 `
 
 export { 
@@ -84,5 +83,7 @@ export {
     StyledModalHeader as ModalHeader,
     StyledCloseButton as ModalCloseButton,
     StyledModalContent as ModalContent,
-    StyledModalFooter as ModalFooter
+    StyledModalFooter as ModalFooter,
+    StyledModalHeaderTitle as ModalTitle,
+    StyledModalFooterWarning as ModalWarning
 }

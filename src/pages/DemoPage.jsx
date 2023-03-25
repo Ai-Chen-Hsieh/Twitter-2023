@@ -1,5 +1,5 @@
 import { Header } from "components";
-import { ModalContainer, ModalHeader, ModalCloseButton, ModalContent, ModalFooter } from "../components/common/modal.styled";
+import { ModalContainer, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalTitle, ModalWarning } from "../components/common/modal.styled";
 import { Button } from "../components"
 
 /**
@@ -15,21 +15,21 @@ const DemoPage = () => {
           <ModalContainer>
             <ModalHeader>
               <ModalCloseButton/>
-              <span className="title">編輯個人資料</span>
+              <ModalTitle>編輯個人資料</ModalTitle>
               <Button
                 text="儲存"
               />
             </ModalHeader>
-            <ModalContent></ModalContent>
+            <ModalContent/>
           </ModalContainer>
           <br></br>
           <ModalContainer>
             <ModalHeader>
               <ModalCloseButton/>
             </ModalHeader>
-            <ModalContent></ModalContent>
+            <ModalContent/>
             <ModalFooter>
-              <span className="warning">字數不可超過140字</span>
+              <ModalWarning>字數不可超過140字</ModalWarning>
               <Button
                 text="推文"
               />
@@ -40,9 +40,9 @@ const DemoPage = () => {
             <ModalHeader>
               <ModalCloseButton/>
             </ModalHeader>
-            <ModalContent></ModalContent>
+            <ModalContent/>
             <ModalFooter>
-              <span className="warning">內容不可空白</span>
+              <ModalWarning>內容不可空白</ModalWarning>
               <Button
                 text="回覆"
               />
