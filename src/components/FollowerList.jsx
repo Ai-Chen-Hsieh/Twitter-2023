@@ -1,6 +1,6 @@
 import styled from "styled-components"
 // import { useState } from "react"
-import { FollowItem } from '.'
+import { FollowerItem } from '.'
 // 測試用假資料串接
 import { dummyUsers } from "testData/dummyUserInfo"
 
@@ -21,7 +21,7 @@ const FollowerList = () => {
         <StyledFollowList>
             { dummyUsers.map(user => {
                 return(
-                   <FollowItem 
+                   <FollowerItem 
                     key = {user.id}
                     item = {user}
                    />
