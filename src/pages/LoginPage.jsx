@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import { Input, Button } from "components"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ACLogo } from "assets/images"
 import { LandingFormContainer, LandingForm, LandingFormLogoContainer, LandingFormTitle, LandingLink } from "components/common/landingRelatedPages.styled"
 import Swal from "sweetalert2"
-import { login } from "api/auth"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "contexts/AuthContext"
 
 const StyledLinksContainer = styled.div`
     text-align: right;
@@ -17,19 +17,29 @@ const StyledLinksContainer = styled.div`
  * @returns 
  */
 const LoginPage = () => {
-    const [account, setAccount] = useState('');
-    const [password, setPassword] = useState('');
+    const [account, setAccount] = useState('')
+    const [password, setPassword] = useState('')
+    const { login, hasToken, isAdmin } = useAuth()
     let navigate = useNavigate()
 
+    // 檢查是否有 token，如果有導到首頁
+    useEffect(() => {
+        if (hasToken) {
+            if (isAdmin) {
+                navigate('/admin_main');
+            } else {
+                navigate('/main');
+            }
+        }
+    }, [navigate, hasToken, isAdmin]);
+
+    
+    // 阻止表單提交
     function handleSubmit(e) {
         e.preventDefault()
     }
 
     async function handleClick () {
-        if (localStorage.getItem('token')) {
-            localStorage.removeItem('token')
-        }
-
         // 檢查輸入框是否未填寫
         if (account.length === 0 || password.length === 0) {
             return;
@@ -46,8 +56,6 @@ const LoginPage = () => {
         // 檢查是否登入成功
         const isLogin = (response.status === 'success') ? true : false
         if (isLogin) {
-            localStorage.setItem('token', response.data.token)
-            navigate('/main');
             Swal.fire({
                 title: '登入成功!',
                 icon: 'success',
@@ -55,7 +63,8 @@ const LoginPage = () => {
                 timer: 5000,
                 position: 'top',
             });
-
+            return;
+            
         } else {
             Swal.fire({
                 title: '登入失敗!',
