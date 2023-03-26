@@ -1,5 +1,4 @@
-import { Header, TweetModal, Button } from "components";
-
+import { Header, TweetModal, Button, ReplyModal } from "components";
 import { createPortal } from "react-dom";
 import { useState } from "react";
 
@@ -10,6 +9,7 @@ import { useState } from "react";
  */
 const DemoPage = () => {
   const [showModal, setShowModal] = useState(false)
+  const [ showReplyModal, setShowReplyModal ] = useState(false)
 
   return (
     <div className="container">
@@ -26,6 +26,18 @@ const DemoPage = () => {
           <br />
           {showModal && createPortal(
             <TweetModal onClose={() => setShowModal(false)}/>,
+            document.body
+          )}
+
+          <br />
+          <Button
+            text="回覆推文"
+             onClick={()=>{
+              setShowReplyModal(true)
+            }}
+          />
+          {showReplyModal && createPortal(
+            <ReplyModal onClose={() => setShowReplyModal(false)}/>,
             document.body
           )}
 

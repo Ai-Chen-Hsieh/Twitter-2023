@@ -29,6 +29,7 @@ import UserPageReplyList from "./UserPageReplyList"
 import UserPageLikeList from "./UserPageLikeList";
 import UserPageFollowerList from "./UserPageFollowerList";
 import UserPageFollowingList from "./UserPageFollowingList";
+import TweetInput from "./TweetInput"
 
 export { 
     AdminTweetItem,
@@ -61,5 +62,6 @@ export {
     UserPageReplyList,
     UserPageLikeList,
     UserPageFollowerList,
-    UserPageFollowingList
+    UserPageFollowingList,
+    TweetInput
 }
