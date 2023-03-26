@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { Button, Avatar } from "."
+import { useNavigate } from "react-router-dom"
 
 const StyledFollowItemContainer = styled.div`
   width: 100%;
@@ -38,19 +39,37 @@ const StyledFollowItem = styled.div`
  } 
 `
 
-const FollowItem = ({name, imageUrl, description}) => {
+const FollowItem = ({item, onToggleFollow}) => {
+
+    const navigate = useNavigate()
+
     return(
         <StyledFollowItemContainer>
-          <div className="avatar">
-            <Avatar imageUrl={imageUrl}/>
+          <div className="avatar" onClick ={() => {navigate(`/user/${item.id}`)}}>
+             <Avatar imageUrl={item.imageUrl}/>
           </div>
-        <StyledFollowButtonWrapper>
-            <Button text='正在跟隨' styled='outlined:hover'/>
-        </StyledFollowButtonWrapper>
-        <StyledFollowItem> 
-           <p className="user-name">{name}</p>
-           <p className="user-description text-fz-secondary">{description}</p>
-         </StyledFollowItem>          
+          <StyledFollowButtonWrapper>
+            { item.isFollow ?
+              <Button 
+                 text='正在跟隨'
+                 onClick = {(e) => {
+                   onToggleFollow(item.id)
+                 }}        
+              /> :
+
+              <Button 
+                 text ='跟隨' 
+                 styled ='outlined'
+                 onClick = {(e) => {
+                   onToggleFollow(item.id)
+                 }}
+              />                 
+            }  
+          </StyledFollowButtonWrapper>
+          <StyledFollowItem> 
+             <p className="user-name">{item.name}</p>
+             <p className="user-description text-fz-secondary">{item.description}</p>
+          </StyledFollowItem>          
         </StyledFollowItemContainer>
     )
 }
