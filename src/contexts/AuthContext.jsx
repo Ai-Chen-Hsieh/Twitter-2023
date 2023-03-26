@@ -1,11 +1,10 @@
 import { createContext, useContext, useState, useEffect } from "react"
-import * as jwt from 'jsonwebtoken'
-// import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { login } from "api/auth"
+// import * as jwt from "jsonwebtoken"
 
 const defaultAuthContext = {
   hasToken: false, // 是否有 token
-  isAdmin: false, // 是否為管理者
   currentRegistrant: null, // 登入者資訊 
   login: null, // 登入
 }
@@ -15,7 +14,7 @@ const AuthContext = createContext(defaultAuthContext)
  * 取得認證相關的邏輯 (AuthContext)
  * @returns 
  */
-export const useAuth = () => { return useContext(AuthContext) }
+export const useAuth = () => useContext(AuthContext)
 
 /**
  * 提供認證相關的邏輯 
@@ -24,54 +23,49 @@ export const useAuth = () => { return useContext(AuthContext) }
  */
 export const AuthProvider = ({ children }) => {
   const [hasToken, setHasToken] = useState(false)
-  const [payload, setPayload] = useState(null) // token 解析後的 payload
-  const isAdmin = (payload.role === 'admin') ? true : false;
-  // const { pathname } = useLocation() // 取得網址的路徑
+  const [currentRegistrant, setCurrentRegistrant] = useState(null)
+  const { pathname } = useLocation()
 
-  // // 當切換網址路徑時
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token')
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      setHasToken(false)
+      setCurrentRegistrant(null)
+      return
+    }
 
-  //   if (!token) {
-  //     setPayload(null)
-  //     setHasToken(false)
-  //     return
-  //   }
-  // }, [pathname])
+  }, [pathname])
 
   return (
     <AuthContext.Provider
       value={{
         // 是否有 token
         hasToken,
-        // 是否為管理者
-        isAdmin,
-        // 登入者資訊
-        currentRegistrant: payload && {
-          ...payload
+        // 登入者資訊 
+        currentRegistrant: currentRegistrant && {
+          ...currentRegistrant
         },
         // 登入
         login: async (data) => {
           const response = await login({
-              account: data.account,
-              password: data.password,
-              role: data.role
+            account: data.account,
+            password: data.password,
+            role: data.role
           })
 
           const isLogin = (response.status === 'success') ? true : false
           if (isLogin) {
-            const token = response.data.token
-            const tempPayload = jwt.decode(token)
-
-            setPayload(tempPayload)
+            setCurrentRegistrant(response.data.user)
             setHasToken(true)
-            localStorage.setItem('token', token)
+            localStorage.setItem('token', response.data.token)
 
           } else {
-            setPayload(null)
+            setCurrentRegistrant(null)
             setHasToken(false)
             localStorage.removeItem('token')
           }
+
+          return response;
         }
       }}
     >

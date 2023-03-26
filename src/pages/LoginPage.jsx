@@ -19,19 +19,19 @@ const StyledLinksContainer = styled.div`
 const LoginPage = () => {
     const [account, setAccount] = useState('')
     const [password, setPassword] = useState('')
-    const { login, hasToken, isAdmin } = useAuth()
+    const { hasToken, login, currentRegistrant } = useAuth()
     let navigate = useNavigate()
 
     // 檢查是否有 token，如果有導到首頁
     useEffect(() => {
         if (hasToken) {
-            if (isAdmin) {
+            if (currentRegistrant.role === 'admin') {
                 navigate('/admin_main');
             } else {
                 navigate('/main');
             }
         }
-    }, [navigate, hasToken, isAdmin]);
+    }, [navigate, hasToken, currentRegistrant]);
 
     
     // 阻止表單提交
@@ -60,7 +60,7 @@ const LoginPage = () => {
                 title: '登入成功!',
                 icon: 'success',
                 showConfirmButton: false,
-                timer: 5000,
+                timer: 3000,
                 position: 'top',
             });
             return;
@@ -71,7 +71,7 @@ const LoginPage = () => {
                 icon: 'error',
                 html: response.message,
                 showConfirmButton: false,
-                timer: 1000,
+                timer: 3000,
                 position: 'top',
             });
         }
