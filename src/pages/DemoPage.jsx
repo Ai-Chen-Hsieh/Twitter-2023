@@ -1,4 +1,4 @@
-import { FollowItem, Header, TabList } from "components";
+import {  Header } from "components";
 import { ModalContainer, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalTitle, ModalWarning } from "../components/common/modal.styled";
 import { Button } from "../components"
 

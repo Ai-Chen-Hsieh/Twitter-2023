@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { Button, Avatar } from "."
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 const StyledFollowItemContainer = styled.div`
   width: 100%;
@@ -42,10 +42,11 @@ const StyledFollowItem = styled.div`
 const FollowerItem = ({item, onToggleFollow}) => {
 
     const navigate = useNavigate()
+    const { user_id } = useParams()
 
     return(
         <StyledFollowItemContainer>
-          <div className="avatar" onClick ={() => {navigate(`/user/${item.id}`)}}>
+          <div className="avatar" onClick ={()=> {navigate(`/user/${user_id}`)}}>
              <Avatar imageUrl={item.imageUrl}/>
           </div>
           <StyledFollowButtonWrapper>
