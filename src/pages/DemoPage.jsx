@@ -1,7 +1,7 @@
-import { UserHeader, UserProfile } from "components";
-import { user } from "testData/dummyUserInfo";
+import { Header } from "components";
+import { ModalContainer, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalTitle, ModalWarning } from "../components/common/modal.styled";
+import { Button } from "../components"
 
-/* 透過切換 user[0] 或 user[1] 查看不同 User/ 
 
 /**
  * [Demo] 共用 Component
@@ -13,18 +13,44 @@ const DemoPage = () => {
     <div className="container">
       <div className="row">
         <div className="col-6">
-          <UserHeader
-            name='John'
-            tweetCount={25}/>
-          <UserProfile
-            name={user[0].name}
-            account={user[0].account}
-            backgroundImageUrl={user[0].backgroundImageUrl}
-            imageUrl={user[0].imageUrl}
-            description={user[0].description}
-            followingCount={user[0].followingCount}
-            followerCount={user[0].followerCount}
-          />      
+          <Header text="首頁"/>
+          <ModalContainer>
+            <ModalHeader>
+              <ModalCloseButton/>
+              <ModalTitle>編輯個人資料</ModalTitle>
+              <Button
+                text="儲存"
+              />
+            </ModalHeader>
+            <ModalContent/>
+          </ModalContainer>
+          <br></br>
+          <ModalContainer>
+            <ModalHeader>
+              <ModalCloseButton/>
+            </ModalHeader>
+            <ModalContent/>
+            <ModalFooter>
+              <ModalWarning>字數不可超過140字</ModalWarning>
+              <Button
+                text="推文"
+              />
+            </ModalFooter>
+          </ModalContainer>
+          <br></br>
+          <ModalContainer>
+            <ModalHeader>
+              <ModalCloseButton/>
+            </ModalHeader>
+            <ModalContent/>
+            <ModalFooter>
+              <ModalWarning>內容不可空白</ModalWarning>
+              <Button
+                text="回覆"
+              />
+            </ModalFooter>
+          </ModalContainer>
+          <br />
         </div>
       </div>
     </div>
