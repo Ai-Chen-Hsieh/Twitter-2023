@@ -1,12 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import { login } from "api/auth"
-// import * as jwt from "jsonwebtoken"
+import jwt_decode from "jwt-decode";
 
 const defaultAuthContext = {
   hasToken: false, // 是否有 token
   currentRegistrant: null, // 登入者資訊 
   login: null, // 登入
+  logout: null // 登出
 }
 const AuthContext = createContext(defaultAuthContext)
 
@@ -23,15 +24,22 @@ export const useAuth = () => useContext(AuthContext)
  */
 export const AuthProvider = ({ children }) => {
   const [hasToken, setHasToken] = useState(false)
-  const [currentRegistrant, setCurrentRegistrant] = useState(null)
+  const [payload, setPayload] = useState(null) // token 解析後 payload 帶的資訊
   const { pathname } = useLocation()
+
+  console.log('AuthProvider')
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (!token) {
       setHasToken(false)
-      setCurrentRegistrant(null)
+      setPayload(null)
       return
+
+    } else {
+      const tempPayload = jwt_decode(token)
+      setHasToken(true)
+      setPayload(tempPayload)
     }
 
   }, [pathname])
@@ -42,8 +50,8 @@ export const AuthProvider = ({ children }) => {
         // 是否有 token
         hasToken,
         // 登入者資訊 
-        currentRegistrant: currentRegistrant && {
-          ...currentRegistrant
+        currentRegistrant: payload && {
+          ...payload
         },
         // 登入
         login: async (data) => {
@@ -55,17 +63,26 @@ export const AuthProvider = ({ children }) => {
 
           const isLogin = (response.status === 'success') ? true : false
           if (isLogin) {
-            setCurrentRegistrant(response.data.user)
+            const token = response.data.token
+            const tempPayload = jwt_decode(token)
+
+            setPayload(tempPayload)
             setHasToken(true)
-            localStorage.setItem('token', response.data.token)
+            localStorage.setItem('token', token)
 
           } else {
-            setCurrentRegistrant(null)
+            setPayload(null)
             setHasToken(false)
             localStorage.removeItem('token')
           }
 
           return response;
+        },
+        // 登出
+        logout: () => {
+          localStorage.removeItem('token')
+          setPayload(null)
+          setHasToken(false)
         }
       }}
     >

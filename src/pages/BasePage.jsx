@@ -1,5 +1,7 @@
-import { Outlet } from "react-router-dom";
-import { PopularList, SideBar, SideBarList, SideBarItem, Button } from "../components";
+import { Outlet, useNavigate } from "react-router-dom"
+import { PopularList, SideBar, SideBarList, SideBarItem, Button } from "../components"
+import { useEffect } from "react"
+import { useAuth } from "contexts/AuthContext"
 
 /**
  * [前台] 放置前台所有頁面（不包含前台登入頁、註冊頁）共用 Component
@@ -7,9 +9,25 @@ import { PopularList, SideBar, SideBarList, SideBarItem, Button } from "../compo
  * @returns 
  */
 const BasePage = ({showPopularList = true}) => {
+  const { hasToken, currentRegistrant, logout } = useAuth()
+  let navigate = useNavigate()
+
+  // 檢查是否有 token
+  // 沒有 -> 登入頁
+  // 有 -> (管理者) 後台首頁； (使用者) 留在此頁
+  useEffect(() => {
+    if (!hasToken) {
+      navigate('/login');
+
+    } else {
+      if (currentRegistrant.role === 'admin') {
+        navigate('/admin_main');
+      }
+    }
+  }, [navigate, hasToken, currentRegistrant]);
 
   function handleLogOut() {
-    console.log('log out.');
+    logout()
   }
 
   return (
@@ -21,7 +39,7 @@ const BasePage = ({showPopularList = true}) => {
           >
             <SideBarList>
               <SideBarItem to="/main" text="首頁" icon="home" />
-              <SideBarItem to="/user/000" text="個人資料" icon="user" />
+              { (currentRegistrant) && <SideBarItem to={`/user/${currentRegistrant.id}`} text="個人資料" icon="user" /> }
               <SideBarItem to="/setting" text="設定" icon="setting" />
             </SideBarList>
             <Button

@@ -1,24 +1,40 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import { Input, Button } from "components"
-import { useState } from "react"
-import { ACLogo } from "assets/images";
-import { register } from "api/register";
-import { LandingFormContainer, LandingForm, LandingFormLogoContainer, LandingFormTitle, LandingLink } from "components/common/landingRelatedPages.styled";
+import { useState, useEffect } from "react"
+import { ACLogo } from "assets/images"
+import { register } from "api/register"
+import { LandingFormContainer, LandingForm, LandingFormLogoContainer, LandingFormTitle, LandingLink } from "components/common/landingRelatedPages.styled"
+import { useAuth } from "contexts/AuthContext"
 
 /**
  * [前台] 註冊頁
  * @returns 
  */
 const RegisterPage = () => {
-    const [account, setAccount] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [checkPassword, setCheckPassword] = useState('');
-    let navigate = useNavigate();
+    const [account, setAccount] = useState('')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [checkPassword, setCheckPassword] = useState('')
+    const { hasToken, currentRegistrant } = useAuth()
+    let navigate = useNavigate()
 
+    // 檢查是否有 token
+    // 有 -> (使用者) 導到首頁； (管理者) 導到後台推文清單
+    // 無 -> 停留在此頁
+    useEffect(() => {
+        if (hasToken) {
+            if (currentRegistrant.role === 'admin') {
+                navigate('/admin_main');
+            } else {
+                navigate('/main');
+            }
+        }
+    }, [hasToken, navigate, currentRegistrant])
+
+    // 阻止表單提交
     async function handleSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
     }
 
     async function handleClick() {
@@ -29,7 +45,6 @@ const RegisterPage = () => {
             password,
             checkPassword
         })
-        console.log(res)
     }
 
     return (
@@ -47,7 +62,7 @@ const RegisterPage = () => {
                     placeholder='請輸入帳號'
                     value={account}
                     required={true}
-                    onChange={(e) => { setAccount(e.target.value); }}
+                    onChange={(e) => { setAccount(e.target.value) }}
                 />
                 <Input
                     label='名稱'
@@ -56,7 +71,7 @@ const RegisterPage = () => {
                     value={name}
                     required={true}
                     maxLength={50}
-                    onChange={(e) => { setName(e.target.value); }}
+                    onChange={(e) => { setName(e.target.value) }}
                 />
                 <Input
                     label='Email'
@@ -65,7 +80,7 @@ const RegisterPage = () => {
                     placeholder='請輸入 Email'
                     value={email}
                     required={true}
-                    onChange={(e) => { setEmail(e.target.value); }}
+                    onChange={(e) => { setEmail(e.target.value) }}
                 />
                 <Input
                     label='密碼'
@@ -74,7 +89,7 @@ const RegisterPage = () => {
                     placeholder='請設定密碼'
                     value={password}
                     required={true}
-                    onChange={(e) => { setPassword(e.target.value); }}
+                    onChange={(e) => { setPassword(e.target.value) }}
                 />
                 <Input
                     label='密碼確認'
@@ -83,7 +98,7 @@ const RegisterPage = () => {
                     placeholder='請再次輸入密碼'
                     value={checkPassword}
                     required={true}
-                    onChange={(e) => { setCheckPassword(e.target.value); }}
+                    onChange={(e) => { setCheckPassword(e.target.value) }}
                 />
 
                 <Button

@@ -22,7 +22,9 @@ const LoginPage = () => {
     const { hasToken, login, currentRegistrant } = useAuth()
     let navigate = useNavigate()
 
-    // 檢查是否有 token，如果有導到首頁
+    // 檢查是否有 token
+    // 有 -> (使用者) 導到首頁； (管理者) 導到後台推文清單
+    // 無 -> 停留在此頁
     useEffect(() => {
         if (hasToken) {
             if (currentRegistrant.role === 'admin') {
@@ -39,6 +41,7 @@ const LoginPage = () => {
         e.preventDefault()
     }
 
+    // 處理按下登入按鈕
     async function handleClick () {
         // 檢查輸入框是否未填寫
         if (account.length === 0 || password.length === 0) {
