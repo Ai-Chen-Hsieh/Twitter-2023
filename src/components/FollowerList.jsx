@@ -11,7 +11,7 @@ const StyledFollowList = styled.div`
 `
 
 
-const FollowList = () => {
+const FollowerList = () => {
 
     // const [users, setUsers] = useState(dummyUsers)
 
@@ -31,4 +31,4 @@ const FollowList = () => {
     )
 }
 
-export default FollowList
+export default FollowerList

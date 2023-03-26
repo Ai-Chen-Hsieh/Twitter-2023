@@ -39,7 +39,7 @@ const StyledFollowItem = styled.div`
  } 
 `
 
-const FollowItem = ({item, onToggleFollow}) => {
+const FollowerItem = ({item, onToggleFollow}) => {
 
     const navigate = useNavigate()
 
@@ -74,4 +74,4 @@ const FollowItem = ({item, onToggleFollow}) => {
     )
 }
 
-export default FollowItem
+export default FollowerItem
