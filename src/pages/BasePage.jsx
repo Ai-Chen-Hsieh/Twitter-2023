@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { PopularList } from "../components";
 
 /**
  * [前台] 放置前台所有頁面（不包含前台登入頁、註冊頁）共用 Component
@@ -11,17 +12,16 @@ const BasePage = ({showPopularList = true}) => {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-12">
-          <p>路徑: {location.pathname} (BasicPage.jsx)</p>
-        </div>
         <div className="col-3">
+          <p>路徑: {location.pathname} (BasicPage.jsx)</p>
           <p>sideBar.jsx (BasicPage.jsx)</p>
         </div>
         <div className="col-6">
           <Outlet />
         </div>
         <div className="col-3">
-          { showPopularList && <p>PopularList.jsx (BasicPage.jsx)</p> }
+          { showPopularList && <PopularList /> }
+
         </div>
       </div>
     </div>
