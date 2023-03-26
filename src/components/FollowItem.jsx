@@ -4,59 +4,39 @@ import { Button, Avatar } from "."
 const StyledFollowItemContainer = styled.div`
   width: 100%;
   border: 1px solid #E6ECF0;
+  border-top: none;
   background-color: #fff;
   position: relative;
-  .userinfo-button {
-    position: absolute;
-    right: 16px;
-    top: 216px;
-  }
   .avatar {
     width:50px;
     height:50px;
     position:absolute;
-    top:124px;
-    left:16px;
+    top:16px;
+    left:23px;
   }
-//   .user-info {
-//     width: 95px;
-//     height: 48px;
-//   }
+`
+
+const StyledFollowButtonWrapper = styled.div`
+    position: absolute;
+    right: 30px;
+    top: 16px;
+    z-index:2;
+    Button {
+     z-index: 100;  
+    }   
 `
 
 const StyledFollowItem = styled.div`
- padding:72px 16px 0 16px;
+ padding:23px 30px 16px 81px;
  width:100%;
  height:100%;
- position:relative;
- border: 1px solid green;
+ .user-name {
+   font-weight:bold; 
+ }
+ .user-description {
+    padding-top:15px;
+ } 
 `
-
-// const StyledUserInfo =styled.div`
-// // border: 1px solid blue;
-// `
-
-// const StyledFollowContainer = styled.div`
-// //  border: 1px solid red;
-//   font-size: var(--fz-secondary);
-//   display:flex;
-//    .follower-link {
-//   margin-left:20px;
-//    &:hover {
-//     cursor:pointer;
-//     color:var(--main);
-//     }
-//   };
-//    .following-link {
-//    &:hover {
-//     cursor:pointer;
-//     color:var(--main);
-//     }
-//   }
-//  }
-// `
-
-
 
 const FollowItem = ({name, imageUrl, description}) => {
     return(
@@ -64,12 +44,12 @@ const FollowItem = ({name, imageUrl, description}) => {
           <div className="avatar">
             <Avatar imageUrl={imageUrl}/>
           </div>
-          <div className ="follow-button">
+        <StyledFollowButtonWrapper>
             <Button text='正在跟隨' styled='outlined:hover'/>
-          </div>
-         <StyledFollowItem> 
-             <h5>{name}</h5>
-             <p className="user-description text-fz-secondary">{description}</p>
+        </StyledFollowButtonWrapper>
+        <StyledFollowItem> 
+           <p className="user-name">{name}</p>
+           <p className="user-description text-fz-secondary">{description}</p>
          </StyledFollowItem>          
         </StyledFollowItemContainer>
     )
