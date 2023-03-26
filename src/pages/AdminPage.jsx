@@ -19,6 +19,7 @@ const StyledLinksContainer = styled.div`
 const AdminPage = () => {
     const [account, setAccount] = useState('')
     const [password, setPassword] = useState('')
+    const [disabledSubmitBtn, setDisabledSubmitBtn] = useState(false)
     const { hasToken, login, currentRegistrant} = useAuth()
     let navigate = useNavigate()
 
@@ -42,8 +43,12 @@ const AdminPage = () => {
 
     // 處理按下登入按鈕
     async function handleClick () {
+        // 避免使用者在 API 還沒回傳資料前 再次點擊按鈕
+        setDisabledSubmitBtn(true)
+
         // 檢查輸入框是否未填寫
         if (account.length === 0 || password.length === 0) {
+            setDisabledSubmitBtn(false)
             return;
         }
 
@@ -68,10 +73,11 @@ const AdminPage = () => {
             return;
             
         } else {
+            setDisabledSubmitBtn(false)
             Swal.fire({
                 title: '登入失敗!',
                 icon: 'error',
-                html: response.message,
+                html: `<p>${response.message}</p>`,
                 showConfirmButton: false,
                 timer: 3000,
                 position: 'top',
@@ -111,6 +117,7 @@ const AdminPage = () => {
                     display='block'
                     text='登入'
                     onClick={handleClick}
+                    disabled={disabledSubmitBtn}
                 />
             </LandingForm>
 

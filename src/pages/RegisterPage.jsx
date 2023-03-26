@@ -16,6 +16,7 @@ const RegisterPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [checkPassword, setCheckPassword] = useState('')
+    const [disabledSubmitBtn, setDisabledSubmitBtn] = useState(false)
     const { hasToken, currentRegistrant, register } = useAuth()
     let navigate = useNavigate()
 
@@ -39,8 +40,12 @@ const RegisterPage = () => {
 
     // 處理按下註冊按鈕
     async function handleClick() {
+        // 避免使用者在 API 還沒回傳資料前 再次點擊按鈕
+        setDisabledSubmitBtn(true)
+
         // 檢查輸入框是否未填寫
         if (account.length === 0 || name.length === 0 || email.length === 0 || password.length === 0 || checkPassword.length === 0) {
+            setDisabledSubmitBtn(false)
             return;
         }
 
@@ -66,10 +71,16 @@ const RegisterPage = () => {
             navigate('/login');
 
         } else {
+            setDisabledSubmitBtn(false)
+            let errorMsgHtml = ''
+            for (let error of response.errors) {
+                errorMsgHtml += error + '<br/>'
+            }
+            
             Swal.fire({
                 title: '註冊失敗!',
                 icon: 'error',
-                html: '<p>待寫邏輯</p>',
+                html: `<p>${errorMsgHtml}</p>`,
                 showConfirmButton: false,
                 timer: 3000,
                 position: 'top',
@@ -137,6 +148,7 @@ const RegisterPage = () => {
                     display='block'
                     text='註冊'
                     onClick={handleClick}
+                    disabled={disabledSubmitBtn}
                 />
             </LandingForm>
 

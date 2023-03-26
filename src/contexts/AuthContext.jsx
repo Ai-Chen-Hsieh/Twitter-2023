@@ -28,8 +28,6 @@ export const AuthProvider = ({ children }) => {
   const [payload, setPayload] = useState(null) // token 解析後 payload 帶的資訊
   const { pathname } = useLocation()
 
-  console.log('AuthProvider')
-
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (!token) {
