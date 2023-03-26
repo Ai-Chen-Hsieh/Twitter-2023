@@ -59,7 +59,6 @@ const TweetModal = ({onClose}) => {
     }
 
     return (
-        <>
         <StyledTweetModal>
             <ModalWrapper>
                 <Modal>
@@ -99,7 +98,6 @@ const TweetModal = ({onClose}) => {
                 </Modal>
             </ModalWrapper>
         </StyledTweetModal>  
-        </>
     )
 }
 

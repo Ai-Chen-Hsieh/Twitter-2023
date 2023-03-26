@@ -48,6 +48,7 @@ const StyledCloseButton = styled.div`
     margin-left: 5px;
     border-radius: 50%;
     color: var(--main);
+    cursor: pointer;
     position: relative;
 
     &:hover {
