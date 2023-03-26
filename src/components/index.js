@@ -6,6 +6,8 @@ import Avatar from "./Avatar";
 import Button from "./Button";
 import FollowerItem from "./FollowerItem";
 import FollowerList from "./FollowerList";
+import FollowingItem from "./FollowingItem";
+import FollowingList from "./FollowingList";
 import Header from "./Header";
 import Input from "./Input";
 import PopularItem from "./PopularItem";
@@ -39,6 +41,8 @@ export {
     Button,
     FollowerItem,
     FollowerList,
+    FollowingItem,
+    FollowingList,
     Header,
     Input,
     PopularItem,

@@ -22,7 +22,7 @@ const dummyUsers = [
         description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint ullamco est sit aliqua.",
         followingCount:30,
         followerCount:80,
-        isFollow: true
+        isFollow: false
     },
 
     {
@@ -34,7 +34,7 @@ const dummyUsers = [
         description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint ullamco est sit aliqua dolor do sit aliqua dolor do amet sint ullamco est sit aliqua dolor do  sit aliqua dolor do amet sint ullamco est sit aliqua dolor do amet sint.",
         followingCount:60,
         followerCount:200,
-        isFollow: true
+        isFollow: false
     },
 
      {
@@ -46,7 +46,7 @@ const dummyUsers = [
         description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint ullamco est sit aliqua.",
         followingCount:89,
         followerCount:22,
-        isFollow: false
+        isFollow: true
     },
 
 
@@ -59,7 +59,7 @@ const dummyUsers = [
         description: "Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint ullamco est sit aliqua dolor do sit aliqua dolor do amet sint ullamco est sit aliqua dolor do  sit aliqua dolor do amet sint ullamco est sit aliqua dolor do amet sint.",
         followingCount:7,
         followerCount:2,
-        isFollow: false
+        isFollow: true
     },
 
 

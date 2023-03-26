@@ -14,7 +14,7 @@ const StyledFollowItemContainer = styled.div`
     position:absolute;
     top:16px;
     left:23px;
-    }
+  }
 `
 
 const StyledFollowButtonWrapper = styled.div`
@@ -23,23 +23,23 @@ const StyledFollowButtonWrapper = styled.div`
   top: 16px;
   z-index:2;
     Button {
-      z-index: 100;  
+     z-index: 100;  
     }   
 `
 
 const StyledFollowItem = styled.div`
- padding:23px 30px 16px 81px;
- width:100%;
- height:100%;
- .user-name {
+  padding:23px 30px 16px 81px;
+  width:100%;
+  height:100%;
+  .user-name {
    font-weight:bold; 
  }
- .user-description {
+  .user-description {
     padding-top:15px;
  } 
 `
 
-const FollowerItem = ({item, onToggleFollow}) => {
+const FollowingItem = ({item, onToggleFollow}) => {
 
     const navigate = useNavigate()
 
@@ -49,22 +49,12 @@ const FollowerItem = ({item, onToggleFollow}) => {
              <Avatar imageUrl={item.imageUrl}/>
           </div>
           <StyledFollowButtonWrapper>
-            { item.isFollow ?
-              <Button 
+             <Button 
                  text='正在跟隨'
                  onClick = {(e) => {
                    onToggleFollow(item.id)
                  }}        
-              /> :
-
-              <Button 
-                 text ='跟隨' 
-                 styled ='outlined'
-                 onClick = {(e) => {
-                   onToggleFollow(item.id)
-                 }}
-              />                 
-            }  
+              /> 
           </StyledFollowButtonWrapper>
           <StyledFollowItem> 
              <p className="user-name">{item.name}</p>
@@ -74,4 +64,4 @@ const FollowerItem = ({item, onToggleFollow}) => {
     )
 }
 
-export default FollowerItem
+export default FollowingItem

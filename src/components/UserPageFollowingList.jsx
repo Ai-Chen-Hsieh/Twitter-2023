@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem } from "components"
+import FollowingList from "./FollowingList";
 
 /**
  * [前台] 使用者資料頁（正在追隨）
@@ -18,7 +19,7 @@ const UserFollowingList = () => {
                 <TabItem to={`/user/${user_id}/follower`} text="追隨者" />
                 <TabItem to={`/user/${user_id}/following`} text="正在追隨" />
             </TabList>
-            <p>UserPageFollowingList.jsx</p>
+            <FollowingList/>
         </>
     )
 }
