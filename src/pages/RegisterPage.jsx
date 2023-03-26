@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom"
 import { Input, Button } from "components"
 import { useState, useEffect } from "react"
 import { ACLogo } from "assets/images"
-import { register } from "api/register"
 import { LandingFormContainer, LandingForm, LandingFormLogoContainer, LandingFormTitle, LandingLink } from "components/common/landingRelatedPages.styled"
 import { useAuth } from "contexts/AuthContext"
+import Swal from "sweetalert2"
 
 /**
  * [前台] 註冊頁
@@ -16,7 +16,7 @@ const RegisterPage = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [checkPassword, setCheckPassword] = useState('')
-    const { hasToken, currentRegistrant } = useAuth()
+    const { hasToken, currentRegistrant, register } = useAuth()
     let navigate = useNavigate()
 
     // 檢查是否有 token
@@ -37,14 +37,44 @@ const RegisterPage = () => {
         e.preventDefault()
     }
 
+    // 處理按下註冊按鈕
     async function handleClick() {
-        const res = await register({
-            name,
+        // 檢查輸入框是否未填寫
+        if (account.length === 0 || name.length === 0 || email.length === 0 || password.length === 0 || checkPassword.length === 0) {
+            return;
+        }
+
+        // 呼叫註冊 API
+        const response = await register({
             account,
+            name,
             email,
             password,
             checkPassword
         })
+        console.log(response)
+
+        const isRegister = (response.status === 'success') ? true : false
+        if (isRegister) {
+            Swal.fire({
+                title: '註冊成功!',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 3000,
+                position: 'top',
+            });
+            navigate('/login');
+
+        } else {
+            Swal.fire({
+                title: '註冊失敗!',
+                icon: 'error',
+                html: '<p>待寫邏輯</p>',
+                showConfirmButton: false,
+                timer: 3000,
+                position: 'top',
+            });
+        }
     }
 
     return (

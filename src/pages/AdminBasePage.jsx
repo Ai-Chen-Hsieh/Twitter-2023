@@ -15,18 +15,22 @@ const AdminBasePage = () => {
   // 有 -> (管理者) 留在此頁； (使用者) 導到首頁
   useEffect(() => {
     if (!hasToken) {
-      navigate('/login')
-
-    } else {
-      if (currentRegistrant.role !== 'admin') {
-        navigate('/main')
-      }
+      navigate('/login');
+    } else if (hasToken && currentRegistrant.role !== 'admin') {
+      navigate('/main');
     }
-  }, [navigate, hasToken, currentRegistrant])
+  }, [navigate, hasToken, currentRegistrant]);
 
 
   function handleLogOut() {
     logout()
+  }
+
+  // 避免導到其他頁面看到畫面
+  if (!hasToken || (hasToken && currentRegistrant.role !== 'admin')) {
+    return (
+      <></>
+    )
   }
 
   return (

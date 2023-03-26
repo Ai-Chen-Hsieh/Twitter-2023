@@ -18,16 +18,20 @@ const BasePage = ({showPopularList = true}) => {
   useEffect(() => {
     if (!hasToken) {
       navigate('/login');
-
-    } else {
-      if (currentRegistrant.role === 'admin') {
-        navigate('/admin_main');
-      }
+    } else if (hasToken && currentRegistrant.role === 'admin') {
+      navigate('/admin_main');
     }
   }, [navigate, hasToken, currentRegistrant]);
 
   function handleLogOut() {
     logout()
+  }
+
+  // 避免導到其他頁面看到畫面
+  if (!hasToken || (hasToken && currentRegistrant.role === 'admin')) {
+    return (
+      <></>
+    )
   }
 
   return (
@@ -39,7 +43,7 @@ const BasePage = ({showPopularList = true}) => {
           >
             <SideBarList>
               <SideBarItem to="/main" text="首頁" icon="home" />
-              { (currentRegistrant) && <SideBarItem to={`/user/${currentRegistrant.id}`} text="個人資料" icon="user" /> }
+              <SideBarItem to={`/user/${currentRegistrant.id}`} text="個人資料" icon="user" />
               <SideBarItem to="/setting" text="設定" icon="setting" />
             </SideBarList>
             <Button

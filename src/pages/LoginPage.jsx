@@ -34,7 +34,6 @@ const LoginPage = () => {
             }
         }
     }, [navigate, hasToken, currentRegistrant]);
-
     
     // 阻止表單提交
     function handleSubmit(e) {
@@ -54,7 +53,6 @@ const LoginPage = () => {
             password,
             role: 'user'
         })
-        console.log(response)
 
         // 檢查是否登入成功
         const isLogin = (response.status === 'success') ? true : false
@@ -66,13 +64,12 @@ const LoginPage = () => {
                 timer: 3000,
                 position: 'top',
             });
-            return;
             
         } else {
             Swal.fire({
                 title: '登入失敗!',
                 icon: 'error',
-                html: response.message,
+                html: `<p>${response.message}</p>`,
                 showConfirmButton: false,
                 timer: 3000,
                 position: 'top',

@@ -1,12 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useLocation } from "react-router-dom"
-import { login } from "api/auth"
+import { login, register } from "api/auth"
 import jwt_decode from "jwt-decode";
 
 const defaultAuthContext = {
   hasToken: false, // 是否有 token
   currentRegistrant: null, // 登入者資訊 
   login: null, // 登入
+  register: null, // 註冊
   logout: null // 登出
 }
 const AuthContext = createContext(defaultAuthContext)
@@ -77,6 +78,18 @@ export const AuthProvider = ({ children }) => {
           }
 
           return response;
+        },
+        // 註冊
+        register: async (data) => {
+          const response = await register({
+            name: data.name,
+            account: data.account,
+            email: data.email,
+            password: data.password,
+            checkPassword: data.checkPassword
+          })
+
+          return response
         },
         // 登出
         logout: () => {
