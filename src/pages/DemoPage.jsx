@@ -2,11 +2,13 @@ import { Header } from "components";
 import { ModalContainer, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalTitle, ModalWarning } from "../components/common/modal.styled";
 import { Button } from "../components"
 
+
 /**
  * [Demo] 共用 Component
  * @returns 
  */
 const DemoPage = () => {
+
   return (
     <div className="container">
       <div className="row">
@@ -56,3 +58,4 @@ const DemoPage = () => {
 }
 
 export default DemoPage;
+
