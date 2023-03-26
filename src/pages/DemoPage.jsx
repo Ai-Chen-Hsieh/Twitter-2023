@@ -1,4 +1,4 @@
-import { Header, TweetModal, Button } from "components";
+import { Header, TweetModal, Button, UserEditModal } from "components";
 
 import { createPortal } from "react-dom";
 import { useState } from "react";
@@ -28,7 +28,7 @@ const DemoPage = () => {
             <TweetModal onClose={() => setShowModal(false)}/>,
             document.body
           )}
-
+          <UserEditModal />
         </div>
       </div>
     </div>
