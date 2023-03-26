@@ -14,6 +14,9 @@ const StyledFollowItemContainer = styled.div`
     position:absolute;
     top:16px;
     left:23px;
+    &:hover {
+      cursor:pointer;
+     }
     }
 `
 
