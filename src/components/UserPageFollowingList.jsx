@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
-import { UserHeader, TabList, TabItem } from "components"
-import FollowingList from "./FollowingList";
+import { UserHeader, TabList, TabItem, FollowingList } from "components"
+
 
 /**
  * [前台] 使用者資料頁（正在追隨）
