@@ -1,7 +1,5 @@
 import styled from "styled-components"
 import { FollowItem } from '.'
-// 測試用假資料串接
-
 
 
 const StyledFollowList = styled.div`
