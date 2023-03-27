@@ -73,7 +73,6 @@ const StyledFollowContainer = styled.div`
         color:var(--main);
     }
   }
- }
 `
 
 const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, followingCount, followerCount}) => {

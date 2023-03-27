@@ -1,14 +1,12 @@
 import styled from "styled-components"
 import { useState } from "react"
 import { PopularItem } from "."
-//測試用 :串假資料
-import { dummyUsers } from "testData/dummyRecommendUser"
 
 const StyledPopularList = styled.div`
     width: 100%;
     height: 100%;
     max-width: 270px;
-    min-height: 730px;
+    max-height: 730px;
     border-radius: 10px;
     background: var(--dark-20);
 
@@ -21,8 +19,8 @@ const StyledPopularList = styled.div`
     }
 `
 
-const PopularList = () => {
-    const [ users, setUser ] = useState(dummyUsers)
+const PopularList = ({ recommendUsers }) => {
+    const [ users, setUser ] = useState(recommendUsers)
 
     function handleFollow (id){
         const currentItem = users.find(user => user.id === id)

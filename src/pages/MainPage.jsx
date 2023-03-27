@@ -1,4 +1,6 @@
 import { Header } from "components"
+//測試假資料
+import { dummyAllTweet } from "../testData/dummyAllTweet"
 
 /**
  * [前台] 首頁
@@ -12,7 +14,7 @@ const MainPage = () => {
         <>
             <Header text="首頁" />
             <p>MainPage.jsx</p>
-            <TweetList/>
+            <TweetList allTweets = {dummyAllTweet}/>
         </>
     )
 }
