@@ -87,10 +87,11 @@ const StyledInputValueLength = styled.small`
  * @param {string} errorMessage - 錯誤訊息 (預設：'')
  * @param {boolean} showValueLength - 是否顯示 value 長度 (預設：false)
  * @param {number} maxLength - 限制輸入字數長度 (預設：0)
+ * @param {boolean} required - 輸入框是否必填 (預設：false)
  * @param {function} onChange - 處理當 value 改變
  * @returns 
  */
-const Input = ({label='', type='text', name, id=name, value='', placeholder, disabled=false, errorMessage='', showValueLength=false , maxLength=0, onChange}) => {
+const Input = ({label='', type='text', name, id=name, value='', placeholder, disabled=false, errorMessage='', showValueLength=false , maxLength=0, required=false, onChange}) => {
     return (
         <>
             <StyledInputContainer>
@@ -104,6 +105,7 @@ const Input = ({label='', type='text', name, id=name, value='', placeholder, dis
                     placeholder={placeholder}
                     value={value}
                     maxLength={(maxLength > 0) ? maxLength : undefined}
+                    required={(required) ? 'required' : undefined}
                     onChange={onChange}
                     disabled={disabled}
                     className={clsx('', {error: errorMessage.length > 0})}
