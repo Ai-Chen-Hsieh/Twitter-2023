@@ -57,7 +57,6 @@ const RegisterPage = () => {
             password,
             checkPassword
         })
-        console.log(response)
 
         const isRegister = (response.status === 'success') ? true : false
         if (isRegister) {

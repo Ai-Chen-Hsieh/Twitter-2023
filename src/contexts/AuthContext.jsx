@@ -1,13 +1,14 @@
 import { createContext, useContext, useState, useEffect } from "react"
 import { useLocation } from "react-router-dom"
-import { login, register } from "api/auth"
+import { userLogin, adminLogin, register } from "api/auth"
 import jwt_decode from "jwt-decode";
 
 const defaultAuthContext = {
   hasToken: false, // 是否有 token
   currentRegistrant: null, // 登入者資訊 
-  login: null, // 登入
-  register: null, // 註冊
+  userLogin: null, // [使用者] 登入
+  adminLogin: null, // [管理者] 登入
+  register: null, // [使用者] 註冊
   logout: null // 登出
 }
 const AuthContext = createContext(defaultAuthContext)
@@ -52,12 +53,36 @@ export const AuthProvider = ({ children }) => {
         currentRegistrant: payload && {
           ...payload
         },
-        // 登入
-        login: async (data) => {
-          const response = await login({
+        // [使用者] 登入
+        userLogin: async (data) => {
+          const response = await userLogin({
             account: data.account,
-            password: data.password,
-            role: data.role
+            password: data.password
+          })
+
+          const isLogin = (response.status === 'success') ? true : false
+          if (isLogin) {
+            const token = response.data.token
+            const tempPayload = jwt_decode(token)
+
+            setPayload(tempPayload)
+            setHasToken(true)
+            localStorage.setItem('token', token)
+
+          } else {
+            setPayload(null)
+            setHasToken(false)
+            localStorage.removeItem('token')
+          }
+     
+          console.log('[user login] :', response)
+          return response
+        },
+        // [管理者] 登入
+        adminLogin: async (data) => {
+          const response = await adminLogin({
+            account: data.account,
+            password: data.password
           })
 
           const isLogin = (response.status === 'success') ? true : false
@@ -75,9 +100,10 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem('token')
           }
 
-          return response;
+          console.log('[admin login] :', response)
+          return response
         },
-        // 註冊
+        // [使用者] 註冊
         register: async (data) => {
           const response = await register({
             name: data.name,
@@ -87,6 +113,7 @@ export const AuthProvider = ({ children }) => {
             checkPassword: data.checkPassword
           })
 
+          console.log('[register] :', response)
           return response
         },
         // 登出
