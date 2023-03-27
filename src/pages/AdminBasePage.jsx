@@ -1,12 +1,36 @@
-import { Outlet } from "react-router-dom";
-import { SideBar, SideBarList, SideBarItem } from "components";
+import { useEffect } from "react"
+import { Outlet, useNavigate } from "react-router-dom"
+import { SideBar, SideBarList, SideBarItem } from "components"
+import { useAuth } from "contexts/AuthContext"
 /**
  * [後台] 放置後台所有頁面（不包含後台登入頁） 共用 Component
  * @returns 
  */
 const AdminBasePage = () => {
+  const { hasToken, currentRegistrant, logout } = useAuth()
+  let navigate = useNavigate()
+
+  // 檢查是否有 token
+  // 沒有 -> 登入頁
+  // 有 -> (管理者) 留在此頁； (使用者) 導到首頁
+  useEffect(() => {
+    if (!hasToken) {
+      navigate('/login');
+    } else if (hasToken && currentRegistrant.role !== 'admin') {
+      navigate('/main');
+    }
+  }, [navigate, hasToken, currentRegistrant]);
+
+
   function handleLogOut() {
-    console.log('log out.');
+    logout()
+  }
+
+  // 避免導到其他頁面看到畫面
+  if (!hasToken || (hasToken && currentRegistrant.role !== 'admin')) {
+    return (
+      <></>
+    )
   }
 
   return (
@@ -27,7 +51,7 @@ const AdminBasePage = () => {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default AdminBasePage;
+export default AdminBasePage
