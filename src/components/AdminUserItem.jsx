@@ -3,6 +3,9 @@ import styled from "styled-components"
 
 const StyledUserItem = styled.div`
     width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #F6F7F8;
 `
 
 const StyledUserItemHeader = styled.div`
@@ -29,6 +32,12 @@ const StyledUserItemAvatarWrap = styled.div`
     }
 `
 
+const StyledUserItemBody = styled.div`
+    padding: 24px;
+    text-align:center;
+`
+
+
 /**
  * 使用者列表項目
  * @param {object} item - 使用者資訊 
@@ -43,7 +52,10 @@ const AdminUserItem = ({ item }) => {
                         <Avatar imageUrl={item.avatar} />
                     </StyledUserItemAvatarWrap>
                 </StyledUserItemHeader>
-
+                <StyledUserItemBody>
+                    <h6 className="mt-2">{item.name}</h6>
+                    <small className=""></small>
+                </StyledUserItemBody>
             </StyledUserItem>
         </div>
     )
