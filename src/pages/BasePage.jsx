@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { PopularList, SideBar, SideBarList, SideBarItem, Button } from "../components";
-
+//測試假資料
+import { dummyUsers } from "../testData/dummyRecommendUser";
 /**
  * [前台] 放置前台所有頁面（不包含前台登入頁、註冊頁）共用 Component
  * @param {boolean} showPopularList - 是否顯示推薦跟隨列表（預設：true）
@@ -34,7 +35,7 @@ const BasePage = ({showPopularList = true}) => {
           <Outlet />
         </div>
         <div className="col-3">
-          { showPopularList && <PopularList /> }
+          { showPopularList && <PopularList recommendUsers={dummyUsers} /> }
         </div>
       </div>
     </div>

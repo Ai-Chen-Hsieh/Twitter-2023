@@ -75,15 +75,15 @@ const ReplyItem = ({item}) => {
         <StyledListItem>
             <div className="post-section">
                 <div className="avatar">
-                    <Avatar imageUrl={item.image} />
+                    <Avatar imageUrl={item.replyAvatar} />
                 </div>
                 <div className="post-item">
                     <div className="account-info">
-                        <span className="name">user</span>
-                        <span className="account">@user1 · {item.createdAt}</span>
+                        <span className="name">{item.replyName}</span>
+                        <span className="account">@{item.replyAccount} · {item.createdAt}</span>
                     </div>
-                    <span className="reply">回覆 <span className="tagged">@{item.name}</span></span>
-                    <div className="content">{item.description}</div>
+                    <span className="reply">回覆 <span className="tagged">@{item.tweetAuthorAccount}</span></span>
+                    <div className="content">{item.comment}</div>
                 </div>
             </div>
         </StyledListItem>
