@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom"
-import { UserHeader, TabList, TabItem, FollowerList } from "components"
+import { UserHeader, TabList, TabItem, FollowList } from "components"
 import { dummyUsers } from "testData/dummyUserInfo"
 import { useState } from "react"
 
@@ -37,7 +37,7 @@ const UserPageFollowerList = () => {
                 <TabItem to={`/user/${user_id}/follower`} text="追隨者" />
                 <TabItem to={`/user/${user_id}/following`} text="正在追隨" />
             </TabList>
-          <FollowerList users={users} onToggleFollow={handleFollow}/>
+          <FollowList users={users} onToggleFollow={handleFollow}/>
         </>
     )
 }

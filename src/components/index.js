@@ -4,10 +4,8 @@ import AdminUserItem from "./AdminUserItem";
 import AdminUserList from "./AdminUserList";
 import Avatar from "./Avatar";
 import Button from "./Button";
-import FollowerItem from "./FollowerItem";
-import FollowerList from "./FollowerList";
-import FollowingItem from "./FollowingItem";
-import FollowingList from "./FollowingList";
+import FollowItem from "./FollowItem";
+import FollowList from "./FollowList";
 import Header from "./Header";
 import Input from "./Input";
 import PopularItem from "./PopularItem";
@@ -41,10 +39,8 @@ export {
     AdminUserList, 
     Avatar,
     Button,
-    FollowerItem,
-    FollowerList,
-    FollowingItem,
-    FollowingList,
+    FollowItem,
+    FollowList,
     Header,
     Input,
     PopularItem,

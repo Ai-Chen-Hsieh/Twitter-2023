@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom"
-import { UserHeader, TabList, TabItem, FollowingList } from "components"
+import { UserHeader, TabList, TabItem, FollowList } from "components"
+import { dummyUsers } from "testData/dummyUserInfo"
+import { useState } from "react"
 
 
 /**
@@ -8,6 +10,21 @@ import { UserHeader, TabList, TabItem, FollowingList } from "components"
  */
 const UserFollowingList = () => {
     const { user_id } = useParams();
+    const [users, setUsers] = useState(dummyUsers)
+       
+    function handleFollow(id) {
+        setUsers((users) => {
+            return users.map((user) => {
+              if(user.id === id) {
+                return {
+                 ...user,
+                 isFollow: !user.isFollow
+                }
+              }
+              return user
+            })
+        }) 
+    }
 
     return (
         <>
@@ -19,7 +36,7 @@ const UserFollowingList = () => {
                 <TabItem to={`/user/${user_id}/follower`} text="追隨者" />
                 <TabItem to={`/user/${user_id}/following`} text="正在追隨" />
             </TabList>
-            <FollowingList/>
+            <FollowList users={users} onToggleFollow={handleFollow}/>
         </>
     )
 }
