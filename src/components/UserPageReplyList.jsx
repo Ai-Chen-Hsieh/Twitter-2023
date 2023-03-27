@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
-import { UserHeader, TabList, TabItem } from "components"
-
+import { UserHeader, TabList, TabItem, ReplyList } from "components"
+//測試假資料
+import { dummyUserRepliedTweets } from "../testData/dummyUserRepliedTweets";
 /**
  * [前台] 使用者資料頁（回復）
  * @returns 
@@ -20,6 +21,7 @@ const UserPageReplyList = () => {
                 <TabItem to={`/user/${user_id}/like`} text="喜歡的內容" />
             </TabList>
             <p>UserPageReplyList.jsx</p>
+            <ReplyList repliedList={dummyUserRepliedTweets}/>
         </>
     )
 }

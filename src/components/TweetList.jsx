@@ -3,15 +3,14 @@
 import styled from "styled-components"
 import { useState } from "react"
 import { TweetItem } from "."
-import { dummyAllTweet } from "testData/dummyAllTweet"
 
 const StyledTweetList = styled.div`
     width:100%;
     min-height: 600px;
 `
 
-const TweetList = () => {
-    const [ tweets, setTweets ] = useState(dummyAllTweet)
+const TweetList = ({allTweets}) => {
+    const [ tweets, setTweets ] = useState(allTweets)
 
     function handleLikeToggle(id) {
         const currentItem = tweets.find(tweet => tweet.id === id )
