@@ -55,9 +55,9 @@ const MainPage = () => {
 
     return (
         <>
-            <StyledMainContainer onClick={()=>setShowTweetModal(true)}>
+            <StyledMainContainer>
                 <Header text="首頁" />
-                    <StyledTweetContainer>
+                    <StyledTweetContainer onClick={()=>setShowTweetModal(true)}>
                         <StyledAvatar>
                         <Avatar
                             imageUrl="https://picsum.photos/200"/>
