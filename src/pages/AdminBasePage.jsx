@@ -26,7 +26,7 @@ const StyledWrap = styled.div`
 const StyledStickyContainer = styled.div`
   position: -webkit-sticky;
   position: sticky;
-  top: 0px;
+  top: 16px;
 `
 
 const StyledSideBarContainer = styled.div`

@@ -28,7 +28,7 @@ const StyledWrap = styled.div`
 const StyledStickyContainer = styled.div`
   position: -webkit-sticky;
   position: sticky;
-  top: 0px;
+  top: 16px;
 `
 
 const StyledSideBarContainer = styled.div`
@@ -41,10 +41,6 @@ const StyledPopularListContainer = styled.div`
   position: relative;
   width: 100%;
   max-width: calc(100% - 866px);
-
-  > ${StyledStickyContainer} {
-    top: 16px;
-  }
 `
 
 const StyledMain = styled.div`
