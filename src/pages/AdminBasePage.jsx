@@ -22,7 +22,7 @@ const AdminBasePage = () => {
             </SideBarList>
           </SideBar>
         </div>
-        <div className="col-6">
+        <div className="col-9">
           <Outlet />
         </div>
       </div>

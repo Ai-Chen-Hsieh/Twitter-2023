@@ -1,4 +1,9 @@
+import styled from "styled-components"
 import AdminUserItem from "./AdminUserItem"
+
+const StyledUserList = styled.div`
+    max-width: 920px;
+`
 
 /**
  * 使用者列表
@@ -10,17 +15,17 @@ const AdminUserList = ({ users }) => {
         return (
             <AdminUserItem
                 key={user.id}
-                item={user}
+                user={user}
             />
         )
     })
 
     return (
-        <div className="m-y-3">
+        <StyledUserList className="my-3 px-3">
             <div className="row">
                 { UserList }
             </div>
-        </div>
+        </StyledUserList>
     )
 }
 
