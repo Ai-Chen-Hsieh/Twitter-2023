@@ -1,13 +1,11 @@
-//api: /api/tweets
-
-const dummyAllTweet = [
+ const dummyUserTweets = [
     {
         id: "post1",
         UserId: 1,
         description: "xplicabo illum milique ut voluptas explicabo illum impedit ut quod fugit Qui similique aut voluptas explicabo illum Qui similique aut voluptas explicabo illum impedit ut quod fQui similique aut voluptas explicabo illum impedit ut quod fQui similique aut voluptas explicabo illum impedit ut quod fQui similique aut voluptas explicabo illum impedit ut quod f Qui similique aut voluptas explicabo illum impedit ut quod f Qui similique aut voluptas explicabo illum impedit ut quod fugit Qui similique aut voluptas explicabo illum  impedit ut quod fugit.",
         createdAt: "2023-03-23T12:37:01.000Z",
-        name: "user120",
-        account: "user120",
+        name: "user1",
+        account: "user1",
         avatar: "https://fastly.picsum.photos/id/287/200/300.jpg?grayscale&hmac=vDcG2Au5xmOPJLLfeyiDcZqpgw18oNXxUMXmL8kEVEU",
         repliedCount: 1,
         likedCount: 2,
@@ -15,29 +13,16 @@ const dummyAllTweet = [
     },
     {
         id: "post2",
-        UserId: 2,
-        description: "Qui similique aut voluptas explicabo illum impedit ut quod fugit.",
-        createdAt: "2023-03-20T12:37:01.000Z",
-        name: "user12042",
-        account: "user12042",
-        avatar: "https://fastly.picsum.photos/id/287/200/300.jpg?grayscale&hmac=vDcG2Au5xmOPJLLfeyiDcZqpgw18oNXxUMXmL8kEVEU",
-        repliedCount: 8,
-        likedCount: 7,
-        isLike: false
-    },
-    {
-        id: "post3",
-        UserId: 2,
-        description: "Qui similique aut voluptas explicabo  Qui similique aut  Qui similique aut voluptas explicabo  Qui similique aut voluptas explicabo  impedit ut quod fugit illum  impedit ut quod fugit. impedit ut quod fugit.",
+        UserId: 1,
+        description: "xplicabo illum milique ut voluptas explicabo illum impedit ut quod fugit Qui similique aut voluptas explicabo illum Qui similique aut voluptas explicabo illum impedit ut quod fQui similique aut voluptas explicabo illum impedit ut quod fQui similique aut voluptas explicabo illum impedit ut quod fQui similique aut voluptas explicabo illum impedit ut quod f Qui similique aut voluptas explicabo illum impedit ut quod f Qui similique aut voluptas explicabo illum impedit ut quod fugit Qui similique aut voluptas explicabo illum  impedit ut quod fugit.",
         createdAt: "2023-03-23T12:37:01.000Z",
-        name: "user300",
-        account: "user300",
+        name: "user1",
+        account: "user1",
         avatar: "https://fastly.picsum.photos/id/287/200/300.jpg?grayscale&hmac=vDcG2Au5xmOPJLLfeyiDcZqpgw18oNXxUMXmL8kEVEU",
-        repliedCount: 5,
-        likedCount: 2,
-        isLike: false
-    }
+        repliedCount: 1,
+        likedCount: 4,
+        isLike: true
+    },
+ ]
 
-]
-
-export { dummyAllTweet }
+ export { dummyUserTweets }
