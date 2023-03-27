@@ -10,17 +10,23 @@ const StyledUserItemHeader = styled.div`
     height: 0;
     width: 100%;
     padding-top: 66.6666666667%;
+    background-color: var(--dark-30);
 `
 
 const StyledUserItemAvatarWrap = styled.div`
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: -24px;
+    left: calc(50% - 50px);
     width: 100px;
-    height: 0;
-    padding-top: 100%;
+    height: 100px;
+    padding: 4px;
     border-radius: 50%;
+    background-color: var(--dark-0);
     overflow: hidden;
+
+    > img {
+        display: block;
+    }
 `
 
 /**
