@@ -3,7 +3,7 @@ import { baseUrl } from "./base";
 
 export const login = async ({ account, password, role }) => {
   try {
-    const response = await axios.post(`${baseUrl}/api/users/signin`,{
+    const response = await axios.post(`${baseUrl}/api/signin`,{
       account,
       password,
       role
