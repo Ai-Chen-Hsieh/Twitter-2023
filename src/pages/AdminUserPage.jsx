@@ -1,3 +1,4 @@
+import { Header, AdminUserList } from "components"
 import { dummyAdminUsers } from "testData/dummyAdminUsers"
 
 /**
@@ -7,7 +8,8 @@ import { dummyAdminUsers } from "testData/dummyAdminUsers"
 const AdminUserPage = () => {
     return (
         <>
-            <p>AdminUserPage.jsx</p>
+            <Header text="使用者列表" />
+            <AdminUserList users={dummyAdminUsers}/>
         </>
     )
 }
