@@ -95,7 +95,7 @@ const SideBarItem = ({ to, icon, text }) => {
 
   return (
     <li>
-      <StyledItemNavLink to={to} end={true} title={text} aria-label={text}>
+      <StyledItemNavLink to={to} title={text} aria-label={text}>
         <StyledIconContainer>{Icon}</StyledIconContainer>
         <span>{ text }</span>
       </StyledItemNavLink>

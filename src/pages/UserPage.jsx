@@ -1,5 +1,8 @@
 import { useParams } from "react-router-dom"
-import { UserHeader, TabList, TabItem, ReplyList } from "components"
+import { UserHeader, TabList, TabItem } from "components"
+import { TweetList } from "components";
+//測試假資料
+import { dummyUserTweets } from "../testData/dummyUserTweets";
 
 /**
  * [前台] 使用者資料頁（推文）
@@ -20,7 +23,7 @@ const UserPage = () => {
                 <TabItem to={`/user/${user_id}/like`} text="喜歡的內容" />
             </TabList>
             <p>UserPage.jsx</p>
-            <ReplyList />
+            <TweetList allTweets={dummyUserTweets}/>
         </>
     )
 }
