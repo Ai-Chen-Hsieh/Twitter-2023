@@ -2,7 +2,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalWarning } from "../components/common/modal.styled";
-import { Button, Avatar } from "../components"
+import { Button, Avatar, TweetInput } from "../components"
 
 
 const StyledTweetModal = styled.div`
@@ -44,18 +44,19 @@ const TweetModal = ({onClose}) => {
     const [ errorMessage, setErrorMessage ] = useState('')
 
     function handleClick(){
-        if(inputValue.length === 0){
-            console.log(inputValue.length)
+        if(inputValue.trim().length === 0){
             setErrorMessage('內容不可空白')
             return
         } else if(inputValue.length === 140 ){
-            console.log(inputValue.length)
             setErrorMessage('字數不可超過140字')
             return
         } else {
             setErrorMessage('')
         }
-        
+    }
+
+    function handleChange (input) {
+        setInputValue(input)
     }
 
     return (
@@ -66,25 +67,13 @@ const TweetModal = ({onClose}) => {
                         <ModalCloseButton onClick={onClose}/>
                     </ModalHeader>
                     <ModalContent>
-                        <div className="modalInput">
-                            <div className="avatar">
+                        <TweetInput 
+                            onChange={handleChange} 
+                            >
                             <Avatar
                                 imageUrl="https://picsum.photos/id/237/200/300"
                             />
-                            </div>
-                            <div className="tweetInput">
-                                <textarea 
-                                maxLength={140}
-                                className="tweetInputValue" 
-                                onChange={(event)=>{
-                                    setInputValue(event.target.value)
-                                }} 
-                                cols="30" 
-                                rows="8" 
-                                placeholder="有什麼新鮮事?"
-                                ></textarea>
-                            </div>
-                        </div>
+                        </TweetInput>
                     </ModalContent>
                     <ModalFooter>
                         {(errorMessage.length > 0 ) && 

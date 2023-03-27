@@ -31,6 +31,7 @@ import UserPageReplyList from "./UserPageReplyList"
 import UserPageLikeList from "./UserPageLikeList";
 import UserPageFollowerList from "./UserPageFollowerList";
 import UserPageFollowingList from "./UserPageFollowingList";
+import TweetInput from "./TweetInput"
 
 import TextArea from "./TextArea"
 export { 
@@ -67,5 +68,6 @@ export {
     UserPageLikeList,
     UserPageFollowerList,
     UserPageFollowingList,
-    TextArea
+    TextArea,
+    TweetInput
 }
