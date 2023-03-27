@@ -37,9 +37,13 @@ const StyledButton = styled.div`
 `
 
 
-const UserTweet = ({item}) => {
+const UserTweet = ({item, onClick}) => {
     return (
-        <StyledTweetContainer >
+        <StyledTweetContainer 
+            onClick={()=>[
+                onClick?.()
+            ]}
+        >
             <StyledAvatar>
             <Avatar
                 imageUrl={item.avatar}/>

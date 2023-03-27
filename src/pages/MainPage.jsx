@@ -20,14 +20,16 @@ const StyledMainContainer = styled.div`
 const MainPage = () => {
     const [ showTweetModal, setShowTweetModal ] = useState(false)
 
+    function handleClick(){
+        setShowTweetModal(true)
+    }
     return (
         <>
             <StyledMainContainer>
                 <Header text="首頁" />
                     <UserTweet 
-                        item={dummyAllTweet[0].avatar}
-                        onClick={()=>setShowTweetModal(true)}
-                    />
+                        item={dummyAllTweet[0]}
+                        onClick={handleClick}/>
                 <TweetList allTweets = {dummyAllTweet}/>
             </StyledMainContainer>
             {showTweetModal && createPortal(
