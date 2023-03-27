@@ -106,12 +106,16 @@ const TweetItem = ({item, onLikeToggle}) => {
                     <div className="account-info">
                         <span
                             onClick={()=>{navigate(`/user/${item.UserId}`)}} 
-                            className="name">{item.name}</span>
+                            className="name">
+                                {item.name}
+                            </span>
                         <span className="account">@{item.account} · {item.createdAt}</span>
                     </div>
                     <div 
-                        onClick={()=> {navigate(`/user/${item.id}`)}}
-                        className="content">{item.description}</div>
+                        onClick={()=> {navigate(`/user/${item.UserId}/${item.id}`)}}
+                        className="content">
+                            {item.description}
+                        </div>
                     <StyledResponse>
                         <span className="response reply">
                             <Comment />
