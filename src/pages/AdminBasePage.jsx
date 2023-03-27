@@ -2,6 +2,47 @@ import { useEffect } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 import { SideBar, SideBarList, SideBarItem } from "components"
 import { useAuth } from "contexts/AuthContext"
+import styled from "styled-components"
+
+const StyledContainer = styled.div`
+  width: 100%;
+  max-width: 100%;
+  @media screen and (min-width: 992px) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 960px;
+  }
+  @media screen and (min-width: 1200px) {
+    max-width: 1140px;
+  }
+`
+
+const StyledWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`
+
+const StyledStickyContainer = styled.div`
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+`
+
+const StyledSideBarContainer = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 178px;
+`
+
+const StyledMain = styled.div`
+  position: relative;
+  border-left: 1px solid var(--gray-20);
+  min-height: 200vh;
+  width: 100%;
+  max-width: calc(100% - 202px);
+`
+
 /**
  * [後台] 放置後台所有頁面（不包含後台登入頁） 共用 Component
  * @returns 
@@ -34,23 +75,27 @@ const AdminBasePage = () => {
   }
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-3">
-          <SideBar
-            logOutButtonOnClick={handleLogOut}
-          >
-            <SideBarList>
-              <SideBarItem to="/admin_main" text="推文清單" icon="home" />
-              <SideBarItem to="/admin_users" text="使用者列表" icon="user" />
-            </SideBarList>
-          </SideBar>
-        </div>
-        <div className="col-6">
+    <StyledContainer>
+      <StyledWrap>
+        <StyledSideBarContainer>
+          <StyledStickyContainer>
+            <SideBar
+              logOutButtonOnClick={handleLogOut}
+            >
+              <SideBarList>
+                <SideBarItem to="/admin_main" text="推文清單" icon="home" />
+                <SideBarItem to="/admin_users" text="使用者列表" icon="user" />
+              </SideBarList>
+            </SideBar>
+          </StyledStickyContainer>
+        </StyledSideBarContainer>
+
+        <StyledMain>
           <Outlet />
-        </div>
-      </div>
-    </div>
+        </StyledMain>
+
+      </StyledWrap>
+    </StyledContainer>
   )
 }
 

@@ -1,8 +1,60 @@
 import { Outlet, useNavigate } from "react-router-dom"
-import { PopularList, SideBar, SideBarList, SideBarItem, Button } from "../components"
-import { useEffect } from "react"
+import { PopularList, SideBar, SideBarList, SideBarItem, Button, TweetModal } from "../components"
+import { useEffect, useState } from "react"
+import { createPortal } from "react-dom";
 import { useAuth } from "contexts/AuthContext"
+import styled from "styled-components"
 import { dummyUsers } from "../testData/dummyRecommendUser";
+
+const StyledContainer = styled.div`
+  width: 100%;
+  max-width: 100%;
+  @media screen and (min-width: 992px) {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 960px;
+  }
+  @media screen and (min-width: 1200px) {
+    max-width: 1140px;
+  }
+`
+
+const StyledWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`
+
+const StyledStickyContainer = styled.div`
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0px;
+`
+
+const StyledSideBarContainer = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: 178px;
+`
+
+const StyledPopularListContainer = styled.div`
+  position: relative;
+  width: 100%;
+  max-width: calc(100% - 866px);
+
+  > ${StyledStickyContainer} {
+    top: 16px;
+  }
+`
+
+const StyledMain = styled.div`
+  position: relative;
+  border-left: 1px solid var(--gray-20);
+  border-right: 1px solid var(--gray-20);
+  min-height: 200vh;
+  width: 100%;
+  max-width: 640px;
+`
 
 /**
  * [前台] 放置前台所有頁面（不包含前台登入頁、註冊頁）共用 Component
@@ -11,6 +63,7 @@ import { dummyUsers } from "../testData/dummyRecommendUser";
  */
 const BasePage = ({showPopularList = true}) => {
   const { hasToken, currentRegistrant, logout } = useAuth()
+  const [showTweetModal, setShowTweetModal] = useState(false)
   let navigate = useNavigate()
 
   // 檢查是否有 token
@@ -36,31 +89,48 @@ const BasePage = ({showPopularList = true}) => {
   }
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-3">
-          <SideBar
-            logOutButtonOnClick={handleLogOut}
-          >
-            <SideBarList>
-              <SideBarItem to="/main" text="首頁" icon="home" />
-              <SideBarItem to={`/user/${currentRegistrant.id}`} text="個人資料" icon="user" />
-              <SideBarItem to="/setting" text="設定" icon="setting" />
-            </SideBarList>
-            <Button
-              display="block" 
-              text="推文"
-            />
-          </SideBar>
-        </div>
-        <div className="col-6">
+    <StyledContainer>
+      <StyledWrap>
+
+        <StyledSideBarContainer>
+          <StyledStickyContainer>
+            <SideBar
+              logOutButtonOnClick={handleLogOut}
+            >
+              <SideBarList>
+                <SideBarItem to="/main" text="首頁" icon="home" />
+                <SideBarItem to={`/user/${currentRegistrant.id}`} text="個人資料" icon="user" />
+                <SideBarItem to="/setting" text="設定" icon="setting" />
+              </SideBarList>
+              <Button
+                display="block" 
+                text="推文"
+                onClick={()=>{
+                  setShowTweetModal(true)
+                }}
+              />
+            </SideBar>
+          </StyledStickyContainer>
+          
+        </StyledSideBarContainer>
+
+        <StyledMain>
           <Outlet />
-        </div>
-        <div className="col-3">
-          { showPopularList && <PopularList recommendUsers={dummyUsers} /> }
-        </div>
-      </div>
-    </div>
+        </StyledMain>
+
+        <StyledPopularListContainer>
+          <StyledStickyContainer>
+            { showPopularList && <PopularList recommendUsers={dummyUsers} /> }
+          </StyledStickyContainer>
+        </StyledPopularListContainer>
+
+      </StyledWrap>
+
+      {showTweetModal && createPortal(
+        <TweetModal onClose={() => setShowTweetModal(false)}/>,
+        document.body
+      )}
+    </StyledContainer>
   );
 }
 
