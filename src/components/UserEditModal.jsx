@@ -86,7 +86,13 @@ const BannerCoverMask = styled.div`
     }
 `
 
+const userInfo = {
+    userName: "請輸入名稱",
+    userIntroduction: "自我介紹"
+}
+
 const UserEditModal = () => {
+    const [ info, setInfo ] = useState(userInfo)
     const [ input, setInput ] = useState('')
     const [ text, setText ] = useState('')
     const [ inputError, setInputError ] = useState('')
