@@ -91,7 +91,6 @@ const StyledReplyIconBlock = styled.div`
     display: flex;
     align-items: center;    
     margin: 0 10px;
-    border-bottom: 1px solid var(--gray-20);
 `
 
 const StyledComment = styled(Comment)`
