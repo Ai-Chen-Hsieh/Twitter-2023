@@ -76,16 +76,16 @@ const PopularItem = ({ item, onToggleFollow }) => {
                     navigate(`/user/${item.id}`)}}>
                 <div className="avatar">
                     <Avatar
-                        imageUrl={item.image}
+                        imageUrl={item.avatar}
                     />
                 </div>
                 <div className="popular-item-content">
-                    <span className="name">{item.recommendUser}</span>
-                    <span className="account">{item.recommendUserAccount}</span>
+                    <span className="name">{item.name}</span>
+                    <span className="account">{item.account}</span>
                 </div>
             </StyledPopularItem>
             <StyledButton>
-                {item.isFollow ? 
+                {item.isFollowing ? 
                 <Button
                     text="正在追隨"
                     onClick={(e)=>{

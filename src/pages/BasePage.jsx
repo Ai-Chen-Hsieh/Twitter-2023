@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { createPortal } from "react-dom";
 import { useAuth } from "contexts/AuthContext"
 import styled from "styled-components"
-import { dummyUsers } from "../testData/dummyRecommendUser";
+import { getPopularList } from "../api/api-popularlist";
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -60,7 +60,27 @@ const StyledMain = styled.div`
 const BasePage = ({showPopularList = true}) => {
   const { hasToken, currentRegistrant, logout } = useAuth()
   const [showTweetModal, setShowTweetModal] = useState(false)
+  const [lists, setLists] = useState([])
   let navigate = useNavigate()
+  
+  //引入推薦者清單
+useEffect(()=>{
+  const getPopularListAsync = async () => {
+    try{
+      const popularLists = await getPopularList();
+      setLists(()=>{
+        return[
+          ...popularLists
+        ]
+      });
+
+    }catch(error){
+      console.error(error)
+    }
+  }
+
+  getPopularListAsync()
+},[])
 
   // 檢查是否有 token
   // 沒有 -> 登入頁
@@ -76,6 +96,7 @@ const BasePage = ({showPopularList = true}) => {
   function handleLogOut() {
     logout()
   }
+
 
   // 避免導到其他頁面看到畫面
   if (!hasToken || (hasToken && currentRegistrant.role === 'admin')) {
@@ -116,7 +137,7 @@ const BasePage = ({showPopularList = true}) => {
 
         <StyledPopularListContainer>
           <StyledStickyContainer>
-            { showPopularList && <PopularList recommendUsers={dummyUsers} /> }
+            { showPopularList && <PopularList recommendUsers={lists} /> }
           </StyledStickyContainer>
         </StyledPopularListContainer>
 

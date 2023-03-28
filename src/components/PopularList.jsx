@@ -1,7 +1,8 @@
 import styled from "styled-components"
-import { useState } from "react"
+// import { useState } from "react"
 import { PopularItem } from "."
 
+//useState邏輯應該要在外層
 const StyledPopularList = styled.div`
     width: 100%;
     height: 100%;
@@ -19,33 +20,33 @@ const StyledPopularList = styled.div`
     }
 `
 
-const PopularList = ({ recommendUsers }) => {
-    const [ users, setUser ] = useState(recommendUsers)
+const PopularList = ({ recommendUsers, onToggleFollow }) => {
 
-    function handleFollow (id){
-        const currentItem = users.find(user => user.id === id)
-        setUser((prevUser) => {
-            return prevUser.map((user) => {
-                if(user.id === id){
-                    return{
-                        ...user,
-                        isFollow: !currentItem.isFollow
-                    }
-                }
-                return user
-            })
-        })
-    }
+    // const [ users, setUser ] = useState(recommendUsers)
+    // function handleFollow (id){
+    //     const currentItem = recommendUsers.find(user => user.id === id)
+    //     setUser((prevUser) => {
+    //         return prevUser.map((user) => {
+    //             if(user.id === id){
+    //                 return{
+    //                     ...user,
+    //                     isFollowing: !currentItem.isFollowing
+    //                 }
+    //             }
+    //             return user
+    //         })
+    //     })
+    // }
 
     return (
         <StyledPopularList>
             <h1>推薦跟隨</h1>
-            {users.map(user => {
+            {recommendUsers.map(user => {
                 return(
                 <PopularItem 
                     key={user.id} 
                     item={user}
-                    onToggleFollow={handleFollow}
+                    onToggleFollow={onToggleFollow}
                 />  
                 )
             })}
