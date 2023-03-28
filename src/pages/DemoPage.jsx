@@ -2,6 +2,7 @@ import { Header, TweetModal, Button, ReplyModal, UserEditModal } from "component
 
 import { createPortal } from "react-dom";
 import { useState } from "react";
+import { dummyUserProfile } from "../testData/dummyUserProfile";
 
 
 /**
@@ -42,7 +43,8 @@ const DemoPage = () => {
           )}
 
 
-          <UserEditModal />
+          <UserEditModal 
+            userInfo={dummyUserProfile}/>
         </div>
       </div>
     </div>

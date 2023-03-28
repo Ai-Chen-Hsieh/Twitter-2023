@@ -1,7 +1,6 @@
 //尚未完成:
-//1. banner遮罩效果
-//2. 上傳圖片input type="file" 
-//3. input 字數超過 warning
+//1.. 上傳圖片input type="file" 
+//2. input 字數超過 warning
 
 import { useState } from "react"
 import styled from "styled-components"
@@ -18,8 +17,9 @@ const StyledEditContainer = styled.div`
 const StyledUserProfile = styled.div`
     flex: 1;
     max-height: 200px;
-    // border:1px solid blue;
     position:relative;
+    z-index: 0;
+
 `
 
 const StyledEditBlock = styled.div`
@@ -28,16 +28,25 @@ const StyledEditBlock = styled.div`
     margin-top: 60px;
 `
 
+const StyledBannerContainer = styled.div`
+    height: 200px;
+    position:relative;
+    z-index: 0;
+`
+
 const StyledUserBanner = styled.img`
     width: 100%;
     height: 200px;
     object-fit: cover;
+    position: absolute;
+    z-index:-1;
 `
+
 
 const StyledAvatarContainer = styled.div`
     width: 100px;
     height: 100px;
-    box-shadow: 0px 0px 0px 3px var(--dark-0);
+    box-shadow: 0px 0px 0px 5px var(--dark-0);
     border-radius: 50%;
 
     /*position*/
@@ -63,9 +72,11 @@ const AvatarCoverMask = styled.div`
     height: 100%;
     border-radius: 50%;
     position: absolute;
+    z-index: 99;
     &:hover {
         background-color: rgba(0, 0, 0, 0.4);
         transition: background-color .2s ease-out;
+        cursor: pointer;
         ${StyledPhoto}{
             display: block;
             transition: display .2s ease-out;
@@ -75,10 +86,10 @@ const AvatarCoverMask = styled.div`
 /**banner mask遮罩 */
 const BannerCoverMask = styled.div`
     height: 200px;
-    border:1px solid red;
     &:hover {
         background-color: rgba(0, 0, 0, 0.4);
         transition: background-color .2s ease-out;
+        cursor: pointer;
         ${StyledPhoto}{
             display: block;
             transition: display .2s ease-out;
@@ -86,26 +97,38 @@ const BannerCoverMask = styled.div`
     }
 `
 
-const userInfo = {
-    userName: "請輸入名稱",
-    userIntroduction: "自我介紹"
-}
-
-const UserEditModal = () => {
-    const [ info, setInfo ] = useState(userInfo)
-    const [ input, setInput ] = useState('')
-    const [ text, setText ] = useState('')
+const UserEditModal = ({userInfo}) => {
+    const [ info, setInfo ] = useState({
+        name: userInfo.name,
+        introduction: userInfo.introduction
+    })
     const [ inputError, setInputError ] = useState('')
 
+    function handleChange(e){
+        setInfo((prevInfo)=>{
+            return{
+             ...prevInfo,
+             [e.target.name]: e.target.value
+            }
+         })
+    }
+    
     function handleClick (e){
-        if((input.length === 0) || (text.length === 0)){
-            setInputError("不可空白")
+        if(info.name === 0){
+            setInputError((prev)=>{
+                return{
+                    ...prev,
+                    nameLength: '不可空白'
+                }
+            })
             return
-        } else if((input.length === 50) || (text.length === 160)){
+        } else if(inputError.introductionLength === 50){
             setInputError("字數不可超過50字")
             return
         } else {
             setInputError("")
+            console.log('save')
+            console.log(info)
         }
     }
 
@@ -123,7 +146,12 @@ const UserEditModal = () => {
                 <ModalContent>
                     <StyledEditContainer>
                         <StyledUserProfile>
-                            <StyledUserBanner src="https://picsum.photos/200/300/?blur=2"/>
+                            <StyledBannerContainer>
+                                <BannerCoverMask>
+                                    <StyledPhoto />
+                                    <StyledUserBanner src="https://picsum.photos/200/300/?blur=2"/>
+                                </BannerCoverMask>
+                            </StyledBannerContainer>
                             <StyledAvatarContainer>
                                 <AvatarCoverMask>
                                     <StyledPhoto/>                        
@@ -134,18 +162,21 @@ const UserEditModal = () => {
                         <StyledEditBlock>
                             <Input 
                                 label="名稱"
+                                name='name'
                                 showValueLength={true}
                                 maxLength="50"
-                                value={input}
+                                value={info.name}
                                 errorMessage={inputError}
-                                onChange={(e)=>{setInput(e.target.value)}}
+                                onChange={handleChange}
                             />
                             <TextArea 
                                 label="自我介紹"
+                                name='introduction'
                                 showValueLength={true}
                                 maxLength="160"
-                                value={text}
-                                onChange={(e)=> { setText(e.target.value)}}
+                                value={info.introduction}
+                                errorMessage={inputError}
+                                onChange={handleChange}
                             />
                         </StyledEditBlock>
                     </StyledEditContainer>
