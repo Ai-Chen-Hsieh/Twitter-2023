@@ -14,7 +14,7 @@ const FollowList = ({users, onToggleFollow}) => {
             { users.map(user => {
                 return(
                    <FollowItem 
-                    key = {user.id}
+                    key = {user.followingId}
                     item = {user}
                     onToggleFollow = {onToggleFollow}
                    />

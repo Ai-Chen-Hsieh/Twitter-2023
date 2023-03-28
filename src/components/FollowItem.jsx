@@ -46,30 +46,29 @@ const FollowItem = ({item, onToggleFollow}) => {
 
     return(
         <StyledFollowItemContainer>
-          <div className="avatar" onClick ={()=> {navigate(`/user/${item.id}`)}}>
-             <Avatar imageUrl={item.imageUrl}/>
+          <div className="avatar" onClick ={()=> {navigate(`/user/${item.followingId}`)}}>
+             <Avatar imageUrl={item.followingAvatar}/>
           </div>
           <StyledFollowButtonWrapper>
-            { item.isFollow ?
+            { item.isFollowed ?
               <Button 
                  text='正在跟隨'
                  onClick = {(e) => {
-                   onToggleFollow(item.id)
+                   onToggleFollow(item.followingId)
                  }}        
               /> :
-
               <Button 
                  text ='跟隨' 
                  styled ='outlined'
                  onClick = {(e) => {
-                   onToggleFollow(item.id)
+                   onToggleFollow(item.followingId)
                  }}
               />                 
             }  
           </StyledFollowButtonWrapper>
           <StyledFollowItem> 
-             <p className="user-name">{item.name}</p>
-             <p className="user-description text-fz-secondary">{item.description}</p>
+             <p className="user-name">{item.followingName}</p>
+             <p className="user-description text-fz-secondary">{item.followingIntro}</p>
           </StyledFollowItem>          
         </StyledFollowItemContainer>
     )
