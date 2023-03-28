@@ -4,6 +4,7 @@ import { ReplyItem } from "."
 const StyledReplyList = styled.div`
     width:100%;
     min-height: 500px;
+    border-top: 1px solid #E6ECF0;
 `
 
 const ReplyList = ({repliedList}) => {

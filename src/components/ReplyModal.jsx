@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalWarning } from "components/common/modal.styled";
 import { Button, Avatar, TweetInput } from ".";
-import { dummyAllTweet } from "../testData/dummyAllTweet";
 
 const StyledReplyContainer= styled.div`
     min-height: 150px;
@@ -75,11 +74,11 @@ const StyledUser = styled.div`
     }
 `
 
-const ReplyContent = ({user}) => {
+const TweetContent = ({user}) => {
     return(
         <StyledReplyContainer>
             <StyledReplyAvatar>
-                <Avatar imageUrl="https://picsum.photos/200"/>
+                <Avatar imageUrl={user.avatar}/>
             </StyledReplyAvatar>
             <StyledConnect/>
             <StyledReplyBlock>
@@ -99,7 +98,7 @@ const ReplyContent = ({user}) => {
 
 
 
-const ReplyModal = ({onClose}) => {
+const ReplyModal = ({userInfo, tweet ,onClose}) => {
     const [ inputValue, setInputValue ] = useState('')
     const [ errorMessage, setErrorMessage] = useState('')
 
@@ -124,14 +123,14 @@ const ReplyModal = ({onClose}) => {
                     <ModalCloseButton onClick={onClose}/>
                 </ModalHeader>
                 <ModalContent>
-                    <ReplyContent
-                        user={dummyAllTweet[0]}
+                    <TweetContent
+                        user={tweet}
                     />
                     <TweetInput 
                         onChange={handleChange} 
                         placeholder="推你的回覆"
                     >
-                        <Avatar imageUrl="https://picsum.photos/200/300/?blur"/>
+                        <Avatar imageUrl={userInfo.avatar}/>
                     </TweetInput>
                 </ModalContent>
                 <ModalFooter>
