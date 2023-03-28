@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom"
 
 const StyledFollowItemContainer = styled.div`
   width: 100%;
-  border: 1px solid #E6ECF0;
-  border-top: none;
+  border-bottom: 1px solid #E6ECF0;
   background-color: #fff;
   position: relative;
   .avatar {
@@ -24,9 +23,8 @@ const StyledFollowButtonWrapper = styled.div`
   position: absolute;
   right: 30px;
   top: 16px;
-  z-index:2;
     Button {
-      z-index: 100;  
+      z-index: 2;  
     }   
 `
 
