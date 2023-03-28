@@ -9,7 +9,8 @@ const defaultAuthContext = {
   userLogin: null, // [使用者] 登入
   adminLogin: null, // [管理者] 登入
   register: null, // [使用者] 註冊
-  logout: null // 登出
+  logout: null, // 登出
+  prevPath: null
 }
 const AuthContext = createContext(defaultAuthContext)
 
@@ -27,19 +28,33 @@ export const useAuth = () => useContext(AuthContext)
 export const AuthProvider = ({ children }) => {
   const [hasToken, setHasToken] = useState(false)
   const [payload, setPayload] = useState(null) // token 解析後 payload 帶的資訊
+  const [prevPath, setPrevPath] = useState('/main')
   const { pathname } = useLocation()
 
   useEffect(() => {
     const token = localStorage.getItem('token')
+
     if (!token) {
       setHasToken(false)
       setPayload(null)
-      return
 
     } else {
       const tempPayload = jwt_decode(token)
       setHasToken(true)
       setPayload(tempPayload)
+      
+      // 紀錄上一頁路徑
+      const adminPaths = ['/admin_main', '/admin_users']
+      const landingPaths = ['/admin', '/login', '/register']
+      if (!(landingPaths.includes(pathname))) {
+        let prevPath = ''
+        if (tempPayload.role === 'admin') {
+          prevPath = adminPaths.includes(pathname) ? pathname : '/admin_main'
+        } else {
+          prevPath = !(adminPaths.includes(pathname)) ? pathname : '/main'
+        }
+        setPrevPath(prevPath)
+      }
     }
 
   }, [pathname])
@@ -121,7 +136,8 @@ export const AuthProvider = ({ children }) => {
           localStorage.removeItem('token')
           setPayload(null)
           setHasToken(false)
-        }
+        },
+        prevPath
       }}
     >
       { children }
