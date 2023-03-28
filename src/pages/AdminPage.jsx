@@ -20,7 +20,7 @@ const AdminPage = () => {
     const [account, setAccount] = useState('')
     const [password, setPassword] = useState('')
     const [disabledSubmitBtn, setDisabledSubmitBtn] = useState(false)
-    const { hasToken, login, currentRegistrant} = useAuth()
+    const { hasToken, adminLogin, currentRegistrant} = useAuth()
     let navigate = useNavigate()
 
     // 檢查是否有 token
@@ -53,12 +53,10 @@ const AdminPage = () => {
         }
 
         // 呼叫登入 API
-        const response = await login({
+        const response = await adminLogin({
             account,
-            password,
-            role: 'admin'
+            password
         })
-        console.log(response)
 
         // 檢查是否登入成功
         const isLogin = (response.status === 'success') ? true : false

@@ -20,7 +20,7 @@ const LoginPage = () => {
     const [account, setAccount] = useState('')
     const [password, setPassword] = useState('')
     const [disabledSubmitBtn, setDisabledSubmitBtn] = useState(false)
-    const { hasToken, login, currentRegistrant } = useAuth()
+    const { hasToken, userLogin, currentRegistrant } = useAuth()
     let navigate = useNavigate()
 
     // 檢查是否有 token
@@ -53,10 +53,9 @@ const LoginPage = () => {
         }
 
         // 呼叫登入 API
-        const response = await login({
+        const response = await userLogin({
             account,
-            password,
-            role: 'user'
+            password
         })
 
         // 檢查是否登入成功

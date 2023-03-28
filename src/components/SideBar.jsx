@@ -5,7 +5,7 @@ import { LogOutIcon } from "assets/images"
 const StyledSideBarContainer = styled.div`
     position: relative;
     padding-bottom: 62px;
-    min-height: 100vh;
+    min-height: calc(100vh - 32px);
     max-width: 178px;
 `
 
@@ -68,10 +68,8 @@ const StyledIconContainer = styled.span`
 const SideBar = ({ children, logOutButtonOnClick }) => {
     return (
         <StyledSideBarContainer>
-            <ACLogo className="mt-2"/>
-            
+            <ACLogo/>
             { children }
-
             <StyledLogOutButtonContainer>
                 <StyledLogOutButton
                     type="button"
