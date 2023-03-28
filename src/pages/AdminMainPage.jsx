@@ -5,8 +5,9 @@ import { AdminTweetList, Header } from "components"
 const StyledContainer = styled.div`
     width: 100%;
     border-right: 1px solid var(--gray-20);
+    height: 100%;
     min-height: 100vh;
-    /* max-width: calc(100% - 130px); */
+    max-width: calc(100% - 130px);
 `
 
 /**

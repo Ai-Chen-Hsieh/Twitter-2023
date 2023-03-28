@@ -63,10 +63,10 @@ const StyledItemDeleteButton = styled.button`
 /**
  * [後台] 推文清單項目
  * @param {object} item - 推文清單項目
- * @param {function} onClick - 處理刪除推文
+ * @param {function} onDelete - 處理刪除推文
  * @returns 
  */
-const AdminTweetItem = ({ item, onClick }) => {
+const AdminTweetItem = ({ item, onDelete }) => {
     return(
         <StyledItemContainer>
             <StyledItemAvatarContainer>
@@ -87,7 +87,7 @@ const AdminTweetItem = ({ item, onClick }) => {
                 title="刪除此貼文"
                 aria-label="刪除此貼文"
                 onClick={() => {
-                    onClick?.()
+                    onDelete?.(item.id)
                 }}
             />
         </StyledItemContainer>
