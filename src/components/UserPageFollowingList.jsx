@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem, FollowList } from "components"
-import { dummyUsers } from "testData/dummyUserInfo"
+import { dummyFollowings } from "testData/dummyFollowings"
 import { useState } from "react"
 
 
@@ -10,15 +10,15 @@ import { useState } from "react"
  */
 const UserFollowingList = () => {
     const { user_id } = useParams();
-    const [users, setUsers] = useState(dummyUsers)
+    const [users, setUsers] = useState(dummyFollowings)
        
-    function handleFollow(id) {
+    function handleFollow( followingId) {
         setUsers((users) => {
             return users.map((user) => {
-              if(user.id === id) {
+              if(user.followingId ===  followingId) {
                 return {
                  ...user,
-                 isFollow: !user.isFollow
+                 isFollowed: !user.isFollowed
                 }
               }
               return user
@@ -42,3 +42,4 @@ const UserFollowingList = () => {
 }
 
 export default UserFollowingList
+
