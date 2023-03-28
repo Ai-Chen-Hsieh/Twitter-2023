@@ -8,7 +8,10 @@ import { dummyTweetReplies } from "../testData/dummyTweetReplies"
 import { ReplyList, Tweet } from "."
 import { Link } from "react-router-dom"
 import { HeaderContainer } from "./common/header.styled"
-
+//測試假資料
+import { dummyTweet } from "../testData/dummyTweet"
+//測試使用者假資料
+import { dummyUser } from "../testData/dummyUser"
 const StyledContainer = styled.div`
     display:flex;
     flex-direction: column;
@@ -86,7 +89,10 @@ const UserPageTweet = () => {
                         <h5>推文</h5>
                     </StyledHeaderTitle>
             </HeaderContainer>
-            <Tweet />
+            <Tweet 
+                tweet={dummyTweet}
+                userInfo={dummyUser}
+            />
             <ReplyList repliedList={dummyTweetReplies}/>
         </StyledContainer>
     )
