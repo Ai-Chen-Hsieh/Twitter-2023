@@ -9,11 +9,10 @@ const StyledContainer = styled.div`
   max-width: 100%;
   @media screen and (min-width: 992px) {
     margin-left: auto;
-    margin-right: auto;
     max-width: 960px;
   }
   @media screen and (min-width: 1200px) {
-    max-width: 1140px;
+    max-width: calc(1140px + (50% - 570px));
   }
 `
 
