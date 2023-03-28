@@ -8,6 +8,7 @@ import FollowItem from "./FollowItem";
 import FollowList from "./FollowList";
 import Header from "./Header";
 import Input from "./Input";
+import NumberFormatter from "./NumberFormatter";
 import PopularItem from "./PopularItem";
 import PopularList from "./PopularList";
 import ReplyItem from "./ReplyItem";
@@ -45,6 +46,7 @@ export {
     FollowList,
     Header,
     Input,
+    NumberFormatter,
     PopularItem,
     PopularList,
     ReplyItem,

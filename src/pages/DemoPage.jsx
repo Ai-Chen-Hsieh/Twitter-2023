@@ -41,8 +41,8 @@ const DemoPage = () => {
             document.body
           )}
 
-        <UserEditModal />
 
+          <UserEditModal />
         </div>
       </div>
     </div>

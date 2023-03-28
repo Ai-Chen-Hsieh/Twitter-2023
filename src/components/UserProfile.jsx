@@ -5,8 +5,6 @@ import { useNavigate, useParams } from "react-router-dom"
 
 const StyledUserProfileContainer = styled.div`
   width: 100%;
-  border: 1px solid #E6ECF0;
-  background-color: #fff;
   position: relative;
   .background-image {
     width:100%;
@@ -50,7 +48,7 @@ const StyledButtonWrapper =styled.div`
 `
       
 const StyledUserInfoContainer = styled.div`
-   padding:72px 16px 0 16px;
+   padding:72px 16px 16px 16px;
    width:100%;
    height:100%;
    position:relative;
@@ -95,15 +93,15 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
              <StyledUserInfo>  
                <div className ="user-info">
                   <h5>{name}</h5>
-                  <p className="account text-fz-secondary color-secondary">{account}</p>
+                  <p className="account text-fz-secondary color-secondary">@{account}</p>
                </div>
                <p className="user-description text-fz-secondary">{description}</p>
                <StyledFollowContainer>
-                  <div className ="following-link" onClick={()=> {navigate(`/user/${user_id}/following`)}}>
+                  <div className ="following-link mt-2" onClick={()=> {navigate(`/user/${user_id}/following`)}}>
                     <span className="following-count">{`${followingCount} 個`}</span>
                     <span className="following color-secondary">跟隨中</span>
                   </div>
-                  <div className ="follower-link" onClick={()=> {navigate(`/user/${user_id}/follower`)}}>
+                  <div className ="follower-link mt-2" onClick={()=> {navigate(`/user/${user_id}/follower`)}}>
                     <span className="follower-count">{`${followerCount} 個`}</span>
                     <span className="follower color-secondary">跟隨者</span>
                   </div>
