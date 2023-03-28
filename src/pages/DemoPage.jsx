@@ -40,7 +40,6 @@ const DemoPage = () => {
             <ReplyModal onClose={() => setShowReplyModal(false)}/>,
             document.body
           )}
-
         </div>
       </div>
     </div>
