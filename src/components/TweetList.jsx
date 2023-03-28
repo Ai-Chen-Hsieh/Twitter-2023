@@ -17,10 +17,20 @@ const TweetList = ({allTweets}) => {
         setTweets((prevTweets) => {
             return prevTweets.map((tweet) => {
                 if(tweet.id === id){
-                    return{
-                        ...tweet,
-                        isLike: !currentItem.isLike
+                    if(tweet.isLike){
+                        return{
+                            ...tweet,
+                            isLike: !currentItem.isLike,
+                            likedCount: currentItem.likedCount - 1 
+                        }
+                    }else{
+                        return{
+                            ...tweet,
+                            isLike: !currentItem.isLike,
+                            likedCount: currentItem.likedCount + 1 
+                        }
                     }
+                    
                 }
                 return tweet
             })

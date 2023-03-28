@@ -11,7 +11,7 @@ import { HeaderContainer } from "./common/header.styled"
 //測試假資料
 import { dummyTweet } from "../testData/dummyTweet"
 //測試使用者假資料
-import { dummyUser } from "../testData/dummyUser"
+import { dummyUserProfile } from "../testData/dummyUserProfile"
 const StyledContainer = styled.div`
     display:flex;
     flex-direction: column;
@@ -91,7 +91,7 @@ const UserPageTweet = () => {
             </HeaderContainer>
             <Tweet 
                 tweet={dummyTweet}
-                userInfo={dummyUser}
+                userInfo={dummyUserProfile}
             />
             <ReplyList repliedList={dummyTweetReplies}/>
         </StyledContainer>

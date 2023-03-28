@@ -108,28 +108,56 @@ const StyledLike = styled(Like)`
     width: 25px;
     height: 25px;
     margin: 10px 30px;
+    &:hover {
+        cursor: pointer;
+        opacity: 0.6;
+    }
 `
 
 const StyledLiked = styled(Liked)`
     width: 25px;
     height: 25px;
     margin: 10px 30px;
+    &:hover {
+        cursor: pointer;
+        opacity: 0.6;
+    }
 `
 
 const Tweet = ({tweet, userInfo}) => {
     const [ showReplyModal, setShowReplyModal ] = useState(false)
+    const [ tweetInfo, setReply ] = useState(tweet)
+
+    function handleToggleLike () {
+        setReply((prevTweetInfo)=>{
+            if(prevTweetInfo.isLike){
+                return{
+                    ...prevTweetInfo,
+                    isLike: !prevTweetInfo.isLike,
+                    likedCount: prevTweetInfo.likedCount - 1
+                }
+            } else {
+                return{
+                    ...prevTweetInfo,
+                    isLike: !prevTweetInfo.isLike,
+                    likedCount: prevTweetInfo.likedCount + 1
+                }
+            }
+            
+        })
+    }
 
     return (
         <>
             <StyledTweetContainer>
                 <StyledAuthInfoBlock>
-                    <StyledAvatar to={`/user/${tweet.UserId}`}>
+                    <StyledAvatar to={`/user/${tweetInfo.UserId}`}>
                         <Avatar 
                             imageUrl={tweet.avatar}
                         />
                     </StyledAvatar>
                     <StyledAuthInfo>
-                        <StyledName to={`/user/${tweet.UserId}`}>
+                        <StyledName to={`/user/${tweetInfo.UserId}`}>
                             {tweet.name}
                         </StyledName>
                         <StyledAccount>
@@ -145,11 +173,11 @@ const Tweet = ({tweet, userInfo}) => {
                 </StyledTweet>
                 <StyledCountBlock>
                     <StyledCount>
-                        <span className="count">{tweet.repliedCount}</span>
+                        <span className="count">{tweetInfo.repliedCount}</span>
                         回覆
                         </StyledCount>
                     <StyledCount>
-                        <span className="count">{tweet.likedCount}</span>
+                        <span className="count">{tweetInfo.likedCount}</span>
                         喜歡次數
                         </StyledCount>
                 </StyledCountBlock>
@@ -159,13 +187,19 @@ const Tweet = ({tweet, userInfo}) => {
                             setShowReplyModal(true)
                         }}
                     />
-                    {tweet.isLike ? (<StyledLiked /> ) : (  <StyledLike /> )}
+                    {tweetInfo.isLike ? 
+                    (<StyledLiked 
+                        onClick={handleToggleLike}
+                    /> ) : 
+                    (  <StyledLike 
+                        onClick={handleToggleLike}
+                    /> )}
                 </StyledReplyIconBlock>
             </StyledTweetContainer>
             {showReplyModal && createPortal(
                 <ReplyModal
                     userInfo={userInfo}
-                    tweet={tweet}
+                    tweet={tweetInfo}
                     onClose={()=> setShowReplyModal(false)}/>,
                 document.body
             )}

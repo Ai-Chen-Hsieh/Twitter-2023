@@ -85,10 +85,14 @@ const StyledResponse = styled.div`
         width: 80px;
         line-height: 1.4rem;
         vertical-align: center;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.6;
+        }
     }
     .reply-count, .like-count{
-        margin-left: 5px;
-}
+        margin-left: 5px
+    }
 
 `
 
@@ -118,7 +122,9 @@ const TweetItem = ({item, onLikeToggle}) => {
                         </div>
                     <StyledResponse>
                         <span className="response reply">
-                            <Comment />
+                            <Comment 
+                                onClick={()=>{navigate(`/user/${item.UserId}/${item.id}`)}}
+                            />
                             <span className="reply-count">{item.repliedCount}</span>
                         </span>
                         <span
