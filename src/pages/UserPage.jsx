@@ -1,32 +1,45 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem, UserProfile } from "components"
 import { TweetList } from "components";
+import { getUserInfo } from "../api/api_userPage";
 //測試假資料
 import { dummyUserTweets } from "../testData/dummyUserTweets";
-import { dummyUserProfile } from "../testData/dummyUserProfile";
 
 /**
  * [前台] 使用者資料頁（推文）
  * @returns 
  */
 const UserPage = () => {
-    const userProfile = dummyUserProfile
+    const [ userInfo, showUserInfo ] = useState('')
     const { user_id } = useParams();
+
+    useEffect(()=>{
+        const getUserInfoAsync = async () => {
+            try{
+                const userInfo = await getUserInfo(user_id)
+                showUserInfo(userInfo)
+            }catch(error){
+                console.error(error)
+            }
+        }
+        getUserInfoAsync()
+    },[])
 
     return (
         <>
             <UserHeader
-                name="anna"
-                tweetCount={10}
+                name={userInfo.name}
+                tweetCount={userInfo.tweetCount}
             />
             <UserProfile
-                name={userProfile.name}
-                account={userProfile.account}
-                description={userProfile.introduction}
-                backgroundImageUrl={userProfile.cover}
-                imageUrl={userProfile.avatar}
-                followingCount={userProfile.followingCount}
-                followerCount={userProfile.followerCount}
+                name={userInfo.name}
+                account={userInfo.account}
+                description={userInfo.introduction}
+                backgroundImageUrl={userInfo.cover}
+                imageUrl={userInfo.avatar}
+                followingCount={userInfo.followingCount}
+                followerCount={userInfo.followerCount}
             />
             <TabList>
                 <TabItem to={`/user/${user_id}`} text="推文" />

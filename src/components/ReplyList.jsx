@@ -8,9 +8,10 @@ const StyledReplyList = styled.div`
 `
 
 const ReplyList = ({repliedList}) => {
+
     return (
         <StyledReplyList>
-            {repliedList.map(reply=>{
+            {repliedList.map(reply =>{
                 return(
                     <ReplyItem
                         key={reply.id}
