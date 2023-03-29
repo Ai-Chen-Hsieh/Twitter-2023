@@ -19,7 +19,7 @@ const StyledContainer = styled.div`
  */
 const AdminMainPage = () => {
     const [tweets, setTweets] = useState([])
-    const [logoutMsg, setLogoutMsg] = useState({})
+    const [logoutMsg, setLogoutMsg] = useState('')
     const [deleteMsg, setDeleteMsg] = useState(null)
     const { logout } = useAuth()
 
