@@ -20,21 +20,15 @@ const LoginPage = () => {
     const [account, setAccount] = useState('')
     const [password, setPassword] = useState('')
     const [disabledSubmitBtn, setDisabledSubmitBtn] = useState(false)
-    const { hasToken, userLogin, currentRegistrant } = useAuth()
+    const { hasToken, userLogin, prevPath } = useAuth()
     let navigate = useNavigate()
-
+    
     // 檢查是否有 token
-    // 有 -> (使用者) 導到首頁； (管理者) 導到後台推文清單
-    // 無 -> 停留在此頁
     useEffect(() => {
         if (hasToken) {
-            if (currentRegistrant.role === 'admin') {
-                navigate('/admin_main');
-            } else {
-                navigate('/main');
-            }
+            navigate(prevPath);
         }
-    }, [navigate, hasToken, currentRegistrant]);
+    }, [navigate, hasToken, prevPath]);
     
     // 阻止表單提交
     function handleSubmit(e) {
