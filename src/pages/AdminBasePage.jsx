@@ -55,7 +55,7 @@ const AdminBasePage = () => {
   // 有 -> (管理者) 留在此頁； (使用者) 導到首頁
   useEffect(() => {
     if (!hasToken) {
-      navigate('/login');
+      navigate('/admin');
     } else if (hasToken && currentRegistrant.role !== 'admin') {
       navigate('/main');
     }
