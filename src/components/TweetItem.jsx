@@ -129,8 +129,11 @@ const TweetItem = ({userInfo, item, onLikeToggle}) => {
                                 <span className="reply-count">{item.repliedCount}</span>
                             </span>
                             <span
-                                onClick={()=>{onLikeToggle(item.id)}}
-                                className="response like">
+                                onClick={()=>{
+                                    onLikeToggle(item.id)}
+                                }
+                                className="response like"
+                            >
                                 {item.isLike ? <Liked /> : <Like />}
                                 <span className="like-count">{item.likedCount}</span>
                             </span>

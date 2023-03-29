@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalWarning } from "components/common/modal.styled";
 import { Button, Avatar, TweetInput } from ".";
+import { useAuth } from "contexts/AuthContext";
+import { replyTweet } from "api/tweets";
+import Swal from "sweetalert2"
 
 const StyledReplyContainer= styled.div`
     min-height: 150px;
@@ -96,18 +99,78 @@ const TweetContent = ({user}) => {
     )
 }
 
-
-
 const ReplyModal = ({userInfo, tweet ,onClose}) => {
     const [ inputValue, setInputValue ] = useState('')
     const [ errorMessage, setErrorMessage] = useState('')
+    const [ replyTweetResAlert, setReplyTweetResAlert] = useState(null)
+    const [logoutMsg, setLogoutMsg] = useState('')
+    const { logout } = useAuth()
 
-    function handleClick(){
+    // 當呼叫 API 回傳 status 是 401, 403 則登出
+    useEffect(() => {
+        if (logoutMsg.length > 0) {
+            Swal.fire({
+                title: '請重新登入!',
+                icon: 'info',
+                html: `<p>${logoutMsg}</p>`,
+                showConfirmButton: false,
+                timer: 3000,
+                position: 'top',
+            });
+            logout()
+        }
+    }, [logoutMsg, logout])
+
+    // 顯示新增回覆成功與否的彈跳視窗
+    useEffect(() => {
+        if (replyTweetResAlert) {
+            Swal.fire({
+                title: replyTweetResAlert.title,
+                icon: replyTweetResAlert.icon,
+                html: (replyTweetResAlert.html) ? replyTweetResAlert.html : '',
+                showConfirmButton: false,
+                timer: 3000,
+                position: 'top',
+            });
+        }
+    }, [replyTweetResAlert])
+
+    // 新增推文回復
+    async function handleClick(){
         if(inputValue.trim().length === 0){
             setErrorMessage('內容不可空白')
             return
+
         } else {
             setErrorMessage('')
+            try {
+                const response = await replyTweet({
+                    tweetId: tweet.id,
+                    comment: inputValue
+                })
+                const logoutStatus = [401, 403]
+                
+                if (logoutStatus.includes(response.status)) {
+                    setLogoutMsg(response.data.message)
+
+                } else if (response.status === 200) {
+                    setReplyTweetResAlert({
+                        title: '回覆成功!',
+                        icon: 'success',
+                        html: `<p>${response.data.message}</p>`
+                    })
+                    setInputValue('')
+                } else {
+                    setReplyTweetResAlert({
+                        title: '回覆失敗!',
+                        icon: 'error',
+                        html: `<p>${response.data.message}</p>`
+                    })
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 
