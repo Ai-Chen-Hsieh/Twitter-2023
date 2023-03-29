@@ -46,7 +46,7 @@ const UserPageReplyList = () => {
                         ]
                     })
                 } else if (userReplyList.status === 200) {
-                    setUserReplyList(userReplyList)
+                    setUserReplyList(userReplyList.data)
                     return
                 } else{
                     return

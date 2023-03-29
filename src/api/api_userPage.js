@@ -12,12 +12,11 @@ export const getUserInfo = async (id) => {
 export const getUserReply = async (id) => {
     try{
         const res = await axiosInstance.get(`${baseUrl}/api/users/${id}/replied_tweets`)
-        const successResponse = res.response
-        const data = {
-            status: successResponse.status,
-            message: successResponse.data.message
+        const successResponse = {
+            status: res.status,
+            data: res.data
         }
-        return res.data
+        return successResponse
     }catch(error){
         const errorResponse = error.response
         const data = {
