@@ -1,13 +1,11 @@
-//尚未完成
-// 1. 點擊回復icon 跳出replyModal的功能
-// 2. 限制露端回傳的資料只有幾筆?? 超過會破版or下拉滾軸
-
 import styled from "styled-components"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Avatar } from "."
+import { Avatar, ReplyModal } from "."
 import { ReactComponent as Comment } from "assets/images/comment.svg"
 import { ReactComponent as Like } from "assets/images/like.svg"
 import { ReactComponent as Liked } from "assets/images/liked.svg"
+import { createPortal } from "react-dom"
 
 const StyledTweetItem = styled.div`
     width: 100%;
@@ -85,52 +83,69 @@ const StyledResponse = styled.div`
         width: 80px;
         line-height: 1.4rem;
         vertical-align: center;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.6;
+        }
     }
     .reply-count, .like-count{
-        margin-left: 5px;
-}
+        margin-left: 5px
+    }
 
 `
 
-const TweetItem = ({item, onLikeToggle}) => {
+const TweetItem = ({userInfo, item, onLikeToggle}) => {
     const navigate = useNavigate()
+    const [ showReplyModal, setShowReplyModal ] = useState(false)
+
     return (
-        <StyledTweetItem>
-            <div className="post-section">
-                <div    
-                    onClick={()=>{navigate(`/user/${item.UserId}`)}}
-                    className="avatar">
-                    <Avatar imageUrl={item.avatar} />
-                </div>
-                <div className="post-item">
-                    <div className="account-info">
-                        <span
-                            onClick={()=>{navigate(`/user/${item.UserId}`)}} 
-                            className="name">
-                                {item.name}
-                            </span>
-                        <span className="account">@{item.account} · {item.createdAt}</span>
+        <>
+            <StyledTweetItem>
+                <div className="post-section">
+                    <div    
+                        onClick={()=>{navigate(`/user/${item.UserId}`)}}
+                        className="avatar">
+                        <Avatar imageUrl={item.avatar} />
                     </div>
-                    <div 
-                        onClick={()=> {navigate(`/user/${item.UserId}/${item.id}`)}}
-                        className="content">
-                            {item.description}
+                    <div className="post-item">
+                        <div className="account-info">
+                            <span
+                                onClick={()=>{navigate(`/user/${item.UserId}`)}} 
+                                className="name">
+                                    {item.name}
+                                </span>
+                            <span className="account">@{item.account} · {item.createdAt}</span>
                         </div>
-                    <StyledResponse>
-                        <span className="response reply">
-                            <Comment />
-                            <span className="reply-count">{item.repliedCount}</span>
-                        </span>
-                        <span
-                            onClick={()=>{onLikeToggle(item.id)}}
-                            className="response like">
-                            {item.isLike ? <Liked /> : <Like />}
-                            <span className="like-count">{item.likedCount}</span>
-                        </span>
-                    </StyledResponse>
+                        <div 
+                            onClick={()=> {navigate(`/user/${item.UserId}/${item.id}`)}}
+                            className="content">
+                                {item.description}
+                            </div>
+                        <StyledResponse>
+                            <span className="response reply">
+                                <Comment 
+                                    onClick={()=>{setShowReplyModal(true)}}
+                                />
+                                <span className="reply-count">{item.repliedCount}</span>
+                            </span>
+                            <span
+                                onClick={()=>{onLikeToggle(item.id)}}
+                                className="response like">
+                                {item.isLike ? <Liked /> : <Like />}
+                                <span className="like-count">{item.likedCount}</span>
+                            </span>
+                        </StyledResponse>
+                    </div>
                 </div>
-            </div>
-        </StyledTweetItem>
+            </StyledTweetItem>
+            {showReplyModal && createPortal(
+                <ReplyModal 
+                    userInfo={userInfo}
+                    tweet={item}
+                    onClose={()=> setShowReplyModal(false)}/>,
+                document.body
+            )}
+        </>
     )
 }
 

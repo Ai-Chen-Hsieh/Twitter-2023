@@ -3,13 +3,14 @@
 import styled from "styled-components"
 import { useState } from "react"
 import { TweetItem } from "."
+import { dummyUserProfile } from "../testData/dummyUserProfile"
 
 const StyledTweetList = styled.div`
     width:100%;
     min-height: 600px;
 `
 
-const TweetList = ({allTweets}) => {
+const TweetList = ({allTweets, userInfo}) => {
     const [ tweets, setTweets ] = useState(allTweets)
 
     function handleLikeToggle(id) {
@@ -17,10 +18,20 @@ const TweetList = ({allTweets}) => {
         setTweets((prevTweets) => {
             return prevTweets.map((tweet) => {
                 if(tweet.id === id){
-                    return{
-                        ...tweet,
-                        isLike: !currentItem.isLike
+                    if(tweet.isLike){
+                        return{
+                            ...tweet,
+                            isLike: !currentItem.isLike,
+                            likedCount: currentItem.likedCount - 1 
+                        }
+                    }else{
+                        return{
+                            ...tweet,
+                            isLike: !currentItem.isLike,
+                            likedCount: currentItem.likedCount + 1 
+                        }
                     }
+                    
                 }
                 return tweet
             })
@@ -33,6 +44,7 @@ const TweetList = ({allTweets}) => {
                 return(
                 <TweetItem 
                     key={tweet.id}
+                    userInfo={dummyUserProfile}
                     item={tweet}
                     onLikeToggle={handleLikeToggle}
                 />

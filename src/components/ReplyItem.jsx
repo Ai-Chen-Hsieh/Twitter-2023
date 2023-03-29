@@ -7,7 +7,7 @@ const StyledListItem = styled.div`
     width: 100%;
     height: 150px;
     border-bottom: 1px solid #E6ECF0;
-
+    
     .post-section{
         display: flex;
         text-align: start;
