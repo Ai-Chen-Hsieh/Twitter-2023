@@ -20,7 +20,7 @@ const LoginPage = () => {
     const [account, setAccount] = useState('')
     const [password, setPassword] = useState('')
     const [disabledSubmitBtn, setDisabledSubmitBtn] = useState(false)
-    const { hasToken, userLogin, currentRegistrant, prevPath } = useAuth()
+    const { hasToken, userLogin, prevPath } = useAuth()
     let navigate = useNavigate()
     
     // 檢查是否有 token
@@ -28,7 +28,7 @@ const LoginPage = () => {
         if (hasToken) {
             navigate(prevPath);
         }
-    }, [navigate, hasToken, currentRegistrant, prevPath]);
+    }, [navigate, hasToken, prevPath]);
     
     // 阻止表單提交
     function handleSubmit(e) {

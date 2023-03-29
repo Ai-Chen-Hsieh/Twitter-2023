@@ -10,7 +10,7 @@ const defaultAuthContext = {
   adminLogin: null, // [管理者] 登入
   register: null, // [使用者] 註冊
   logout: null, // 登出
-  prevPath: null
+  prevPath: null // 上一頁路徑
 }
 const AuthContext = createContext(defaultAuthContext)
 
@@ -26,9 +26,9 @@ export const useAuth = () => useContext(AuthContext)
  * @returns 
  */
 export const AuthProvider = ({ children }) => {
-  const [hasToken, setHasToken] = useState(false)
+  const [hasToken, setHasToken] = useState(false) // 是否有 token
   const [payload, setPayload] = useState(null) // token 解析後 payload 帶的資訊
-  const [prevPath, setPrevPath] = useState('/main')
+  const [prevPath, setPrevPath] = useState('/main') // 上一頁路徑
   const { pathname } = useLocation()
 
   useEffect(() => {
@@ -44,9 +44,9 @@ export const AuthProvider = ({ children }) => {
       setPayload(tempPayload)
       
       // 紀錄上一頁路徑
-      const adminPaths = ['/admin_main', '/admin_users']
-      const landingPaths = ['/admin', '/login', '/register']
+      const landingPaths = ['/admin', '/login', '/register', '/']
       if (!(landingPaths.includes(pathname))) {
+        const adminPaths = ['/admin_main', '/admin_users']
         let prevPath = ''
         if (tempPayload.role === 'admin') {
           prevPath = adminPaths.includes(pathname) ? pathname : '/admin_main'
@@ -137,6 +137,7 @@ export const AuthProvider = ({ children }) => {
           setPayload(null)
           setHasToken(false)
         },
+        // 上一頁路徑
         prevPath
       }}
     >

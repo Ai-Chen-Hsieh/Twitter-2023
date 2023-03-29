@@ -19,7 +19,7 @@ axiosInstance.interceptors.request.use(
     return config;
   },
   (error) => {
-    return error
+    console.error(error)
   },
 );
 

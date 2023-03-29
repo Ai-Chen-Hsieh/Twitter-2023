@@ -11,14 +11,18 @@ const StyledUserList = styled.div`
  * @returns 
  */
 const AdminUserList = ({ users }) => {
-    const UserList = users.map(user => {
-        return (
-            <AdminUserItem
-                key={user.id}
-                user={user}
-            />
-        )
-    })
+    let UserList = <></>
+
+    if (users.length > 0) {
+        UserList = users.map(user => {
+            return (
+                <AdminUserItem
+                    key={user.id}
+                    user={user}
+                />
+            )
+        })
+    }
 
     return (
         <StyledUserList className="my-3 px-3">
