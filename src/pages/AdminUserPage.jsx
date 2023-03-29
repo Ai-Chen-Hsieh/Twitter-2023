@@ -44,7 +44,7 @@ const AdminUserPage = () => {
         }
 
         getUsersAsync()
-    }, [])
+    }, [logout])
 
     return (
         <>
