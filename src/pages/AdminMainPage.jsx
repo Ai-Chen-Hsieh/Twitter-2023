@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { useState, useEffect } from "react"
 import { useAuth } from "contexts/AuthContext"
-import { getAdminTweets } from "api/admin"
+import { getAdminTweets, deleteAdminTweet } from "api/admin"
 import { AdminTweetList, Header } from "components"
 import Swal from "sweetalert2"
 
@@ -60,11 +60,30 @@ const AdminMainPage = () => {
 
         getTweetsAsync()
     },[])
+    
+    // 刪除推文
+    async function handleDelete(id) {
+        try {
+            await deleteAdminTweet(id)
+            // const logoutStatus = [401, 403]
+                
+            // if (logoutStatus.includes(response.status)) {
+            //     setLogoutMsg(response.data.message)
+
+            // } 
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <StyledContainer>
             <Header text="推文清單" />
-            <AdminTweetList tweetList={tweets} />
+            <AdminTweetList
+                tweetList={tweets}
+                onDelete={handleDelete}
+            />
         </StyledContainer>
     )
 }

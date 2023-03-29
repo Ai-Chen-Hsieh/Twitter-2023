@@ -5,7 +5,7 @@ import AdminTweetItem from "./AdminTweetItem"
  * @param {array} tweetList - 推文清單 
  * @returns 
  */
-const AdminTweetList = ({ tweetList }) => {
+const AdminTweetList = ({ tweetList, onDelete }) => {
     let TweetItem = <></>
 
     if (tweetList.length > 0) {
@@ -14,6 +14,9 @@ const AdminTweetList = ({ tweetList }) => {
                 <AdminTweetItem
                     key={tweetItem.id}
                     item={tweetItem}
+                    onDelete={(id) => {
+                        onDelete?.(id)
+                    }}
                 />
             )
         })

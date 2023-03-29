@@ -2,6 +2,14 @@ import axios from "axios"
 
 export const baseUrl = "https://safe-cliffs-81319.herokuapp.com"
 
+export const getData = (response) => {
+  console.log(response)
+  return {
+    status: response.status,
+    data: response.data
+  }
+}
+
 const axiosInstance = axios.create({
   baseURL: baseUrl,
 });
