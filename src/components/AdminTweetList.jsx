@@ -6,14 +6,18 @@ import AdminTweetItem from "./AdminTweetItem"
  * @returns 
  */
 const AdminTweetList = ({ tweetList }) => {
-    const TweetItem = tweetList.map(tweetItem => {
-        return (
-            <AdminTweetItem
-                key={tweetItem.id}
-                item={tweetItem}
-            />
-        )
-    })
+    let TweetItem = <></>
+
+    if (tweetList.length > 0) {
+        TweetItem = tweetList.map(tweetItem => {
+            return (
+                <AdminTweetItem
+                    key={tweetItem.id}
+                    item={tweetItem}
+                />
+            )
+        })
+    }
 
     return(
         <>
