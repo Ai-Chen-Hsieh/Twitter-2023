@@ -67,6 +67,13 @@ const StyledItemDeleteButton = styled.button`
  * @returns 
  */
 const AdminTweetItem = ({ item, onDelete }) => {
+    let description = item.description
+
+    // 可以直接在清單上快覽 Tweet 的前 50 個字 ?
+    if (description.length > 50) {
+        description = `${item.description.slice(0, 50)}...`
+    }
+
     return(
         <StyledItemContainer>
             <StyledItemAvatarContainer>
@@ -79,7 +86,7 @@ const AdminTweetItem = ({ item, onDelete }) => {
                         @{item.account}・{item.createdAt}
                     </span>
                 </header>
-                <p>{item.description}</p>
+                <p>{description}</p>
             </StyledItemInfosContainer>
 
             <StyledItemDeleteButton
