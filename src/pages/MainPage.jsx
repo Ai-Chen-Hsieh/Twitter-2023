@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import styled from "styled-components" 
 import { Header, TweetList, TweetModal, UserTweet } from "components"
@@ -18,6 +18,8 @@ const StyledMainContainer = styled.div`
 
 
 const MainPage = () => {
+    const [tweets, setTweets] = useState([])
+    
     const [ showTweetModal, setShowTweetModal ] = useState(false)
 
     function handleClick(){
@@ -27,9 +29,10 @@ const MainPage = () => {
         <>
             <StyledMainContainer>
                 <Header text="首頁" />
-                    <UserTweet 
-                        item={dummyAllTweet[0]}
-                        onClick={handleClick}/>
+                <UserTweet 
+                    item={dummyAllTweet[0]}
+                    onClick={handleClick}
+                />
                 <TweetList allTweets = {dummyAllTweet}/>
             </StyledMainContainer>
             {showTweetModal && createPortal(
