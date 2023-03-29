@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem, FollowList } from "components"
 import { dummyFollowings } from "testData/dummyFollowings"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { getUserInfo } from "../api/api_userPage"
 
 
 /**
@@ -11,6 +12,7 @@ import { useState } from "react"
 const UserFollowingList = () => {
     const { user_id } = useParams();
     const [users, setUsers] = useState(dummyFollowings)
+    const [ userInfo, setUserInfo ] = useState('')
        
     function handleFollow( followingId) {
         setUsers((users) => {
@@ -26,11 +28,23 @@ const UserFollowingList = () => {
         }) 
     }
 
+    useEffect(()=>{
+        const getUserInfoAsync = async () => {
+            try{
+                const userInfo = await getUserInfo(user_id)
+                setUserInfo(userInfo)
+            }catch(error){
+                console.error(error)
+            }
+        } 
+        getUserInfoAsync()
+    },[user_id])
+
     return (
         <>
             <UserHeader
-                name="anna"
-                tweetCount={10}
+                name={userInfo.name}
+                tweetCount={userInfo.tweetCount}
             />
             <TabList>
                 <TabItem to={`/user/${user_id}/follower`} text="追隨者" />

@@ -24,15 +24,15 @@ const StyledNoReplied = styled.div`
 
 const UserPageReplyList = () => {
 
-    const [ userInfo, showUserInfo ] = useState('')
-    const [ userReplyList, showUserReplyList ] = useState([])
+    const [ userInfo, setUserInfo ] = useState('')
+    const [ userReplyList, setUserReplyList ] = useState([])
     const { user_id } = useParams();
 
     useEffect(()=>{
         const getUserInfoAsync = async () => {
             try{
                 const userInfo = await getUserInfo(user_id)
-                showUserInfo(userInfo)
+                setUserInfo(userInfo)
             }catch(error){
                 console.error(error)
             }
@@ -42,13 +42,13 @@ const UserPageReplyList = () => {
                 const noReplied = '尚未回覆任何推文';
                 const userReplyList = await getUserReply(user_id)
                 if(userReplyList.status === 404){
-                    showUserReplyList(()=>{
+                    setUserReplyList(()=>{
                         return[
                             noReplied
                         ]
                     })
                 } else if (userReplyList.status === 200) {
-                showUserReplyList(userReplyList)
+                    setUserReplyList(userReplyList)
                 }
                 
             }catch(error){
