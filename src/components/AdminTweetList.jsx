@@ -8,7 +8,7 @@ import AdminTweetItem from "./AdminTweetItem"
 const AdminTweetList = ({ tweetList, onDelete }) => {
     let TweetItem = <></>
 
-    if (tweetList.length > 0) {
+    if (Array.isArray(tweetList)) {
         TweetItem = tweetList.map(tweetItem => {
             return (
                 <AdminTweetItem

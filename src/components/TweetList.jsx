@@ -10,8 +10,8 @@ const StyledTweetList = styled.div`
 
 const TweetList = ({tweetList, userInfo, onLikeToggle}) => {
     let TweetItems = <></>
-
-    if (TweetItem.length > 0) {
+    
+    if (Array.isArray(tweetList)) {
         TweetItems = tweetList.map(tweet => {
             return(
                 <TweetItem 
