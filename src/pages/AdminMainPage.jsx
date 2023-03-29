@@ -19,9 +19,11 @@ const StyledContainer = styled.div`
  */
 const AdminMainPage = () => {
     const [tweets, setTweets] = useState([])
-    const [logoutMsg, setLogoutMsg] = useState('')
+    const [logoutMsg, setLogoutMsg] = useState({})
+    const [deleteMsg, setDeleteMsg] = useState(null)
     const { logout } = useAuth()
 
+    // 當取得推文清單，API 回傳 status 是 401, 403 則登出
     useEffect(() => {
         if (logoutMsg.length > 0) {
             Swal.fire({
@@ -36,6 +38,21 @@ const AdminMainPage = () => {
         }
     }, [logoutMsg, logout])
 
+    // 刪除推文顯示的消息
+    useEffect(() => {
+        if (deleteMsg) {
+            Swal.fire({
+                title: deleteMsg.title,
+                icon: deleteMsg.icon,
+                html: (deleteMsg.html) ? deleteMsg.html : '',
+                showConfirmButton: false,
+                timer: 3000,
+                position: 'top',
+            });
+        }
+    }, [deleteMsg])
+
+    // 取得推文清單
     useEffect(() => {
         const getTweetsAsync = async () => {
             try {
@@ -46,13 +63,14 @@ const AdminMainPage = () => {
                     setLogoutMsg(response.data.message)
 
                 } else if (response.status === 200) {
-                    const users = response.data.map((user) => {
+                    const tweets = response.data.map((tweet) => {
                         return {
-                            ...user
+                            ...tweet
                         }
                     })
-                    setTweets(users)
+                    setTweets(tweets)
                 }
+
             } catch (error) {
                 console.log(error)
             }
@@ -64,13 +82,30 @@ const AdminMainPage = () => {
     // 刪除推文
     async function handleDelete(id) {
         try {
-            await deleteAdminTweet(id)
-            // const logoutStatus = [401, 403]
+            const response = await deleteAdminTweet(id)
+            const logoutStatus = [401, 403]
                 
-            // if (logoutStatus.includes(response.status)) {
-            //     setLogoutMsg(response.data.message)
+            if (logoutStatus.includes(response.status)) {
+                setLogoutMsg(response.data.message)
 
-            // } 
+            } else if (response.status === 200) {
+                setTweets((prevTweets) => {
+                    return prevTweets.filter((tweet) => {
+                        return tweet.id !== id
+                    })
+                })
+                setDeleteMsg({
+                    title: '刪除成功!',
+                    icon: 'success',
+                })
+
+            } else {
+                setDeleteMsg({
+                    title: '刪除失敗!',
+                    icon: 'error',
+                    html: `<p>${response.data.message}</p>`
+                })
+            }
 
         } catch (error) {
             console.log(error)

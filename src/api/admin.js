@@ -36,7 +36,7 @@ export const getAdminTweets = async () => {
 
 export const deleteAdminTweet = async (tweedId) => {
   try {
-    const response = await axiosInstance.delete(`${baseUrl}/admin/tweets/${tweedId}`);
+    const response = await axiosInstance.delete(`${baseUrl}/api/admin/tweets/${tweedId}`);
     const data = getData(response)
     return data
 
