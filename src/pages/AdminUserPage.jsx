@@ -10,7 +10,22 @@ import Swal from "sweetalert2"
  */
 const AdminUserPage = () => {
     const [users, setUsers] = useState([])
+    const [logoutMsg, setLogoutMsg] = useState('')
     const { logout } = useAuth()
+
+    useEffect(() => {
+        if (logoutMsg.length > 0) {
+            Swal.fire({
+                title: '請重新登入!',
+                icon: 'info',
+                html: `<p>${logoutMsg}</p>`,
+                showConfirmButton: false,
+                timer: 3000,
+                position: 'top',
+            });
+            logout()
+        }
+    }, [logoutMsg, logout])
 
     useEffect(() => {
         const getUsersAsync = async () => {
@@ -18,17 +33,8 @@ const AdminUserPage = () => {
                 const response = await getUsers()
                 const logoutStatus = [401, 403]
                 
-                // token 失效 -> 登出
                 if (logoutStatus.includes(response.status)) {
-                    Swal.fire({
-                        title: '請重新登入!',
-                        icon: 'warning',
-                        html: `<p>${response.data.message}</p>`,
-                        showConfirmButton: false,
-                        timer: 3000,
-                        position: 'top',
-                    });
-                    logout()
+                    setLogoutMsg(response.data.message)
 
                 } else if (response.status === 200) {
                     const users = response.data.map((user) => {
@@ -44,7 +50,7 @@ const AdminUserPage = () => {
         }
 
         getUsersAsync()
-    }, [logout])
+    }, [])
 
     return (
         <>
