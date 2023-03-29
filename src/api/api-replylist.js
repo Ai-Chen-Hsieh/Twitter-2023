@@ -1,13 +1,14 @@
-import { baseUrl } from "./base";
-import { axiosInstance } from "./api.js"
+//待tweet list
 
-export 
-const getReplyList = async () => {
-  try{
+// import { baseUrl } from "./base";
+// import { axiosInstance } from "./api.js"
 
-  }catch(error){
-      console.error("Get replyList failed")
-  }
-}
+// export const getReplyList = async () => {
+//   try{
+
+//   }catch(error){
+//       console.error("Get replyList failed")
+//   }
+// }
 
   
