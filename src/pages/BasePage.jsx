@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { createPortal } from "react-dom";
 import { useAuth } from "contexts/AuthContext"
 import styled from "styled-components"
-import { getPopularList } from "../api/api_popularlist";
+import { getPopularList } from "../api/api_popularList";
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -67,13 +67,17 @@ const BasePage = ({showPopularList = true}) => {
 useEffect(()=>{
   const getPopularListAsync = async () => {
     try{
-      const popularLists = await getPopularList();
-      setLists(()=>{
-        return[
-          ...popularLists
-        ]
-      });
-
+      const response = await getPopularList();
+      //若未成功取得status不等於success，lists useState 保持為空陣列
+      if(response.status !== 'success' ){
+       return
+      } else if(response.status === 'success'){
+        setLists(()=>{
+          return[
+            ...response.data
+          ]
+        });
+      }
     }catch(error){
       console.error(error)
     }

@@ -18,6 +18,9 @@ const StyledPopularList = styled.div`
         text-align: start;
         border-bottom: 1px solid var(--gray-20);
     }
+    p{
+        text-align: center;
+    }
 `
 
 const PopularList = ({ recommendUsers, onToggleFollow }) => {
@@ -37,21 +40,29 @@ const PopularList = ({ recommendUsers, onToggleFollow }) => {
     //         })
     //     })
     // }
-
-    return (
+    if(recommendUsers.length === 0){
+        return( 
         <StyledPopularList>
             <h1>推薦跟隨</h1>
-            {recommendUsers.map(user => {
-                return(
-                <PopularItem 
-                    key={user.id} 
-                    item={user}
-                    onToggleFollow={onToggleFollow}
-                />  
-                )
-            })}
+            <p>無推薦清單</p>
         </StyledPopularList>
-    )
+        )
+    } else {
+        return (
+            <StyledPopularList>
+                <h1>推薦跟隨</h1>
+                {recommendUsers.map(user => {
+                    return(
+                    <PopularItem 
+                        key={user.id} 
+                        item={user}
+                        onToggleFollow={onToggleFollow}
+                    />  
+                    )
+                })}
+            </StyledPopularList>
+        )
+    }
 }
 
 export default PopularList
