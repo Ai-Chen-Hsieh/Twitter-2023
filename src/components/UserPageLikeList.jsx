@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem, TweetList, UserProfile } from "components"
-import { getUserInfo, getUserLikeList } from "../api/api_userPage";
-//測試假資料
+import { getUserInfo } from "../api/api_userPage";
 import { dummyUserLikedTweets } from "../testData/dummyUserLikedTweet";
 
 /**
@@ -11,7 +10,6 @@ import { dummyUserLikedTweets } from "../testData/dummyUserLikedTweet";
  */
 const UserPageLikeList = () => {
     const [ userInfo, setUserInfo ] = useState('')
-    const [ userLikeList, setUserLikeList ] = useState([])
     const { user_id } = useParams()
 
     useEffect(()=>{
@@ -23,17 +21,8 @@ const UserPageLikeList = () => {
                 console.error(error)
             }
         } 
-        const userLikeListAsync = async () => {
-            try{
-                const userLikeList = await getUserLikeList(user_id)
-                setUserLikeList(userLikeList)
-            }catch(error){
-                console.error(error)
-            }
-        }
         userInfoAsync()
-        userLikeListAsync()
-    },[])
+    },[user_id])
 
     return (
         <>
@@ -55,9 +44,7 @@ const UserPageLikeList = () => {
                 <TabItem to={`/user/${user_id}/reply`} text="回覆" />
                 <TabItem to={`/user/${user_id}/like`} text="喜歡的內容" />
             </TabList>
-            {/* {userLikeList.message==='沒有按任何貼文喜歡' ? 
-             (<h1>userInfo.message</h1>):
-             (<TweetList allTweets={dummyUserLikedTweets}/>)} */}
+             <TweetList allTweets={dummyUserLikedTweets}/>
             
         </>
     )

@@ -25,16 +25,8 @@ export const getUserReply = async (id) => {
             message: errorResponse.data.message
         }
         console.error('Get user reply list failed', data)
+        console.log(errorResponse)
         return data
     }
 }
-
-export const getUserLikeList = async (id) =>{
-    try{
-        const res = await axiosInstance.get(`${baseUrl}/api/users/${id}/likes`)
-        console.log(res.data, 'async')
-    }catch(error){
-        console.log(error)
-    }
-} 
 
