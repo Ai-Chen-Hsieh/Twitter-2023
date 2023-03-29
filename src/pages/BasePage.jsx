@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { createPortal } from "react-dom";
 import { useAuth } from "contexts/AuthContext"
 import styled from "styled-components"
-import { getPopularList } from "../api/api-popularlist";
+import { getPopularList } from "../api/api_popularlist";
 
 const StyledContainer = styled.div`
   width: 100%;
