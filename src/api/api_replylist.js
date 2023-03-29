@@ -1,7 +1,6 @@
 //待tweet list
 
-// import { baseUrl } from "./base";
-// import { axiosInstance } from "./api.js"
+// import { baseUrl, axiosInstance } from "./base";
 
 // export const getReplyList = async () => {
 //   try{
