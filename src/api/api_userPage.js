@@ -1,5 +1,4 @@
-import { baseUrl } from "./base";
-import { axiosInstance } from "./api";
+import { baseUrl, axiosInstance } from "./base";
 
 export const getUserInfo = async (id) => {
     try{
@@ -13,9 +12,20 @@ export const getUserInfo = async (id) => {
 export const getUserReply = async (id) => {
     try{
         const res = await axiosInstance.get(`${baseUrl}/api/users/${id}/replied_tweets`)
+        const successResponse = res.response
+        const data = {
+            status: successResponse.status,
+            message: successResponse.data.message
+        }
         return res.data
     }catch(error){
-        console.error('Get user reply list failed')
+        const errorResponse = error.response
+        const data = {
+            status: errorResponse.status,
+            message: errorResponse.data.message
+        }
+        console.error('Get user reply list failed', data)
+        return data
     }
 }
 
