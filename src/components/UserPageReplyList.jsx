@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom"
 import styled from "styled-components";
 import { UserHeader, TabList, TabItem, ReplyList, UserProfile } from "components"
 import { getUserInfo } from "../api/api_userPageInfo";
-import { getUserReply } from "../api/api-userPageReply";
+import { getUserReply } from "../api/api_userPageReply";
 /**
  * [前台] 使用者資料頁（回復）
  * @returns 
