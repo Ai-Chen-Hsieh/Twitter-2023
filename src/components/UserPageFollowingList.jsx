@@ -31,12 +31,27 @@ const UserFollowingList = () => {
     useEffect(()=>{
         const getUserInfoAsync = async () => {
             try{
-                const userInfo = await getUserInfo(user_id)
-                setUserInfo(userInfo)
+                const userInfoResponse = await getUserInfo(user_id)
+                if(userInfoResponse.status === 200){
+                    setUserInfo(userInfoResponse.data)
+                } else {
+                    setUserInfo(()=>{
+                        return{
+                            name: 'not found',
+                            tweetCount: 'not found',
+                            account: 'not found',
+                            description: 'not found',
+                            backgroundImageUrl: 'not found',
+                            imageUrl:'not found',
+                            followingCount: 'not found',
+                            followerCount: 'not found',
+                        }
+                    })
+                }
             }catch(error){
                 console.error(error)
             }
-        } 
+        }
         getUserInfoAsync()
     },[user_id])
 

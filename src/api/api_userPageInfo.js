@@ -3,8 +3,17 @@ import { baseUrl, axiosInstance } from "./base";
 export const getUserInfo = async (id) => {
     try{
         const res = await axiosInstance.get(`${baseUrl}/api/users/${id}`)
-        return res.data
+        const response = {
+            status: res.status,
+            data: res.data
+        }
+        return response
     }catch(error){
-        console.error('Get user info failed')
+        const errorResponse = {
+            status: error.response.status,
+            data: error.response.data
+        }
+        console.error('Get user info failed', error)
+        return errorResponse
     }
 }

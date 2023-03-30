@@ -11,14 +11,29 @@ import { dummyUserTweets } from "../testData/dummyUserTweets";
  * @returns 
  */
 const UserPage = () => {
-    const [ userInfo, showUserInfo ] = useState('')
+    const [ userInfo, setUserInfo ] = useState('')
     const { user_id } = useParams();
 
     useEffect(()=>{
         const getUserInfoAsync = async () => {
             try{
-                const userInfo = await getUserInfo(user_id)
-                showUserInfo(userInfo)
+                const userInfoResponse = await getUserInfo(user_id)
+                if(userInfoResponse.status === 200){
+                    setUserInfo(userInfoResponse.data)
+                } else {
+                    setUserInfo(()=>{
+                        return{
+                            name: 'not found',
+                            tweetCount: 'not found',
+                            account: 'not found',
+                            description: 'not found',
+                            backgroundImageUrl: 'not found',
+                            imageUrl:'not found',
+                            followingCount: 'not found',
+                            followerCount: 'not found',
+                        }
+                    })
+                }
             }catch(error){
                 console.error(error)
             }

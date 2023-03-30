@@ -13,15 +13,30 @@ const UserPageLikeList = () => {
     const { user_id } = useParams()
 
     useEffect(()=>{
-        const userInfoAsync = async () => {
+        const getUserInfoAsync = async () => {
             try{
-                const userInfo = await getUserInfo(user_id)
-                setUserInfo(userInfo)
+                const userInfoResponse = await getUserInfo(user_id)
+                if(userInfoResponse.status === 200){
+                    setUserInfo(userInfoResponse.data)
+                } else {
+                    setUserInfo(()=>{
+                        return{
+                            name: 'not found',
+                            tweetCount: 'not found',
+                            account: 'not found',
+                            description: 'not found',
+                            backgroundImageUrl: 'not found',
+                            imageUrl:'not found',
+                            followingCount: 'not found',
+                            followerCount: 'not found',
+                        }
+                    })
+                }
             }catch(error){
                 console.error(error)
             }
-        } 
-        userInfoAsync()
+        }
+        getUserInfoAsync()
     },[user_id])
 
     return (

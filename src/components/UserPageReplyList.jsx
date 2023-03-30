@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
-import styled from "styled-components";
 import { UserHeader, TabList, TabItem, ReplyList, UserProfile } from "components"
 import { getUserInfo } from "../api/api_userPageInfo";
 import { getUserReply } from "../api/api_userPageReply";
@@ -9,46 +8,47 @@ import { getUserReply } from "../api/api_userPageReply";
  * @returns 
  */
 
-const StyledNoReplied = styled.div`
-    width:100%;
-    min-height: 500px;
-    border-top: 1px solid #E6ECF0;
-    font-weight: 700;
-    font-size: 1.6rem;
-    padding-top: 20px;
-    text-align: center;
-    
-`
 
 const UserPageReplyList = () => {
     const [ userInfo, setUserInfo ] = useState('')
-    const [ userReplyList, setUserReplyList ] = useState([])
+    const [ userReplyList, setUserReplyList ] = useState('')
     const { user_id } = useParams();
-    const noReplied = '尚未回覆任何推文';
 
     useEffect(()=>{
         const getUserInfoAsync = async () => {
             try{
-                const userInfo = await getUserInfo(user_id)
-                setUserInfo(userInfo)
+                const userInfoResponse = await getUserInfo(user_id)
+                if(userInfoResponse.status === 200){
+                    setUserInfo(userInfoResponse.data)
+                } else {
+                    setUserInfo(()=>{
+                        return{
+                            name: 'not found',
+                            tweetCount: 'not found',
+                            account: 'not found',
+                            description: 'not found',
+                            backgroundImageUrl: 'not found',
+                            imageUrl:'not found',
+                            followingCount: 'not found',
+                            followerCount: 'not found',
+                        }
+                    })
+                }
             }catch(error){
                 console.error(error)
             }
-
         }
         //取得使用者回覆過的推文
         const getUserReplyAsync = async () => {
             try{
                 const userReplyList = await getUserReply(user_id)
-                if(userReplyList.status === 404){
+                //成功取得回覆，則更新reply list；否則return
+                if (userReplyList.status === 200) {
                     setUserReplyList(()=>{
                         return[
-                            noReplied
+                            ...userReplyList.data
                         ]
                     })
-                } else if (userReplyList.status === 200) {
-                    setUserReplyList(userReplyList.data)
-                    return
                 } else{
                     return
                 }
@@ -80,11 +80,8 @@ const UserPageReplyList = () => {
                 <TabItem to={`/user/${user_id}/reply`} text="回覆" />
                 <TabItem to={`/user/${user_id}/like`} text="喜歡的內容" />
             </TabList>
-            {(userReplyList[0] === noReplied) ? (
-                <StyledNoReplied>尚未回覆任何推文</StyledNoReplied>
-            ): (
-                <ReplyList repliedList={userReplyList}/>
-            )}
+
+            <ReplyList repliedList={userReplyList}/>
             
         </>
     )

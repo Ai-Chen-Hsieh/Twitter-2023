@@ -15,7 +15,6 @@ export const getUserReply = async (id) => {
             message: errorResponse.data.message
         }
         console.error('Get user reply list failed', data)
-        console.log(errorResponse)
         return data
     }
 }
