@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem, FollowList } from "components"
-import { dummyFollowings } from "testData/dummyFollowings"
+// import { dummyFollowings } from "testData/dummyFollowings"
 import { getUserInfo } from "../api/api_userPageInfo"
+import { getFollower } from "api/api_folllow"
 
 
 /**
@@ -11,16 +12,17 @@ import { getUserInfo } from "../api/api_userPageInfo"
  */
 const UserPageFollowerList = () => {
     const { user_id } = useParams();
-    const [users, setUsers] = useState(dummyFollowings)
+    // const [users, setUsers] = useState(dummyFollowings)
     const [ userInfo, setUserInfo ] = useState('')
+    const [userFollowerList, setUserFollowerList] = useState('')
        
-    function handleFollow(followingId) {
-        setUsers((users) => {
+    function handleFollow(followerId) {
+         setUserFollowerList((users) => {
             return users.map((user) => {
-              if(user.followingId === followingId) {
+              if(user.followerId === followerId) {
                 return {
                  ...user,
-                 isFollowed: !user.isFollowed
+                 isFollowing: !user.isFollowing
                 }
               }
               return user
@@ -34,25 +36,46 @@ const UserPageFollowerList = () => {
                 const userInfoResponse = await getUserInfo(user_id)
                 if(userInfoResponse.status === 200){
                     setUserInfo(userInfoResponse.data)
-                } else {
-                    setUserInfo(()=>{
-                        return{
-                            name: 'not found',
-                            tweetCount: 'not found',
-                            account: 'not found',
-                            description: 'not found',
-                            backgroundImageUrl: 'not found',
-                            imageUrl:'not found',
-                            followingCount: 'not found',
-                            followerCount: 'not found',
-                        }
+                // } else {
+                //     setUserInfo(()=>{
+                //         return{
+                //             name: 'not found',
+                //             tweetCount: 'not found',
+                //             account: 'not found',
+                //             description: 'not found',
+                //             backgroundImageUrl: 'not found',
+                //             imageUrl:'not found',
+                //             followingCount: 'not found',
+                //             followerCount: 'not found',
+                //         }
+                //     })
+                // }
+            }
+            }catch(error){
+                console.error(error)
+            }
+        }
+
+        // 取得使用者的跟隨者清單
+         const getUserFollowerAsync = async () => {
+            try{
+                const userFollowerList = await getFollower(user_id)
+                //成功取得回覆，則更新follower list；否則return
+                if (userFollowerList.status === 200) {
+                    setUserFollowerList(()=>{
+                        return[
+                            ...userFollowerList.data
+                        ]
                     })
-                }
+                } // }  else{
+                //     return
+                // }
             }catch(error){
                 console.error(error)
             }
         }
         getUserInfoAsync()
+        getUserFollowerAsync()
     },[user_id])
   
     return (
@@ -65,7 +88,7 @@ const UserPageFollowerList = () => {
                 <TabItem to={`/user/${user_id}/follower`} text="追隨者" />
                 <TabItem to={`/user/${user_id}/following`} text="正在追隨" />
             </TabList>
-          <FollowList users={users} onToggleFollow={handleFollow}/>
+          <FollowList followerList={userFollowerList} onToggleFollow={handleFollow}/>
         </>
     )
 }

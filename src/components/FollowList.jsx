@@ -8,20 +8,31 @@ const StyledFollowList = styled.div`
 `
 
 
-const FollowList = ({users, onToggleFollow}) => {
+const FollowList = ({followerList, onToggleFollow}) => {
+
+    //若無跟隨者顯示"尚未有任何跟隨者"字串
+    if(followerList.length === 0){
+        return(
+            <StyledFollowList>
+                <h1>尚未有任何跟隨者</h1>
+            </StyledFollowList>
+        )
+     
+    }else{
     return (
         <StyledFollowList>
-            { users.map(user => {
+            { followerList.map(follower => {
                 return(
                    <FollowItem 
-                    key = {user.followingId}
-                    item = {user}
+                    key = {follower.followerId}
+                    item = {follower}
                     onToggleFollow = {onToggleFollow}
                    />
                 )
             })}     
         </StyledFollowList>
     )
+  }
 }
 
 export default FollowList
