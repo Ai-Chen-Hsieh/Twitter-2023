@@ -4,8 +4,9 @@ import { useEffect, useState } from "react"
 import { createPortal } from "react-dom";
 import { useAuth } from "contexts/AuthContext"
 import styled from "styled-components"
+/**資料串接 */
 import { getPopularList } from "../api/_api_popularlist";
-
+import { addFollowing, cancelFollowing } from "../api/_api_followiShip";
 const StyledContainer = styled.div`
   width: 100%;
   max-width: 100%;
@@ -101,6 +102,65 @@ useEffect(()=>{
     logout()
   }
 
+  //追蹤/取消追蹤
+  function handleToggleFollow (id) {
+    const currentItem = lists.find(user => user.UserId === id)
+    //判斷是否isFollowing為true, true 則執行cancel following
+    if(currentItem.isFollowing){
+      const cancelFollowingAsync = async (id) => {
+        try{
+          const cancelResponse = await cancelFollowing(id)
+          //成功取消則更新popularList, 否則return
+          if(cancelResponse.status === 200){
+              setLists((prevUser) => {
+                return prevUser.map((user) => {
+                    if(user.UserId === id){
+                        return{
+                            ...user,
+                            isFollowing: !currentItem.isFollowing
+                        }
+                    }
+                    return user
+                })
+            })
+          } else {
+            return
+          }
+        }catch(error){
+          console.error(error)
+        }
+      }
+      cancelFollowingAsync(id)
+      //若isFollowing為false, 則執行add following
+    } else {
+      const addFollowingAsync = async (id) => {
+        try{
+          const addResponse = await addFollowing(id)
+          //若成功追蹤, 則更新popularList, 則return
+          if(addResponse.status === 200){
+              setLists((prevUser) => {
+                return prevUser.map((user) => {
+                    if(user.UserId === id){
+                        return{
+                            ...user,
+                            isFollowing: !currentItem.isFollowing
+                        }
+                    }
+                    return user
+                })
+            })
+          }else{
+            return
+          }
+              
+        }catch(error){
+          console.error(error)
+        }
+      }
+      addFollowingAsync(id)
+    }
+  }
+
 
   // 避免導到其他頁面看到畫面
   if (!hasToken || (hasToken && currentRegistrant.role === 'admin')) {
@@ -141,7 +201,11 @@ useEffect(()=>{
 
         <StyledPopularListContainer>
           <StyledStickyContainer>
-            { showPopularList && <PopularList recommendUsers={lists} /> }
+            { showPopularList && 
+              <PopularList 
+                recommendUsers={lists}
+                onToggleFollow={handleToggleFollow}
+                /> }
           </StyledStickyContainer>
         </StyledPopularListContainer>
 
