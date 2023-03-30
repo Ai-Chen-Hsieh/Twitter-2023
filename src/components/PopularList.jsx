@@ -54,7 +54,7 @@ const PopularList = ({ recommendUsers, onToggleFollow }) => {
                 {recommendUsers.map(user => {
                     return(
                     <PopularItem 
-                        key={user.id} 
+                        key={user.UserId} 
                         item={user}
                         onToggleFollow={onToggleFollow}
                     />  

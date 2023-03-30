@@ -81,7 +81,7 @@ const PopularItem = ({ item, onToggleFollow }) => {
                 </div>
                 <div className="popular-item-content">
                     <span className="name">{item.name}</span>
-                    <span className="account">{item.account}</span>
+                    <span className="account">@{item.account}</span>
                 </div>
             </StyledPopularItem>
             <StyledButton>
