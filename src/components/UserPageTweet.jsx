@@ -2,14 +2,13 @@
  * [前台] 推文回覆列表頁
  * @returns 
  */
-//試串假資料
 import styled from "styled-components"
-import { dummyTweetReplies } from "../testData/dummyTweetReplies"
 import { ReplyList, Tweet } from "."
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
+import { useState, useEffect } from "react"
 import { HeaderContainer } from "./common/header.styled"
-//測試假資料
-import { dummyTweet } from "../testData/dummyTweet"
+import { getUserPageTweet, getUserTweetReply } from "../api/api_userPagetweet"
+
 //測試使用者假資料
 import { dummyUserProfile } from "../testData/dummyUserProfile"
 const StyledContainer = styled.div`
@@ -79,6 +78,67 @@ const StyledHeaderTitle = styled.div`
 `
 
 const UserPageTweet = () => {
+    const [ tweet, setTweet ] = useState('')
+    const [ tweetReplyList, setTweetReplyList ] = useState('')
+    const { tweet_id } = useParams()
+    //新增回覆
+    // function handleToggleLike () {
+    //     setTweet((prevTweetInfo)=>{
+    //         if(prevTweetInfo.isLike){
+    //             return{
+    //                 ...prevTweetInfo,
+    //                 isLike: !prevTweetInfo.isLike,
+    //                 likedCount: prevTweetInfo.likedCount - 1
+    //             }
+    //         } else {
+    //             return{
+    //                 ...prevTweetInfo,
+    //                 isLike: !prevTweetInfo.isLike,
+    //                 likedCount: prevTweetInfo.likedCount + 1
+    //             }
+    //         }
+            
+    //     })
+    // }
+
+    useEffect(()=>{
+        //取得推文
+        const getUserPageTweetAsync = async () => {            
+            try{
+                const tweetResponse = await getUserPageTweet(tweet_id)
+                //成功取得推文, 失敗則不回傳任何東西
+                if(tweetResponse.status === 200){
+                    setTweet(tweetResponse.data)
+                } else {
+                    return
+                }
+                
+            }catch(error){
+                console.error(error)
+            }
+        } 
+        //取得該推文所有回覆
+        const getUserPageTweetReplyAsync = async () => {
+            try{
+                const tweetReplyResponse = await getUserTweetReply(tweet_id)
+                console.log(tweetReplyResponse)
+                //成功取得推文所有回覆，更新回覆列表;若失敗則return
+                if(tweetReplyResponse.status === 200){
+                    setTweetReplyList(()=>{
+                        return[
+                            ...tweetReplyResponse.data
+                        ]
+                    })
+                }else{
+                    return
+                }
+            }catch(error){
+                console.error(error)
+            }
+        }
+        getUserPageTweetAsync()
+        getUserPageTweetReplyAsync()
+    },[tweet_id])
     return (
         <StyledContainer>
             <HeaderContainer>
@@ -90,10 +150,10 @@ const UserPageTweet = () => {
                     </StyledHeaderTitle>
             </HeaderContainer>
             <Tweet 
-                tweet={dummyTweet}
+                tweet={tweet}
                 userInfo={dummyUserProfile}
             />
-            <ReplyList repliedList={dummyTweetReplies}/>
+            <ReplyList repliedList={tweetReplyList}/>
         </StyledContainer>
     )
 }
