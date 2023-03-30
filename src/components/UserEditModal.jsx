@@ -1,12 +1,15 @@
 //尚未完成:
-//1.. 上傳圖片input type="file" 
-//2. input 字數超過 warning
+//上傳圖片input type="file" 
+
 
 import { useState } from "react"
 import styled from "styled-components"
 import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalTitle, ModalContent,  } from "../components/common/modal.styled";
 import { Avatar, Button, Input, TextArea } from ".";
 import { ReactComponent as Photo } from "assets/images/icon_image.svg"
+
+//import 假資料
+import { dummyUserProfile } from "../testData/dummyUserProfile";
 
 const StyledEditContainer = styled.div`
     min-height: 500px;
@@ -96,39 +99,66 @@ const BannerCoverMask = styled.div`
         }
     }
 `
-
-const UserEditModal = ({userInfo}) => {
+const UserEditModal = () => {
+    //假資料
+    const userInfo = dummyUserProfile
     const [ info, setInfo ] = useState({
         name: userInfo.name,
         introduction: userInfo.introduction
     })
-    const [ inputError, setInputError ] = useState('')
+    const [ inputError, setInputError ] = useState({
+        name: '',
+        introduction: ''
+    })
 
     function handleChange(e){
+        if(e.target.value.length === 50){
+            setInputError((prevError)=>{
+                return{
+                    ...prevError,
+                    name: '不可超過50字'
+                }
+            })
+        } else if(e.target.value.length === 0){
+            setInputError((prevError)=>{
+                return{
+                    ...prevError,
+                    [e.target.name]: '不可空白'
+                }
+            })
+        } else if (e.target.value.length === 160){
+            setInputError((prevError)=>{
+                return{
+                    ...prevError,
+                    introduction: '字數不可超過160字'
+                }
+            })
+        }else{
+            setInputError((prevError)=>{
+                return{
+                    ...prevError,
+                    [e.target.name]: ''
+                }
+            })
+        }
         setInfo((prevInfo)=>{
             return{
              ...prevInfo,
              [e.target.name]: e.target.value
             }
          })
+
     }
+
     
     function handleClick (e){
-        if(info.name === 0){
-            setInputError((prev)=>{
-                return{
-                    ...prev,
-                    nameLength: '不可空白'
-                }
-            })
-            return
-        } else if(inputError.introductionLength === 50){
-            setInputError("字數不可超過50字")
+        console.log('click')
+        const {name, introduction } = inputError
+        if((name.length > 0) || (introduction.length > 0)){
+            console.log('error')
             return
         } else {
-            setInputError("")
             console.log('save')
-            console.log(info)
         }
     }
 
@@ -166,7 +196,7 @@ const UserEditModal = ({userInfo}) => {
                                 showValueLength={true}
                                 maxLength="50"
                                 value={info.name}
-                                errorMessage={inputError}
+                                errorMessage={inputError.name}
                                 onChange={handleChange}
                             />
                             <TextArea 
@@ -175,7 +205,7 @@ const UserEditModal = ({userInfo}) => {
                                 showValueLength={true}
                                 maxLength="160"
                                 value={info.introduction}
-                                errorMessage={inputError}
+                                errorMessage={inputError.introduction}
                                 onChange={handleChange}
                             />
                         </StyledEditBlock>
