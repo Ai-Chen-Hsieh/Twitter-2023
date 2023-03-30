@@ -1,6 +1,3 @@
-
-
-
 import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import { useParams } from "react-router-dom"
