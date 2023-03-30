@@ -1,7 +1,8 @@
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem, FollowList } from "components"
 import { dummyFollowings } from "testData/dummyFollowings"
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { getUserInfo } from "../api/api_userPageInfo"
 
 
 /**
@@ -11,6 +12,7 @@ import { useState } from "react"
 const UserFollowingList = () => {
     const { user_id } = useParams();
     const [users, setUsers] = useState(dummyFollowings)
+    const [ userInfo, setUserInfo ] = useState('')
        
     function handleFollow( followingId) {
         setUsers((users) => {
@@ -26,11 +28,38 @@ const UserFollowingList = () => {
         }) 
     }
 
+    useEffect(()=>{
+        const getUserInfoAsync = async () => {
+            try{
+                const userInfoResponse = await getUserInfo(user_id)
+                if(userInfoResponse.status === 200){
+                    setUserInfo(userInfoResponse.data)
+                } else {
+                    setUserInfo(()=>{
+                        return{
+                            name: 'not found',
+                            tweetCount: 'not found',
+                            account: 'not found',
+                            description: 'not found',
+                            backgroundImageUrl: 'not found',
+                            imageUrl:'not found',
+                            followingCount: 'not found',
+                            followerCount: 'not found',
+                        }
+                    })
+                }
+            }catch(error){
+                console.error(error)
+            }
+        }
+        getUserInfoAsync()
+    },[user_id])
+
     return (
         <>
             <UserHeader
-                name="anna"
-                tweetCount={10}
+                name={userInfo.name}
+                tweetCount={userInfo.tweetCount}
             />
             <TabList>
                 <TabItem to={`/user/${user_id}/follower`} text="追隨者" />

@@ -68,35 +68,34 @@ const StyledButton = styled.div`
 
 const PopularItem = ({ item, onToggleFollow }) => {
     const navigate = useNavigate(); 
-
     return(
         <StyledPopularContainer>
             <StyledPopularItem 
                 onClick={(e)=> {
-                    navigate(`/user/${item.id}`)}}>
+                    navigate(`/user/${item.UserId}`)}}>
                 <div className="avatar">
                     <Avatar
-                        imageUrl={item.image}
+                        imageUrl={item.avatar}
                     />
                 </div>
                 <div className="popular-item-content">
-                    <span className="name">{item.recommendUser}</span>
-                    <span className="account">{item.recommendUserAccount}</span>
+                    <span className="name">{item.name}</span>
+                    <span className="account">@{item.account}</span>
                 </div>
             </StyledPopularItem>
             <StyledButton>
-                {item.isFollow ? 
+                {item.isFollowing ? 
                 <Button
                     text="正在追隨"
                     onClick={(e)=>{
-                        onToggleFollow(item.id)
+                        onToggleFollow(item.UserId)
                     }}
                 /> : 
                 <Button
                     styled="outlined" 
                     text="追隨"
                     onClick={(e)=>{
-                        onToggleFollow(item.id)
+                        onToggleFollow(item.UserId)
                     }}
                 />}
             </StyledButton>  
