@@ -214,7 +214,7 @@ const UserPageTweet = () => {
                     icon: 'success',
                     html: `<p>${response.data.message}</p>`
                 })
-                console.log(tempReply)
+                
                 setTweetReplyList((prevReplyList) => {
                     return [
                         {
@@ -231,6 +231,13 @@ const UserPageTweet = () => {
                         },
                         ...prevReplyList
                     ]
+                })
+
+                setTweet((prevTweet) => {
+                    return {
+                        ...prevTweet,
+                        repliedCount: prevTweet.repliedCount + 1
+                    }
                 })
 
                 setShowReplyModal(false)
