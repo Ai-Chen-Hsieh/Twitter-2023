@@ -25,22 +25,8 @@ const StyledPopularList = styled.div`
 
 const PopularList = ({ recommendUsers, onToggleFollow }) => {
 
-    // const [ users, setUser ] = useState(recommendUsers)
-    // function handleFollow (id){
-    //     const currentItem = recommendUsers.find(user => user.id === id)
-    //     setUser((prevUser) => {
-    //         return prevUser.map((user) => {
-    //             if(user.id === id){
-    //                 return{
-    //                     ...user,
-    //                     isFollowing: !currentItem.isFollowing
-    //                 }
-    //             }
-    //             return user
-    //         })
-    //     })
-    // }
-    if(recommendUsers.length === 0){
+    //若未成功取得推薦清單, 顯示"無推薦清單"
+    if(typeof recommendUsers=== 'string'){
         return( 
         <StyledPopularList>
             <h1>推薦跟隨</h1>

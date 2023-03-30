@@ -61,7 +61,7 @@ const StyledMain = styled.div`
 const BasePage = ({showPopularList = true}) => {
   const { hasToken, currentRegistrant, logout } = useAuth()
   const [showTweetModal, setShowTweetModal] = useState(false)
-  const [lists, setLists] = useState([])
+  const [lists, setLists] = useState('')
   let navigate = useNavigate()
   
   //引入推薦者清單
@@ -71,6 +71,7 @@ useEffect(()=>{
       const response = await getPopularList();
       //若未成功取得status不等於success，lists useState 保持為空陣列
       if(response.status === 200){
+        console.log(response)
         setLists(()=>{
           return[
             ...response.data
