@@ -1,5 +1,3 @@
-//尚未完成增加"like"數量
-
 import styled from "styled-components"
 import { TweetItem } from "."
 
@@ -8,7 +6,14 @@ const StyledTweetList = styled.div`
     min-height: 600px;
 `
 
-const TweetList = ({tweetList, userInfo, onLikeToggle}) => {
+/**
+ * 推文清單
+ * @param {array} tweetList - 推文清單
+ * @param {function} onLikeToggle - 處理收藏/取消收藏推文
+ * @param {function} onShowReplyModal - 處理顯示回覆彈跳視窗
+ * @returns 
+ */
+const TweetList = ({tweetList, onLikeToggle, onShowReplyModal}) => {
     let TweetItems = <></>
     
     if (Array.isArray(tweetList)) {
@@ -16,10 +21,12 @@ const TweetList = ({tweetList, userInfo, onLikeToggle}) => {
             return(
                 <TweetItem 
                     key={tweet.id}
-                    userInfo={userInfo}
                     item={tweet}
                     onLikeToggle={(id) => {
                         onLikeToggle?.(id)
+                    }}
+                    onShowReplyModal={(tweet) => {
+                        onShowReplyModal?.(tweet)
                     }}
                 />
             )
