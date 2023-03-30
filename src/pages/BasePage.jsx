@@ -5,8 +5,8 @@ import { createPortal } from "react-dom";
 import { useAuth } from "contexts/AuthContext"
 import styled from "styled-components"
 /**資料串接 */
-import { getPopularList } from "../api/_api_popularlist";
-import { addFollowing, cancelFollowing } from "../api/_api_followiShip";
+import { getPopularList } from "../api/api_popularlist";
+import { addFollowing, cancelFollowing } from "../api/api_followShip";
 const StyledContainer = styled.div`
   width: 100%;
   max-width: 100%;
