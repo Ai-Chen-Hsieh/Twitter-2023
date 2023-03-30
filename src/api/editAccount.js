@@ -1,21 +1,20 @@
-import { axiosInstance, baseUrl } from "./base"
-
+import { axiosInstance, baseUrl} from "./base"
 
 export const editAccount = async(payload) => {
-
-  try{
-    const {account,name,email,password,checkPassword} = 
+  const { userId, account, name, email, password, checkPassword } = 
     payload;
-    const response = await axiosInstance.put(`${baseUrl}/api/users/14/account`, {
+
+  try {
+    const response = await axiosInstance.put(`${baseUrl}/api/users/${userId}/account`, {
       account,
       name,
       email,
       password,
       checkPassword
     });
-    console.log(response)
-    return response.status
+    return response.data
   } catch(error){
     console.error('[Edit Account failed]: ', error)
+    return error.response.data
   }
-}
+} 
