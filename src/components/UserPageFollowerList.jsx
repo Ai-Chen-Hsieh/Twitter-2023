@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem, FollowList } from "components"
 import { dummyFollowings } from "testData/dummyFollowings"
-import { getUserInfo } from "../api/api_userPage"
+import { getUserInfo } from "../api/api_userPageInfo"
 
 
 /**

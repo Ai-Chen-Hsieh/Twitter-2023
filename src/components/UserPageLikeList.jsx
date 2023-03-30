@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem, TweetList, UserProfile } from "components"
-import { getUserInfo } from "../api/api_userPage";
+import { getUserInfo } from "../api/api_userPageInfo";
 import { dummyUserLikedTweets } from "../testData/dummyUserLikedTweet";
 
 /**

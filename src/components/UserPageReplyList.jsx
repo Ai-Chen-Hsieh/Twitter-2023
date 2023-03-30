@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
 import styled from "styled-components";
 import { UserHeader, TabList, TabItem, ReplyList, UserProfile } from "components"
-import { getUserInfo, getUserReply } from "../api/api_userPage";
-
+import { getUserInfo } from "../api/api_userPageInfo";
+import { getUserReply } from "../api/api-userPageReply";
 /**
  * [前台] 使用者資料頁（回復）
  * @returns 
@@ -34,10 +34,11 @@ const UserPageReplyList = () => {
             }catch(error){
                 console.error(error)
             }
+
         }
+        //取得使用者回覆過的推文
         const getUserReplyAsync = async () => {
             try{
-                
                 const userReplyList = await getUserReply(user_id)
                 if(userReplyList.status === 404){
                     setUserReplyList(()=>{
@@ -51,7 +52,6 @@ const UserPageReplyList = () => {
                 } else{
                     return
                 }
-                
             }catch(error){
                 console.error(error)
             }

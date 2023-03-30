@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem, UserProfile } from "components"
 import { TweetList } from "components";
-import { getUserInfo } from "../api/api_userPage";
+import { getUserInfo } from "../api/api_userPageInfo";
 //測試假資料
 import { dummyUserTweets } from "../testData/dummyUserTweets";
 
@@ -24,7 +24,7 @@ const UserPage = () => {
             }
         }
         getUserInfoAsync()
-    },[])
+    },[user_id])
 
     return (
         <>
