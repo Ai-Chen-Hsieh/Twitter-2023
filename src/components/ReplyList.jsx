@@ -13,8 +13,8 @@ const StyledReplyList = styled.div`
 `
 
 const ReplyList = ({repliedList}) => {
-    console.log(Array.isArray(repliedList))
-    //若無回覆顯示"尚未有回覆的"字串
+
+    //若無回覆顯示"尚未有任何回覆"字串
     if(typeof repliedList === 'string'){
         return(
             <StyledReplyList>
@@ -22,7 +22,6 @@ const ReplyList = ({repliedList}) => {
             </StyledReplyList>
         )
     }else{
-       
         return (
             <StyledReplyList>
                 {repliedList.map(reply=>{
