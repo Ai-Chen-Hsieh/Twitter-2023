@@ -13,7 +13,7 @@ const StyledUserList = styled.div`
 const AdminUserList = ({ users }) => {
     let UserList = <></>
 
-    if (users.length > 0) {
+    if (Array.isArray(users)) {
         UserList = users.map(user => {
             return (
                 <AdminUserItem
