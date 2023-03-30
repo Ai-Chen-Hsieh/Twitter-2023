@@ -11,6 +11,10 @@ const StyledTweetContainer = styled.div`
     min-height: 350px;
     display: flex;
     flex-direction: column;
+    h1{
+        font-size: 1.6rem;
+        text-align: center;
+    }
 `
 //推文作者帳號block
 const StyledAuthInfoBlock = styled.div`
@@ -57,8 +61,7 @@ const StyledTweet = styled.div`
 
 const StyledCreatedAt = styled.div`
         height: 30px;
-        margin-top: 10px;
-        margin-bottom: 0;
+        padding-left: 10px;
         color: var(--secondary);
         font-size: 1.4rem;
 `
@@ -123,87 +126,77 @@ const StyledLiked = styled(Liked)`
     }
 `
 
-const Tweet = ({tweet, userInfo}) => {
-    const [ showReplyModal, setShowReplyModal ] = useState(false)
-    const [ tweetInfo, setReply ] = useState(tweet)
+const Tweet = ({tweet, userInfo, onToggleLike}) => {
+    const [ showReplyModal, setShowReplyModal ] = useState(false)     
 
-    function handleToggleLike () {
-        setReply((prevTweetInfo)=>{
-            if(prevTweetInfo.isLike){
-                return{
-                    ...prevTweetInfo,
-                    isLike: !prevTweetInfo.isLike,
-                    likedCount: prevTweetInfo.likedCount - 1
-                }
-            } else {
-                return{
-                    ...prevTweetInfo,
-                    isLike: !prevTweetInfo.isLike,
-                    likedCount: prevTweetInfo.likedCount + 1
-                }
-            }
-            
-        })
-    }
-
-    return (
-        <>
+    if(typeof tweet === 'string' ){
+        return(
             <StyledTweetContainer>
-                <StyledAuthInfoBlock>
-                    <StyledAvatar to={`/user/${tweetInfo.UserId}`}>
-                        <Avatar 
-                            imageUrl={tweet.avatar}
-                        />
-                    </StyledAvatar>
-                    <StyledAuthInfo>
-                        <StyledName to={`/user/${tweetInfo.UserId}`}>
-                            {tweet.name}
-                        </StyledName>
-                        <StyledAccount>
-                            @{tweet.account}
-                        </StyledAccount>
-                    </StyledAuthInfo>
-                </StyledAuthInfoBlock>
-                <StyledTweet>
-                    {tweet.description}
-                    <StyledCreatedAt>
-                        {tweet.createdAt}
-                    </StyledCreatedAt>
-                </StyledTweet>
-                <StyledCountBlock>
-                    <StyledCount>
-                        <span className="count">{tweetInfo.repliedCount}</span>
-                        回覆
-                        </StyledCount>
-                    <StyledCount>
-                        <span className="count">{tweetInfo.likedCount}</span>
-                        喜歡次數
-                        </StyledCount>
-                </StyledCountBlock>
-                <StyledReplyIconBlock>
-                    <StyledComment 
-                        onClick={()=>{
-                            setShowReplyModal(true)
-                        }}
-                    />
-                    {tweetInfo.isLike ? 
-                    (<StyledLiked 
-                        onClick={handleToggleLike}
-                    /> ) : 
-                    (  <StyledLike 
-                        onClick={handleToggleLike}
-                    /> )}
-                </StyledReplyIconBlock>
+                <h1>找不到推文</h1>
             </StyledTweetContainer>
-            {showReplyModal && createPortal(
-                <ReplyModal
-                    userInfo={userInfo}
-                    tweet={tweetInfo}
-                    onClose={()=> setShowReplyModal(false)}/>,
-                document.body
-            )}
-        </>
-    )
+        )
+    }else{
+        return (
+            <>
+                <StyledTweetContainer>
+                    <StyledAuthInfoBlock>
+                        <StyledAvatar to={`/user/${tweet.UserId}`}>
+                            <Avatar 
+                                imageUrl={tweet.avatar}
+                            />
+                        </StyledAvatar>
+                        <StyledAuthInfo>
+                            <StyledName to={`/user/${tweet.UserId}`}>
+                                {tweet.name}
+                            </StyledName>
+                            <StyledAccount>
+                                @{tweet.account}
+                            </StyledAccount>
+                        </StyledAuthInfo>
+                    </StyledAuthInfoBlock>
+                    <StyledTweet>
+                        {tweet.description}
+                    </StyledTweet>
+                    <StyledCreatedAt>
+                            {tweet.createdAt}
+                        </StyledCreatedAt>
+                    <StyledCountBlock>
+                        <StyledCount>
+                            <span className="count">{tweet.repliedCount}</span>
+                            回覆
+                            </StyledCount>
+                        <StyledCount>
+                            <span className="count">{tweet.likedCount}</span>
+                            喜歡次數
+                            </StyledCount>
+                    </StyledCountBlock>
+                    <StyledReplyIconBlock>
+                        <StyledComment 
+                            onClick={()=>{
+                                setShowReplyModal(true)
+                            }}
+                        />
+                        {tweet.isLike ? 
+                        (<StyledLiked 
+                            onClick={onToggleLike}
+                        /> ) : 
+                        (  <StyledLike 
+                            onClick={onToggleLike}
+                        /> )}
+                    </StyledReplyIconBlock>
+                </StyledTweetContainer>
+                {showReplyModal && createPortal(
+                    <ReplyModal
+                        userInfo={userInfo}
+                        tweet={tweet}
+                        onClose={()=> setShowReplyModal(false)}/>,
+                    document.body
+                )}
+            </>
+        )
+    }
+ 
+    
 }
 
 export default Tweet

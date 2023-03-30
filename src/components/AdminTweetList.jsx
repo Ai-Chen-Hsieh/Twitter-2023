@@ -5,15 +5,22 @@ import AdminTweetItem from "./AdminTweetItem"
  * @param {array} tweetList - 推文清單 
  * @returns 
  */
-const AdminTweetList = ({ tweetList }) => {
-    const TweetItem = tweetList.map(tweetItem => {
-        return (
-            <AdminTweetItem
-                key={tweetItem.id}
-                item={tweetItem}
-            />
-        )
-    })
+const AdminTweetList = ({ tweetList, onDelete }) => {
+    let TweetItem = <></>
+
+    if (Array.isArray(tweetList)) {
+        TweetItem = tweetList.map(tweetItem => {
+            return (
+                <AdminTweetItem
+                    key={tweetItem.id}
+                    item={tweetItem}
+                    onDelete={(id) => {
+                        onDelete?.(id)
+                    }}
+                />
+            )
+        })
+    }
 
     return(
         <>
