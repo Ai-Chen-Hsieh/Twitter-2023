@@ -58,10 +58,6 @@ const StyledUser = styled.div`
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow:hidden;
-        &:hover {
-            cursor: pointer;
-            text-decoration: underline;
-        }
     }
     .account{
         font-size: 1.4rem;
@@ -96,18 +92,22 @@ const TweetContent = ({user}) => {
     )
 }
 
-
-
-const ReplyModal = ({userInfo, tweet ,onClose}) => {
+const ReplyModal = ({userInfo, tweet ,onClose, onReplyTweet}) => {
     const [ inputValue, setInputValue ] = useState('')
     const [ errorMessage, setErrorMessage] = useState('')
 
-    function handleClick(){
+    // 新增推文回復
+    async function handleClick(){
         if(inputValue.trim().length === 0){
             setErrorMessage('內容不可空白')
             return
+
         } else {
             setErrorMessage('')
+            await onReplyTweet({
+                tweetId: tweet.id,
+                comment: inputValue
+            })
         }
     }
 

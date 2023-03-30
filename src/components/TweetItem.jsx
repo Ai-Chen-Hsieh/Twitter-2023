@@ -1,11 +1,9 @@
 import styled from "styled-components"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { Avatar, ReplyModal } from "."
+import { Avatar } from "."
 import { ReactComponent as Comment } from "assets/images/comment.svg"
 import { ReactComponent as Like } from "assets/images/like.svg"
 import { ReactComponent as Liked } from "assets/images/liked.svg"
-import { createPortal } from "react-dom"
+import { Link } from "react-router-dom"
 
 const StyledTweetItem = styled.div`
     width: 100%;
@@ -38,6 +36,7 @@ const StyledTweetItem = styled.div`
         line-height: 2.6rem;
         display: flex;
         .name{
+            display: inline-block;
             font-size: 1.6rem;
             font-weight: 700;
             margin-right: 7px;
@@ -45,6 +44,8 @@ const StyledTweetItem = styled.div`
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             overflow:hidden;
+            text-decoration: none;
+            color: var(--dark-100);
             &:hover {
                 cursor: pointer;
                 text-decoration: underline;
@@ -62,6 +63,7 @@ const StyledTweetItem = styled.div`
     }
 
     .content{
+        display: block;
         width: 100%;
         height: 85px;
         font-size: 1.6rem;
@@ -70,8 +72,12 @@ const StyledTweetItem = styled.div`
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow:hidden;
+        color: var(--dark-100);
+        text-decoration: none;
+        transition: color .5s;
         &:hover {
             cursor: pointer;
+            color: var(--secondary);
         }
     }
 `
@@ -80,13 +86,26 @@ const StyledResponse = styled.div`
 
     .response{
         display: inline-block;
-        width: 80px;
+        border: none;
+        width: 48px;
+        padding: 0px;
         line-height: 1.4rem;
-        vertical-align: center;
+        vertical-align: middle;
+        text-align: left;
+        transition: opacity .5s;
+        background-color: transparent;
+        > svg,
+        > span {
+            display: inline-block;
+            vertical-align: middle;
+        }
         &:hover {
             cursor: pointer;
             opacity: 0.6;
         }
+    }
+    .response:not(:last-child) {
+        margin-right: 16px;
     }
     .reply-count, .like-count{
         margin-left: 5px
@@ -94,58 +113,70 @@ const StyledResponse = styled.div`
 
 `
 
-const TweetItem = ({userInfo, item, onLikeToggle}) => {
-    const navigate = useNavigate()
-    const [ showReplyModal, setShowReplyModal ] = useState(false)
-
+/**
+ * 推文清單項目
+ * @param {object} item - 推文清單項目
+ * @param {function} onLikeToggle - 處理收藏/取消收藏推文
+ * @param {function} onShowReplyModal - 處理顯示回覆彈跳視窗
+ * @returns 
+ */
+const TweetItem = ({item, onLikeToggle, onShowReplyModal}) => {
     return (
-        <>
-            <StyledTweetItem>
-                <div className="post-section">
-                    <div    
-                        onClick={()=>{navigate(`/user/${item.UserId}`)}}
-                        className="avatar">
-                        <Avatar imageUrl={item.avatar} />
+        <StyledTweetItem>
+            <div className="post-section">
+                <Link    
+                    to={`/user/${item.UserId}`}
+                    title={`查看 ${item.name} 的個人資料`}
+                    aria-label={`查看 ${item.name} 的個人資料`}
+                    className="avatar"
+                >
+                    <Avatar imageUrl={item.avatar} />
+                </Link>
+                <div className="post-item">
+                    <div className="account-info">
+                        <Link
+                            to={`/user/${item.UserId}`}
+                            title={`查看 ${item.name} 的個人資料`}
+                            aria-label={`查看 ${item.name} 的個人資料`}
+                            className="name"
+                        >
+                            {item.name}
+                        </Link>
+                        <span className="account">@{item.account} · {item.createdAt}</span>
                     </div>
-                    <div className="post-item">
-                        <div className="account-info">
-                            <span
-                                onClick={()=>{navigate(`/user/${item.UserId}`)}} 
-                                className="name">
-                                    {item.name}
-                                </span>
-                            <span className="account">@{item.account} · {item.createdAt}</span>
-                        </div>
-                        <div 
-                            onClick={()=> {navigate(`/user/${item.UserId}/${item.id}`)}}
-                            className="content">
-                                {item.description}
-                            </div>
-                        <StyledResponse>
-                            <span className="response reply">
-                                <Comment 
-                                    onClick={()=>{setShowReplyModal(true)}}
-                                />
-                                <span className="reply-count">{item.repliedCount}</span>
-                            </span>
-                            <span
-                                onClick={()=>{onLikeToggle(item.id)}}
-                                className="response like">
-                                {item.isLike ? <Liked /> : <Like />}
-                                <span className="like-count">{item.likedCount}</span>
-                            </span>
-                        </StyledResponse>
-                    </div>
+
+                    <Link
+                        to={`/user/${item.UserId}/${item.id}`}
+                        title={`查看推文內容`}
+                        aria-label={`查看推文內容`}
+                        className="content"
+                    >
+                        {item.description}
+                    </Link>
+
+                    <StyledResponse>
+                        <button
+                            onClick={() => {
+                                onShowReplyModal?.(item)
+                            }}
+                            className="response reply"
+                        >
+                            <Comment />
+                            <span className="reply-count">{item.repliedCount}</span>
+                        </button>
+                        <button
+                            onClick={()=>{
+                                onLikeToggle(item.id)}
+                            }
+                            className="response like"
+                        >
+                            {item.isLike ? <Liked /> : <Like />}
+                            <span className="like-count">{item.likedCount}</span>
+                        </button>
+                    </StyledResponse>
                 </div>
-            </StyledTweetItem>
-            {showReplyModal && createPortal(
-                <ReplyModal 
-                    userInfo={userInfo}
-                    tweet={item}
-                    onClose={()=> setShowReplyModal(false)}/>,
-                document.body
-            )}
-        </>
+            </div>
+        </StyledTweetItem>
     )
 }
 

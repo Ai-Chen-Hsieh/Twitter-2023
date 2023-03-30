@@ -1,56 +1,41 @@
-//尚未完成增加"like"數量
-
 import styled from "styled-components"
-import { useState } from "react"
 import { TweetItem } from "."
-import { dummyUserProfile } from "../testData/dummyUserProfile"
 
 const StyledTweetList = styled.div`
     width:100%;
     min-height: 600px;
 `
 
-const TweetList = ({allTweets, userInfo}) => {
-    const [ tweets, setTweets ] = useState(allTweets)
-
-    function handleLikeToggle(id) {
-        const currentItem = tweets.find(tweet => tweet.id === id )
-        setTweets((prevTweets) => {
-            return prevTweets.map((tweet) => {
-                if(tweet.id === id){
-                    if(tweet.isLike){
-                        return{
-                            ...tweet,
-                            isLike: !currentItem.isLike,
-                            likedCount: currentItem.likedCount - 1 
-                        }
-                    }else{
-                        return{
-                            ...tweet,
-                            isLike: !currentItem.isLike,
-                            likedCount: currentItem.likedCount + 1 
-                        }
-                    }
-                    
-                }
-                return tweet
-            })
+/**
+ * 推文清單
+ * @param {array} tweetList - 推文清單
+ * @param {function} onLikeToggle - 處理收藏/取消收藏推文
+ * @param {function} onShowReplyModal - 處理顯示回覆彈跳視窗
+ * @returns 
+ */
+const TweetList = ({tweetList, onLikeToggle, onShowReplyModal}) => {
+    let TweetItems = <></>
+    
+    if (Array.isArray(tweetList)) {
+        TweetItems = tweetList.map(tweet => {
+            return(
+                <TweetItem 
+                    key={tweet.id}
+                    item={tweet}
+                    onLikeToggle={(id) => {
+                        onLikeToggle?.(id)
+                    }}
+                    onShowReplyModal={(tweet) => {
+                        onShowReplyModal?.(tweet)
+                    }}
+                />
+            )
         })
     }
 
     return (
         <StyledTweetList>
-            {tweets.map(tweet => {
-                return(
-                <TweetItem 
-                    key={tweet.id}
-                    userInfo={dummyUserProfile}
-                    item={tweet}
-                    onLikeToggle={handleLikeToggle}
-                />
-                )
-            })}
-            
+            { TweetItems }
         </StyledTweetList>
     )
 }
