@@ -19,24 +19,8 @@ const StyledContainer = styled.div`
  */
 const AdminMainPage = () => {
     const [tweets, setTweets] = useState([])
-    const [logoutMsg, setLogoutMsg] = useState('')
     const [deleteMsg, setDeleteMsg] = useState(null)
     const { logout } = useAuth()
-
-    // 當取得推文清單，API 回傳 status 是 401, 403 則登出
-    useEffect(() => {
-        if (logoutMsg.length > 0) {
-            Swal.fire({
-                title: '請重新登入!',
-                icon: 'info',
-                html: `<p>${logoutMsg}</p>`,
-                showConfirmButton: false,
-                timer: 3000,
-                position: 'top',
-            });
-            logout()
-        }
-    }, [logoutMsg, logout])
 
     // 刪除推文顯示的消息
     useEffect(() => {
@@ -60,7 +44,7 @@ const AdminMainPage = () => {
                 const logoutStatus = [401, 403]
                 
                 if (logoutStatus.includes(response.status)) {
-                    setLogoutMsg(response.data.message)
+                    logout(response.data.message)
 
                 } else if (response.status === 200) {
                     const tweets = response.data.map((tweet) => {
@@ -77,7 +61,7 @@ const AdminMainPage = () => {
         }
 
         getTweetsAsync()
-    },[])
+    },[logout])
     
     // 刪除推文
     async function handleDelete(id) {
@@ -86,7 +70,7 @@ const AdminMainPage = () => {
             const logoutStatus = [401, 403]
                 
             if (logoutStatus.includes(response.status)) {
-                setLogoutMsg(response.data.message)
+                logout(response.data.message)
 
             } else if (response.status === 200) {
                 setTweets((prevTweets) => {

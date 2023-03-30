@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import { userLogin, adminLogin, register } from "api/auth"
 import jwt_decode from "jwt-decode";
+import Swal from "sweetalert2";
 
 const defaultAuthContext = {
   hasToken: false, // 是否有 token
@@ -29,6 +30,7 @@ export const AuthProvider = ({ children }) => {
   const [hasToken, setHasToken] = useState(false) // 是否有 token
   const [payload, setPayload] = useState(null) // token 解析後 payload 帶的資訊
   const [prevPath, setPrevPath] = useState('/main') // 上一頁路徑
+  const [logoutAlertMsg, setLogoutAlertMsg] = useState('')
   const { pathname } = useLocation()
 
   useEffect(() => {
@@ -59,6 +61,20 @@ export const AuthProvider = ({ children }) => {
 
   }, [pathname])
 
+  // 當取得推文清單，API 回傳 status 是 401, 403 則登出
+  useEffect(() => {
+    if (logoutAlertMsg.length > 0) {
+      Swal.fire({
+        title: '請重新登入!',
+        icon: 'info',
+        html: `<p>${logoutAlertMsg}</p>`,
+        showConfirmButton: false,
+        timer: 3000,
+        position: 'top',
+      });
+    }
+  }, [logoutAlertMsg])
+
   return (
     <AuthContext.Provider
       value={{
@@ -82,6 +98,7 @@ export const AuthProvider = ({ children }) => {
 
             setPayload(tempPayload)
             setHasToken(true)
+            setPrevPath('/main')
             localStorage.setItem('token', token)
 
           } else {
@@ -107,6 +124,7 @@ export const AuthProvider = ({ children }) => {
 
             setPayload(tempPayload)
             setHasToken(true)
+            setPrevPath('/admin_main')
             localStorage.setItem('token', token)
 
           } else {
@@ -132,10 +150,11 @@ export const AuthProvider = ({ children }) => {
           return response
         },
         // 登出
-        logout: () => {
+        logout: (msg='') => {
           localStorage.removeItem('token')
           setPayload(null)
           setHasToken(false)
+          setLogoutAlertMsg(msg)
         },
         // 上一頁路徑
         prevPath

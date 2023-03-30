@@ -123,7 +123,10 @@ const BasePage = ({showPopularList = true}) => {
       </StyledWrap>
 
       {showTweetModal && createPortal(
-        <TweetModal onClose={() => setShowTweetModal(false)}/>,
+        <TweetModal
+          onClose={() => setShowTweetModal(false)}
+          userInfo={currentRegistrant}
+        />,
         document.body
       )}
     </StyledContainer>

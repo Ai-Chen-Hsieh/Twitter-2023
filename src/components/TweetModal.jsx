@@ -39,7 +39,7 @@ const StyledTweetModal = styled.div`
     }
 `
 
-const TweetModal = ({onClose}) => {
+const TweetModal = ({onClose, userInfo}) => {
     const [ inputValue, setInputValue ] = useState('')
     const [ errorMessage, setErrorMessage ] = useState('')
 
@@ -67,12 +67,8 @@ const TweetModal = ({onClose}) => {
                         <ModalCloseButton onClick={onClose}/>
                     </ModalHeader>
                     <ModalContent>
-                        <TweetInput 
-                            onChange={handleChange} 
-                            >
-                            <Avatar
-                                imageUrl="https://picsum.photos/id/237/200/300"
-                            />
+                        <TweetInput onChange={handleChange} >
+                            <Avatar imageUrl={userInfo.avatar} />
                         </TweetInput>
                     </ModalContent>
                     <ModalFooter>
