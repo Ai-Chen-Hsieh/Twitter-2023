@@ -1,13 +1,21 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "contexts/AuthContext"
 import { createPortal } from "react-dom"
-import { getTweets, likeTweet, unlikeTweet } from "api/tweets"
+import { getTweets, likeTweet, unlikeTweet, replyTweet } from "api/tweets"
 import styled from "styled-components" 
-import { Header, TweetList, TweetModal, UserTweet } from "components"
+import { Header, TweetList, TweetModal, UserTweet, ReplyModal } from "components"
+import Swal from "sweetalert2"
 
 const StyledMainContainer = styled.div`
     height:100%;
     border:1px solid var(--gray-20);
+`
+
+const StyledErrorMsg = styled.p`
+    padding: 32px 16px;
+    text-align: center;
+    font-weight: 700;
+    color: var(--secondary);
 `
 
 /**
@@ -15,7 +23,11 @@ const StyledMainContainer = styled.div`
  * @returns 
  */
 const MainPage = () => {
-    const [tweets, setTweets] = useState([])
+    const [ tweets, setTweets ] = useState([])
+    const [ emptyMsg, setEmptyMsg ] = useState('')
+    const [ showReplyModal, setShowReplyModal ] = useState(false)
+    const [ tweetForReplyModal, setTweetForReplyModal ] = useState(null)
+    const [ replyTweetResAlert, setReplyTweetResAlert] = useState(null)
     const [ showTweetModal, setShowTweetModal ] = useState(false)
     const { logout, currentRegistrant } = useAuth()
 
@@ -36,6 +48,9 @@ const MainPage = () => {
                         }
                     })
                     setTweets(tweets)
+
+                } else {
+                    setEmptyMsg(response.data.message)
                 }
 
             } catch (error) {
@@ -46,6 +61,20 @@ const MainPage = () => {
         getTweetsAsync()
     },[logout])
 
+    // 顯示回覆推文成功與否的彈跳視窗
+    useEffect(() => {
+        if (replyTweetResAlert) {
+            Swal.fire({
+                title: replyTweetResAlert.title,
+                icon: replyTweetResAlert.icon,
+                html: (replyTweetResAlert.html) ? replyTweetResAlert.html : '',
+                showConfirmButton: false,
+                timer: 3000,
+                position: 'top',
+            });
+        }
+    }, [replyTweetResAlert])
+    
     // 處理收藏/取消收藏推文
     async function handleLikeToggle(id) {
         const currentItem = tweets.find(tweet => tweet.id === id )
@@ -107,6 +136,59 @@ const MainPage = () => {
         }
     }
 
+    // 處理顯示回覆彈跳視窗
+    function handleShowReplyModal (tweet) {
+        setTweetForReplyModal(tweet)
+        setShowReplyModal(true)
+    }
+
+    // 處理回覆推文
+    async function handleReplyTweet({ tweetId, comment }){
+        try {
+            const response = await replyTweet({
+                tweetId,
+                comment
+            })
+            const logoutStatus = [401, 403]
+            
+            if (logoutStatus.includes(response.status)) {
+                logout(response.data.message)
+
+            } else if (response.status === 200) {
+                setReplyTweetResAlert({
+                    title: '回覆成功!',
+                    icon: 'success',
+                    html: `<p>${response.data.message}</p>`
+                })
+                setShowReplyModal(false)
+
+                const currentItem = tweets.find(tweet => tweet.id === tweetId )
+                setTweets((prevTweets) => {
+                    return prevTweets.map((tweet) => {
+                        if (tweet.id === tweetId) {
+                            return{
+                                ...tweet,
+                                repliedCount: currentItem.repliedCount + 1 
+                            }
+                        }
+                        return tweet
+                    })
+                })
+
+            } else {
+                setReplyTweetResAlert({
+                    title: '回覆失敗!',
+                    icon: 'error',
+                    html: `<p>${response.data.message}</p>`
+                })
+                setShowReplyModal(false)
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     function handleClick(){
         setShowTweetModal(true)
     }
@@ -120,12 +202,29 @@ const MainPage = () => {
                     onClick={handleClick}
                     onLikeToggle={handleLikeToggle}
                 />
-                <TweetList
-                    tweetList={tweets}
-                    userInfo={currentRegistrant}
-                    onLikeToggle={handleLikeToggle}
-                />
+                {
+                    (emptyMsg.length > 0) ? 
+                    <StyledErrorMsg>{emptyMsg}</StyledErrorMsg> : 
+                    <TweetList
+                        tweetList={tweets}
+                        onLikeToggle={handleLikeToggle}
+                        onShowReplyModal={handleShowReplyModal}
+                    />
+                }
             </StyledMainContainer>
+
+            {/* 回覆彈跳視窗 */}
+            {(showReplyModal && tweetForReplyModal) && createPortal(
+                <ReplyModal 
+                    userInfo={currentRegistrant}
+                    tweet={tweetForReplyModal}
+                    onClose={() => setShowReplyModal(false)}
+                    onReplyTweet={handleReplyTweet}
+                />,
+                document.body
+            )}
+
+            {/* 推文彈跳視窗 */}
             {showTweetModal && createPortal(
                 <TweetModal
                     onClose={() => setShowTweetModal(false)}
