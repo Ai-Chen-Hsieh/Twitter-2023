@@ -4,7 +4,6 @@ import { createPortal } from "react-dom"
 import { getTweets, likeTweet, unlikeTweet } from "api/tweets"
 import styled from "styled-components" 
 import { Header, TweetList, TweetModal, UserTweet } from "components"
-import Swal from "sweetalert2"
 
 const StyledMainContainer = styled.div`
     height:100%;
@@ -17,24 +16,8 @@ const StyledMainContainer = styled.div`
  */
 const MainPage = () => {
     const [tweets, setTweets] = useState([])
-    const [logoutMsg, setLogoutMsg] = useState('')
     const [ showTweetModal, setShowTweetModal ] = useState(false)
     const { logout, currentRegistrant } = useAuth()
-
-    // 當呼叫 API 回傳 status 是 401, 403 則登出
-    useEffect(() => {
-        if (logoutMsg.length > 0) {
-            Swal.fire({
-                title: '請重新登入!',
-                icon: 'info',
-                html: `<p>${logoutMsg}</p>`,
-                showConfirmButton: false,
-                timer: 3000,
-                position: 'top',
-            });
-            logout()
-        }
-    }, [logoutMsg, logout])
 
     // 取得推文清單
     useEffect(() => {
@@ -44,7 +27,7 @@ const MainPage = () => {
                 const logoutStatus = [401, 403]
                 
                 if (logoutStatus.includes(response.status)) {
-                    setLogoutMsg(response.data.message)
+                    logout(response.data.message)
 
                 } else if (response.status === 200) {
                     const tweets = response.data.map((tweet) => {
@@ -61,7 +44,7 @@ const MainPage = () => {
         }
 
         getTweetsAsync()
-    },[])
+    },[logout])
 
     // 處理收藏/取消收藏推文
     async function handleLikeToggle(id) {
@@ -74,7 +57,7 @@ const MainPage = () => {
                 const logoutStatus = [401, 403]
                 
                 if (logoutStatus.includes(response.status)) {
-                    setLogoutMsg(response.data.message)
+                    logout(response.data.message)
 
                 } else if (response.status === 200) {
                     setTweets((prevTweets) => {
@@ -101,7 +84,7 @@ const MainPage = () => {
                 const logoutStatus = [401, 403]
                 
                 if (logoutStatus.includes(response.status)) {
-                    setLogoutMsg(response.data.message)
+                    logout(response.data.message)
 
                 } else if (response.status === 200) {
                     setTweets((prevTweets) => {

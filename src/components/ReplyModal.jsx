@@ -103,23 +103,7 @@ const ReplyModal = ({userInfo, tweet ,onClose}) => {
     const [ inputValue, setInputValue ] = useState('')
     const [ errorMessage, setErrorMessage] = useState('')
     const [ replyTweetResAlert, setReplyTweetResAlert] = useState(null)
-    const [logoutMsg, setLogoutMsg] = useState('')
     const { logout } = useAuth()
-
-    // 當呼叫 API 回傳 status 是 401, 403 則登出
-    useEffect(() => {
-        if (logoutMsg.length > 0) {
-            Swal.fire({
-                title: '請重新登入!',
-                icon: 'info',
-                html: `<p>${logoutMsg}</p>`,
-                showConfirmButton: false,
-                timer: 3000,
-                position: 'top',
-            });
-            logout()
-        }
-    }, [logoutMsg, logout])
 
     // 顯示新增回覆成功與否的彈跳視窗
     useEffect(() => {
@@ -151,7 +135,7 @@ const ReplyModal = ({userInfo, tweet ,onClose}) => {
                 const logoutStatus = [401, 403]
                 
                 if (logoutStatus.includes(response.status)) {
-                    setLogoutMsg(response.data.message)
+                    logout(response.data.message)
 
                 } else if (response.status === 200) {
                     setReplyTweetResAlert({
