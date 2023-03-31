@@ -152,7 +152,6 @@ const UserEditModal = ({onClose, userInfo}) => {
              [e.target.name]: e.target.value
             }
          })
-
     }
 
     
@@ -184,7 +183,11 @@ const UserEditModal = ({onClose, userInfo}) => {
                             <StyledBannerContainer>
                                 <BannerCoverMask htmlFor="bannerInput">
                                     <StyledPhoto />
-                                    <StyledUserBanner src={userInfo.cover}/>
+                                    <StyledUserBanner 
+                                        name='name'
+                                        src={info.cover}
+                                        onChange={handleChange}
+                                        />
                                     <input name="bannerInput" id="bannerInput" type="file" accept="image/png, image/jpeg, image/jpg" />
                                 </BannerCoverMask>
                             </StyledBannerContainer>
@@ -192,7 +195,11 @@ const UserEditModal = ({onClose, userInfo}) => {
                                 <AvatarCoverMask htmlFor="avatarInput">
                                     <StyledPhoto/>                        
                                 </AvatarCoverMask>
-                                <Avatar imageUrl={userInfo.avatar}/>
+                                <Avatar    
+                                    name='introduction'
+                                    imageUrl={info.avatar}
+                                    onChange={handleChange}
+                                    />
                                 <input name="avatarInput" id="avatarInput" type="file" accept="image/png, image/jpeg, image/jpg" />
                             </StyledAvatarContainer>
                         </StyledUserProfile>
