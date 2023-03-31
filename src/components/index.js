@@ -34,6 +34,7 @@ import UserPageFollowerList from "./UserPageFollowerList";
 import UserPageFollowingList from "./UserPageFollowingList";
 import TweetInput from "./TweetInput"
 
+import TextArea from "./TextArea"
 export { 
     AdminTweetItem,
     AdminTweetList, 
@@ -69,5 +70,6 @@ export {
     UserPageLikeList,
     UserPageFollowerList,
     UserPageFollowingList,
+    TextArea,
     TweetInput
 }
