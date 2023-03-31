@@ -1,8 +1,6 @@
 import styled from "styled-components"
-import { useState } from "react"
-import { createPortal } from "react-dom"
 import { Link } from "react-router-dom"
-import { Avatar, ReplyModal } from "."
+import { Avatar } from "."
 import { ReactComponent as Comment } from "assets/images/comment.svg"
 import { ReactComponent as Like } from "assets/images/like.svg"
 import { ReactComponent as Liked } from "assets/images/liked.svg"
@@ -106,6 +104,12 @@ const StyledComment = styled(Comment)`
     }
 `
 
+const StyledLikeWrap = styled.button`
+    display: inline-block;
+    border: none;
+    background-color: transparent;
+`
+
 const StyledLike = styled(Like)`
     width: 25px;
     height: 25px;
@@ -126,73 +130,71 @@ const StyledLiked = styled(Liked)`
     }
 `
 
-const Tweet = ({tweet, userInfo, onToggleLike}) => {
-    const [ showReplyModal, setShowReplyModal ] = useState(false)     
-
-    if(typeof tweet === 'string' ){
-        return(
+/**
+ * 推文
+ * @param {object} tweet - 推文資訊
+ * @param {function} onToggleLike - 處理收藏/取消收藏推文
+ * @param {function} onShowReplyModal - 處理顯示回覆彈跳視窗
+ * @returns 
+ */
+const Tweet = ({tweet, onToggleLike, onShowReplyModal}) => {
+    if ( typeof tweet === 'string' ){
+        return (
             <StyledTweetContainer>
                 <h1>找不到推文</h1>
             </StyledTweetContainer>
         )
-    }else{
+
+    } else {
         return (
-            <>
-                <StyledTweetContainer>
-                    <StyledAuthInfoBlock>
-                        <StyledAvatar to={`/user/${tweet.UserId}`}>
-                            <Avatar 
-                                imageUrl={tweet.avatar}
-                            />
-                        </StyledAvatar>
-                        <StyledAuthInfo>
-                            <StyledName to={`/user/${tweet.UserId}`}>
-                                {tweet.name}
-                            </StyledName>
-                            <StyledAccount>
-                                @{tweet.account}
-                            </StyledAccount>
-                        </StyledAuthInfo>
-                    </StyledAuthInfoBlock>
-                    <StyledTweet>
-                        {tweet.description}
-                    </StyledTweet>
-                    <StyledCreatedAt>
-                            {tweet.createdAt}
-                        </StyledCreatedAt>
-                    <StyledCountBlock>
-                        <StyledCount>
-                            <span className="count">{tweet.repliedCount}</span>
-                            回覆
-                            </StyledCount>
-                        <StyledCount>
-                            <span className="count">{tweet.likedCount}</span>
-                            喜歡次數
-                            </StyledCount>
-                    </StyledCountBlock>
-                    <StyledReplyIconBlock>
-                        <StyledComment 
-                            onClick={()=>{
-                                setShowReplyModal(true)
-                            }}
+            <StyledTweetContainer>
+                <StyledAuthInfoBlock>
+                    <StyledAvatar to={`/user/${tweet.UserId}`}>
+                        <Avatar 
+                            imageUrl={tweet.avatar}
                         />
-                        {tweet.isLike ? 
-                        (<StyledLiked 
-                            onClick={onToggleLike}
-                        /> ) : 
-                        (  <StyledLike 
-                            onClick={onToggleLike}
-                        /> )}
-                    </StyledReplyIconBlock>
-                </StyledTweetContainer>
-                {showReplyModal && createPortal(
-                    <ReplyModal
-                        userInfo={userInfo}
-                        tweet={tweet}
-                        onClose={()=> setShowReplyModal(false)}/>,
-                    document.body
-                )}
-            </>
+                    </StyledAvatar>
+                    <StyledAuthInfo>
+                        <StyledName to={`/user/${tweet.UserId}`}>
+                            {tweet.name}
+                        </StyledName>
+                        <StyledAccount>
+                            @{tweet.account}
+                        </StyledAccount>
+                    </StyledAuthInfo>
+                </StyledAuthInfoBlock>
+                <StyledTweet>
+                    {tweet.description}
+                </StyledTweet>
+                <StyledCreatedAt>
+                        {tweet.createdAt}
+                    </StyledCreatedAt>
+                <StyledCountBlock>
+                    <StyledCount>
+                        <span className="count">{tweet.repliedCount}</span>
+                        回覆
+                    </StyledCount>
+                    <StyledCount>
+                        <span className="count">{tweet.likedCount}</span>
+                        喜歡次數
+                    </StyledCount>
+                </StyledCountBlock>
+                <StyledReplyIconBlock>
+                    <StyledComment 
+                        onClick={() => {
+                           onShowReplyModal?.(tweet)
+                        }}
+                    />
+                    
+                    <StyledLikeWrap
+                        onClick={() => {
+                            onToggleLike?.(tweet)
+                        }}
+                    >
+                        { tweet.isLike ? (<StyledLiked /> ) : (<StyledLike /> ) }
+                    </StyledLikeWrap>
+                </StyledReplyIconBlock>
+            </StyledTweetContainer>
         )
     }
  

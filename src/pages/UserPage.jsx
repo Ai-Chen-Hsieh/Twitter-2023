@@ -5,17 +5,10 @@ import { useAuth } from "contexts/AuthContext"
 import { getUserTweets } from "api/userTweets"
 import { likeTweet, unlikeTweet, replyTweet } from "api/tweets"
 import { getUserInfo } from "../api/api_userPageInfo";
-import { addFollowing, cancelFollowing } from "../api/api_followShip"
-import styled from "styled-components"
 import { UserHeader, TabList, TabItem, UserProfile, TweetList, ReplyModal } from "components"
+import { addFollowing, cancelFollowing } from "../api/api_followShip"
+import { ResponseEmpty } from "components/common/response.styled"
 import Swal from "sweetalert2"
-
-const StyledErrorMsg = styled.p`
-    padding: 32px 16px;
-    text-align: center;
-    font-weight: 700;
-    color: var(--secondary);
-`
 
 /**
  * [前台] 使用者資料頁（推文）
@@ -284,7 +277,7 @@ const UserPage = () => {
             </TabList>
             {
                 (emptyMsg.length > 0) ? 
-                <StyledErrorMsg>{emptyMsg}</StyledErrorMsg> : 
+                <ResponseEmpty>{emptyMsg}</ResponseEmpty> : 
                 <TweetList
                     tweetList={tweets}
                     onLikeToggle={handleLikeToggle}
