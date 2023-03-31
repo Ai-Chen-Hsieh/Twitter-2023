@@ -52,13 +52,13 @@ const FollowItem = ({item, onToggleFollow}) => {
           <StyledFollowButtonWrapper>
             { item.isFollowing ?
               <Button 
-                 text='正在跟隨'
+                 text='正在追隨'
                  onClick = {(e) => {
                    onToggleFollow(item.followId)
                  }}        
               /> :
               <Button 
-                 text ='跟隨' 
+                 text ='追隨' 
                  styled ='outlined'
                  onClick = {(e) => {
                    onToggleFollow(item.followId)

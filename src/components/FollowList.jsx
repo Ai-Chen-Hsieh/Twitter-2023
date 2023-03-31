@@ -5,11 +5,14 @@ import { FollowItem } from '.'
 const StyledFollowList = styled.div`
   width: 100%;
   height: 100%;
+  h6 {
+    color: var(--dark-80);
+    padding: 4rem;
+  };
 `
 
-
 const FollowList = ({followList, onToggleFollow}) => {
-    //若有跟隨者顯示清單
+    //若有追隨資料則顯示清單
     if (followList.length !== 0){
         return(
         <StyledFollowList>
@@ -26,9 +29,9 @@ const FollowList = ({followList, onToggleFollow}) => {
     )
     }else{
       return (
-      //若無跟隨者顯示"尚未有任何跟隨"
+      //若無追隨資料顯示"尚未有任何追隨"
          <StyledFollowList>
-           <h5>尚未有任何跟隨</h5>
+           <h6>尚未有任何追隨</h6>
          </StyledFollowList>
     )
   }

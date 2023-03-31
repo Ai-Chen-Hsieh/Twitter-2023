@@ -27,3 +27,4 @@ export const cancelFollowing = async (id) => {
         console.error(error)
     }
 }
+
