@@ -1,9 +1,9 @@
-//需要用到userProfile的頁面需加上isFollowing參數
-
 import styled from "styled-components"
-import { Button, Avatar } from "."
+import { Button, Avatar, UserEditModal } from "."
 import { useNavigate, useParams } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
+import { createPortal } from "react-dom"
+import { useState } from "react"
 
 
 const StyledUserProfileContainer = styled.div`
@@ -91,10 +91,20 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
   const navigate = useNavigate();
   const { user_id } = useParams();
   const { currentRegistrant } = useAuth()
+  const [ showEditModal, setShowEditModal ] = useState(false)
+
+  const userProfileInfo = {
+    name: name,
+    account: account,
+    avatar: imageUrl,
+    cover: backgroundImageUrl,
+    introduction: description
+  }
   //是否正在瀏覽自己的個人頁面
   const isPageOwner = Number(user_id) === currentRegistrant.id
   
     return (
+      <>
         <StyledUserProfileContainer>
           <div className="background-image">
             <img src={backgroundImageUrl} alt='' />
@@ -103,7 +113,11 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
             <Avatar imageUrl={imageUrl}/>
           </div>
           {isPageOwner ? (
-            <StyledButtonWrapper>
+            <StyledButtonWrapper
+              onClick={()=>{
+                setShowEditModal(true)
+              }}
+            >
               <Button text='編輯個人資料' styled='outlined'/>
             </StyledButtonWrapper>
           ) : (
@@ -137,6 +151,13 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
              </StyledUserInfo>   
            </StyledUserInfoContainer>          
         </StyledUserProfileContainer>
+        {showEditModal && createPortal(
+            <UserEditModal 
+              userInfo={userProfileInfo}
+              onClose={() => setShowEditModal(false)}/>,
+            document.body
+          )}
+      </>
     )
 };
 

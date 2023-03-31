@@ -3,6 +3,8 @@ import styled from "styled-components"
 import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalTitle, ModalContent,  } from "../components/common/modal.styled";
 import { Avatar, Button, Input, TextArea } from ".";
 import { ReactComponent as Photo } from "assets/images/icon_image.svg"
+import { editUserProfile } from "../api/api_editModal";
+import { useParams } from "react-router-dom";
 
 const StyledEditContainer = styled.div`
     min-height: 500px;
@@ -107,18 +109,27 @@ const BannerCoverMask = styled.label`
         position: absolute;
     }
 `
-const UserEditModal = ({onClose, userInfo}) => {
 
-    //假資料
+const UserEditModal = ({onClose, userInfo}) => {
+    const { user_id } = useParams()
     const [ info, setInfo ] = useState(userInfo)
     const [ inputError, setInputError ] = useState({
         name: '',
         introduction: ''
     })
-    //avatar&cover資料
+    //預覽avatar&cover資料
     const [previewCoverUrl, setPreviewCoverUrl] = useState(info.cover)
     const [previewAvatarUrl, setPreviewAvatarUrl] = useState(info.avatar)
 
+    const submitUserInfoData = () => {
+        const form = new FormData();
+        
+        form.append('name', info.name)
+        form.append('introduction', info.introduction)
+        form.append('avatar', info.avatar)
+        form.append('cover', info.cover)
+        return form
+    }
     //處理名稱&自我介紹欄位input
     function handleChange(e){
         if(e.target.value.length === 50){
@@ -158,13 +169,15 @@ const UserEditModal = ({onClose, userInfo}) => {
          })
     }
     //處理儲存按鈕
-    function handleClick (e){
+    async function handleClick (e){
         const {name, introduction } = inputError
         if((name.length > 0) || (introduction.length > 0)){
             console.log('error')
             return
         } else {
             console.log('save')
+            const editUserProfileAsync = await editUserProfile(user_id, submitUserInfoData())
+            console.log(editUserProfileAsync)
             onClose()
         }
     }
@@ -172,6 +185,14 @@ const UserEditModal = ({onClose, userInfo}) => {
     function handleCoverFileUpload (e) {
         const file = e.target.files[0]
         console.log(file)
+
+        //將圖片資訊存入userinfo
+        setInfo((prevInfo)=>{
+            return{
+                ...prevInfo,
+                cover: file
+            }
+        })
 
         if (file) {
             const reader = new FileReader()
@@ -190,6 +211,14 @@ const UserEditModal = ({onClose, userInfo}) => {
     function handleAvatarFileUpload (e) {
         const file = e.target.files[0]
         console.log(file)
+
+        //將圖片資訊存入userinfo
+        setInfo((prevInfo)=>{
+            return{
+                ...prevInfo,
+                avatar: file
+            }
+        })
 
         if (file) {
             const reader = new FileReader()
