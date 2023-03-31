@@ -16,41 +16,29 @@ const UserPageFollowerList = () => {
     const [ userInfo, setUserInfo ] = useState('')
     const [userFollowerList, setUserFollowerList] = useState('')
        
-    function handleFollow(followerId) {
-         setUserFollowerList((users) => {
-            return users.map((user) => {
-              if(user.followerId === followerId) {
-                return {
-                 ...user,
-                 isFollowing: !user.isFollowing
-                }
-              }
-              return user
-            })
-        }) 
-    }
+   
+    useEffect(()=> {
 
-    useEffect(()=>{
+        // 取得使用者資訊
         const getUserInfoAsync = async () => {
             try{
                 const userInfoResponse = await getUserInfo(user_id)
                 if(userInfoResponse.status === 200){
                     setUserInfo(userInfoResponse.data)
-                // } else {
-                //     setUserInfo(()=>{
-                //         return{
-                //             name: 'not found',
-                //             tweetCount: 'not found',
-                //             account: 'not found',
-                //             description: 'not found',
-                //             backgroundImageUrl: 'not found',
-                //             imageUrl:'not found',
-                //             followingCount: 'not found',
-                //             followerCount: 'not found',
-                //         }
-                //     })
-                // }
-            }
+                } else {
+                    setUserInfo(()=>{
+                        return{
+                            name: 'not found',
+                            tweetCount: 'not found',
+                            account: 'not found',
+                            description: 'not found',
+                            backgroundImageUrl: 'not found',
+                            imageUrl:'not found',
+                            followingCount: 'not found',
+                            followerCount: 'not found',
+                        }
+                    })
+                }
             }catch(error){
                 console.error(error)
             }
@@ -67,9 +55,9 @@ const UserPageFollowerList = () => {
                             ...userFollowerList.data
                         ]
                     })
-                } // }  else{
-                //     return
-                // }
+                } else {
+                   return
+                }
             }catch(error){
                 console.error(error)
             }
@@ -77,6 +65,21 @@ const UserPageFollowerList = () => {
         getUserInfoAsync()
         getUserFollowerAsync()
     },[user_id])
+
+
+     function handleFollow(followerId) {
+         setUserFollowerList((followers) => {
+            return followers.map((follower) => {
+              if(follower.followerId === followerId) {
+                return {
+                 ...follower,
+                 isFollowing: !follower.isFollowing
+                }
+              }
+              return follower
+            })
+        }) 
+    }
   
     return (
         <>
@@ -88,7 +91,7 @@ const UserPageFollowerList = () => {
                 <TabItem to={`/user/${user_id}/follower`} text="追隨者" />
                 <TabItem to={`/user/${user_id}/following`} text="正在追隨" />
             </TabList>
-          <FollowList followerList={userFollowerList} onToggleFollow={handleFollow}/>
+          <FollowList followList={userFollowerList} onToggleFollow={handleFollow}/>
         </>
     )
 }
