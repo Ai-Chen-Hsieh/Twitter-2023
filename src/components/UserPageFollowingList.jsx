@@ -65,10 +65,10 @@ const UserPageFollowingList = () => {
     },[user_id])
 
 
-    function handleFollow(followingId) {
+    function handleFollow(followId) {
         setUserFollowingList((followings) => {
             return followings.map((following) => {
-              if(following.followingId ===  followingId) {
+              if(following.followId ===  followId) {
                 return {
                  ...following,
                  isFollowing: !following.isFollowing
@@ -86,8 +86,8 @@ const UserPageFollowingList = () => {
                 tweetCount={userInfo.tweetCount}
             />
             <TabList>
-                <TabItem to={`/user/${user_id}/follower`} text="追隨者" />
-                <TabItem to={`/user/${user_id}/following`} text="正在追隨" />
+                <TabItem to={`/user/${user_id}/followers`} text="追隨者" />
+                <TabItem to={`/user/${user_id}/followings`} text="正在追隨" />
             </TabList>
             <FollowList followList={userFollowingList} onToggleFollow={handleFollow}/>
         </>
