@@ -37,7 +37,7 @@ const StyledSideBarContainer = styled.div`
 const StyledMain = styled.div`
   position: relative;
   border-left: 1px solid var(--gray-20);
-  min-height: 200vh;
+  min-height: 110vh;
   width: 100%;
   max-width: calc(100% - 202px);
 `
