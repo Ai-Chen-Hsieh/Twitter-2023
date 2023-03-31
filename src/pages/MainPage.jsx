@@ -4,18 +4,12 @@ import { createPortal } from "react-dom"
 import { getTweets, likeTweet, unlikeTweet, replyTweet } from "api/tweets"
 import styled from "styled-components" 
 import { Header, TweetList, TweetModal, UserTweet, ReplyModal } from "components"
+import { ResponseEmpty } from "components/common/response.styled"
 import Swal from "sweetalert2"
 
 const StyledMainContainer = styled.div`
     height:100%;
     border:1px solid var(--gray-20);
-`
-
-const StyledErrorMsg = styled.p`
-    padding: 32px 16px;
-    text-align: center;
-    font-weight: 700;
-    color: var(--secondary);
 `
 
 /**
@@ -204,7 +198,7 @@ const MainPage = () => {
                 />
                 {
                     (emptyMsg.length > 0) ? 
-                    <StyledErrorMsg>{emptyMsg}</StyledErrorMsg> : 
+                    <ResponseEmpty>{emptyMsg}</ResponseEmpty> : 
                     <TweetList
                         tweetList={tweets}
                         onLikeToggle={handleLikeToggle}
