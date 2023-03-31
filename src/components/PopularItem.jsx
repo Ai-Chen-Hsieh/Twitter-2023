@@ -31,7 +31,7 @@ const StyledPopularItem = styled.div`
     .popular-item-content{
         display: flex;
         flex-direction: column;
-        flex:1;
+        max-width: 100px;
         margin: 0 7px;
         .name{
             color: var(--dark-100);
@@ -62,7 +62,7 @@ const StyledPopularItem = styled.div`
 
 const StyledButton = styled.div`
     text-align: end;
-    width: 96px;
+    min-width: 96px;
 `
 
 
