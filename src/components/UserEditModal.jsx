@@ -115,7 +115,11 @@ const UserEditModal = ({onClose, userInfo}) => {
         name: '',
         introduction: ''
     })
+    //avatar&cover資料
+    const [previewCoverUrl, setPreviewCoverUrl] = useState(info.cover)
+    const [previewAvatarUrl, setPreviewAvatarUrl] = useState(info.avatar)
 
+    //處理名稱&自我介紹欄位input
     function handleChange(e){
         if(e.target.value.length === 50){
             setInputError((prevError)=>{
@@ -153,8 +157,7 @@ const UserEditModal = ({onClose, userInfo}) => {
             }
          })
     }
-
-    
+    //處理儲存按鈕
     function handleClick (e){
         const {name, introduction } = inputError
         if((name.length > 0) || (introduction.length > 0)){
@@ -164,6 +167,42 @@ const UserEditModal = ({onClose, userInfo}) => {
             console.log('save')
             onClose()
         }
+    }
+    //處理預覽cover
+    function handleCoverFileUpload (e) {
+        const file = e.target.files[0]
+        console.log(file)
+
+        if (file) {
+            const reader = new FileReader()
+
+            reader.onload = (e) => {
+                setPreviewCoverUrl(e.target.result)
+            }
+            
+            reader.readAsDataURL(file);
+
+        } else {
+            setPreviewCoverUrl(null)
+        }        
+    }
+    //處理預覽avatar
+    function handleAvatarFileUpload (e) {
+        const file = e.target.files[0]
+        console.log(file)
+
+        if (file) {
+            const reader = new FileReader()
+
+            reader.onload = (e) => {
+                setPreviewAvatarUrl(e.target.result)
+            }
+            
+            reader.readAsDataURL(file);
+
+        } else {
+            setPreviewAvatarUrl(null)
+        }        
     }
 
     return (
@@ -185,10 +224,14 @@ const UserEditModal = ({onClose, userInfo}) => {
                                     <StyledPhoto />
                                     <StyledUserBanner 
                                         name='name'
-                                        src={info.cover}
-                                        onChange={handleChange}
+                                        src={previewCoverUrl}
                                         />
-                                    <input name="bannerInput" id="bannerInput" type="file" accept="image/png, image/jpeg, image/jpg" />
+                                    <input 
+                                        name="bannerInput" 
+                                        id="bannerInput" 
+                                        type="file" 
+                                        accept="image/png, image/jpeg, image/jpg"
+                                        onChange={handleCoverFileUpload} />
                                 </BannerCoverMask>
                             </StyledBannerContainer>
                             <StyledAvatarContainer>
@@ -197,10 +240,14 @@ const UserEditModal = ({onClose, userInfo}) => {
                                 </AvatarCoverMask>
                                 <Avatar    
                                     name='introduction'
-                                    imageUrl={info.avatar}
-                                    onChange={handleChange}
+                                    imageUrl={previewAvatarUrl}
                                     />
-                                <input name="avatarInput" id="avatarInput" type="file" accept="image/png, image/jpeg, image/jpg" />
+                                <input 
+                                    name="avatarInput" 
+                                    id="avatarInput" 
+                                    type="file" 
+                                    accept="image/png, image/jpeg, image/jpg"
+                                    onChange={handleAvatarFileUpload} />
                             </StyledAvatarContainer>
                         </StyledUserProfile>
                         <StyledEditBlock>
