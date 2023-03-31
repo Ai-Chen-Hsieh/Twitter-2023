@@ -26,7 +26,7 @@ const FollowList = ({followList, onToggleFollow}) => {
     )
     }else{
       return (
-        //若無跟隨者顯示"尚未有任何跟隨"
+      //若無跟隨者顯示"尚未有任何跟隨"
          <StyledFollowList>
            <h5>尚未有任何跟隨</h5>
          </StyledFollowList>
@@ -35,4 +35,3 @@ const FollowList = ({followList, onToggleFollow}) => {
 }
 
 export default FollowList
-
