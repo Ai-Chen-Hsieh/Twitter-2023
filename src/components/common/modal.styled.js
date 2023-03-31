@@ -10,6 +10,7 @@ const StyledModalWrapper = styled.div`
     top: 0;
     left: 0;
     right: 0;
+    z-index: 99;
 `
 
 const StyledModal = styled.div`
@@ -22,7 +23,6 @@ const StyledModal = styled.div`
     border-radius: 10px;
     background-color: var(--dark-0);
 
-    z-index: 99;
     /*position*/
     position: absolute;
     top: 50px;

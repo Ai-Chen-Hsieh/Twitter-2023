@@ -40,6 +40,7 @@ const StyledButtonWrapper =styled.div`
    position: absolute;
    right: 16px;
    top: 216px;
+   z-index: 1;
 `
       
 const StyledUserInfoContainer = styled.div`
@@ -72,14 +73,14 @@ const ButtonPanel = ({isFollowing}) => {
   if(isFollowing){
     return (
       <Button
-        text="正在追蹤"
+        text="正在追隨"
 
       />
     )
   }else {
     return(
       <Button
-        text="追蹤"
+        text="追隨"
         styled="outlined"
       />
     )
@@ -101,18 +102,21 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
           <div className="avatar">
             <Avatar imageUrl={imageUrl}/>
           </div>
-          <StyledButtonWrapper>
-            {isPageOwner ? (
+          {isPageOwner ? (
+            <StyledButtonWrapper>
               <Button text='編輯個人資料' styled='outlined'/>
-            ) : (
+            </StyledButtonWrapper>
+          ) : (
+            <StyledButtonWrapper
+              onClick={()=>{
+                onToggleFollow(user_id)
+              }}
+            >
               <ButtonPanel
                 isFollowing={isFollowing}
-                onClick={()=>{
-                  onToggleFollow(user_id)
-                }}
               />
-            )}
-          </StyledButtonWrapper>  
+            </StyledButtonWrapper>  
+          )}
           <StyledUserInfoContainer> 
              <StyledUserInfo>  
                <div className ="user-info">

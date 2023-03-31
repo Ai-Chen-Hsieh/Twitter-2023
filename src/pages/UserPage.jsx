@@ -77,7 +77,44 @@ const UserPage = () => {
 
     //處理追蹤使用者
     function handleFollowing (id) {
-        console.log(id)
+        //新增追蹤者
+        const addFollowingAsync = async () => {
+            const response = await addFollowing(id)
+            console.log(response)
+            //成功追蹤
+            if(response.status === 200){
+                setUserInfo((prevUserInfo)=>{
+                    return{
+                        ...prevUserInfo,
+                        isFollowing: !prevUserInfo.isFollowing
+                    }
+                })
+            }else{
+                return
+            }
+        }
+        //取消追蹤
+        const cancelFollowingAsync = async () => {
+            const response = await cancelFollowing(id)
+            console.log(response,"handle")
+            if(response.status === 200){
+                setUserInfo((prevUserInfo)=>{
+                    return{
+                        ...prevUserInfo,
+                        isFollowing: !prevUserInfo.isFollowing
+                    }
+                })
+            }else{
+                return
+            }
+        
+        }
+        //判斷是否追蹤
+        if(userInfo.isFollowing){
+            cancelFollowingAsync()
+        } else {
+            addFollowingAsync()
+        }
     }
 
     // 處理收藏/取消收藏推文

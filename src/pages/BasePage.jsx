@@ -62,6 +62,7 @@ const BasePage = ({showPopularList = true}) => {
   const { hasToken, currentRegistrant, logout } = useAuth()
   const [showTweetModal, setShowTweetModal] = useState(false)
   const [lists, setLists] = useState('')
+
   let navigate = useNavigate()
   
   //引入推薦者清單
@@ -83,7 +84,6 @@ useEffect(()=>{
       console.error(error)
     }
   }
-
   getPopularListAsync()
 },[])
 
