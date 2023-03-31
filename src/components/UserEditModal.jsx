@@ -1,7 +1,3 @@
-//尚未完成:
-//上傳圖片input type="file" 
-
-
 import { useState } from "react"
 import styled from "styled-components"
 import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalTitle, ModalContent,  } from "../components/common/modal.styled";
@@ -58,6 +54,12 @@ const StyledAvatarContainer = styled.div`
     left: 20px;
     transform: translateY(-50%);
     
+    // 隱藏input
+    #avatarInput{
+        visibility: hidden;
+        position: absolute;
+    }
+    
 `
 
 /**icon */
@@ -70,12 +72,14 @@ const StyledPhoto = styled(Photo)`
 
 `
 /**avatar mask遮罩 */
-const AvatarCoverMask = styled.div`
+const AvatarCoverMask = styled.label`
+    display: block;
     width: 100%;
     height: 100%;
     border-radius: 50%;
     position: absolute;
     z-index: 99;
+
     &:hover {
         background-color: rgba(0, 0, 0, 0.4);
         transition: background-color .2s ease-out;
@@ -87,7 +91,8 @@ const AvatarCoverMask = styled.div`
     }
 `
 /**banner mask遮罩 */
-const BannerCoverMask = styled.div`
+const BannerCoverMask = styled.label`
+    display:block;
     height: 200px;
     &:hover {
         background-color: rgba(0, 0, 0, 0.4);
@@ -98,14 +103,17 @@ const BannerCoverMask = styled.div`
             transition: display .2s ease-out;
         }
     }
+
+    // 隱藏input
+    #bannerInput{
+        visibility: hidden;
+        position: absolute;
+    }
 `
-const UserEditModal = () => {
+const UserEditModal = ({onClose, userInfo}) => {
+
     //假資料
-    const userInfo = dummyUserProfile
-    const [ info, setInfo ] = useState({
-        name: userInfo.name,
-        introduction: userInfo.introduction
-    })
+    const [ info, setInfo ] = useState(userInfo)
     const [ inputError, setInputError ] = useState({
         name: '',
         introduction: ''
@@ -152,7 +160,6 @@ const UserEditModal = () => {
 
     
     function handleClick (e){
-        console.log('click')
         const {name, introduction } = inputError
         if((name.length > 0) || (introduction.length > 0)){
             console.log('error')
@@ -166,7 +173,7 @@ const UserEditModal = () => {
         <ModalWrapper>
             <Modal>
                 <ModalHeader>
-                    <ModalCloseButton/>
+                    <ModalCloseButton onClick={onClose}/>
                     <ModalTitle>編輯個人資料</ModalTitle>
                     <Button 
                         text="儲存"
@@ -177,16 +184,18 @@ const UserEditModal = () => {
                     <StyledEditContainer>
                         <StyledUserProfile>
                             <StyledBannerContainer>
-                                <BannerCoverMask>
+                                <BannerCoverMask htmlFor="bannerInput">
                                     <StyledPhoto />
-                                    <StyledUserBanner src="https://picsum.photos/200/300/?blur=2"/>
+                                    <StyledUserBanner src={userInfo.cover}/>
+                                    <input name="bannerInput" id="bannerInput" type="file" accept="image/png, image/jpeg, image/jpg" />
                                 </BannerCoverMask>
                             </StyledBannerContainer>
                             <StyledAvatarContainer>
-                                <AvatarCoverMask>
+                                <AvatarCoverMask htmlFor="avatarInput">
                                     <StyledPhoto/>                        
                                 </AvatarCoverMask>
-                                <Avatar imageUrl="https://picsum.photos/200/300?grayscale"/>
+                                <Avatar imageUrl={userInfo.avatar}/>
+                                <input name="avatarInput" id="avatarInput" type="file" accept="image/png, image/jpeg, image/jpg" />
                             </StyledAvatarContainer>
                         </StyledUserProfile>
                         <StyledEditBlock>

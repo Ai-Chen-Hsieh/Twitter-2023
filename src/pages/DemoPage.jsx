@@ -12,6 +12,7 @@ import { dummyUserProfile } from "../testData/dummyUserProfile";
 const DemoPage = () => {
   const [showModal, setShowModal] = useState(false)
   const [ showReplyModal, setShowReplyModal ] = useState(false)
+  const [ showEditModal, setShowEditModal ] = useState(false)
 
   return (
     <div className="container">
@@ -41,10 +42,20 @@ const DemoPage = () => {
             <ReplyModal onClose={() => setShowReplyModal(false)}/>,
             document.body
           )}
+          <br />
+          <Button
+            text="編輯個人資料"
+             onClick={()=>{
+              setShowEditModal(true)
+            }}
+          />
+          {showEditModal && createPortal(
+            <UserEditModal 
+              userInfo={dummyUserProfile}
+              onClose={() => setShowEditModal(false)}/>,
+            document.body
+          )}
 
-
-          <UserEditModal 
-            userInfo={dummyUserProfile}/>
         </div>
       </div>
     </div>
