@@ -21,7 +21,7 @@ export const getFollower = async (id) => {
 
 export const getFollowing = async (id) => {
     try{
-        const res = await axiosInstance.get(`${baseUrl}/api/users/${id}/following`)
+        const res = await axiosInstance.get(`${baseUrl}/api/users/${id}/followings`)
         const response = {
             status: res.status,
             data: res.data
@@ -33,7 +33,7 @@ export const getFollowing = async (id) => {
             status: error.status,
             data: error.data
         }
-        console.error(error)
+        console.error(error)        
         return errorResponse
     }
 }
