@@ -4,9 +4,6 @@ import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalTitle, ModalCo
 import { Avatar, Button, Input, TextArea } from ".";
 import { ReactComponent as Photo } from "assets/images/icon_image.svg"
 
-//import 假資料
-import { dummyUserProfile } from "../testData/dummyUserProfile";
-
 const StyledEditContainer = styled.div`
     min-height: 500px;
     display: flex;
