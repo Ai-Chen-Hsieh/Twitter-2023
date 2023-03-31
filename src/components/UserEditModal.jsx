@@ -163,6 +163,7 @@ const UserEditModal = ({onClose, userInfo}) => {
             return
         } else {
             console.log('save')
+            onClose()
         }
     }
 
