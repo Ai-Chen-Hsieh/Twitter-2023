@@ -63,11 +63,33 @@ const StyledMain = styled.div`
  */
 const BasePage = ({showPopularList = true}) => {
   const { hasToken, currentRegistrant, logout } = useAuth()
-  const [ lists, setLists ] = useState('')
-  const [ newTweet, setNewTweet] = useState(null)
-  const [ showTweetModal, setShowTweetModal ] = useState(false)
-  const [ addTweetResAlert, setAddTweetResAlert ] = useState(null)
-  let navigate = useNavigate()
+const [ lists, setLists ] = useState('')
+const [ newTweet, setNewTweet] = useState(null)
+const [ showTweetModal, setShowTweetModal ] = useState(false)
+const [ addTweetResAlert, setAddTweetResAlert ] = useState(null)
+let navigate = useNavigate()
+  
+  //引入推薦者清單
+useEffect(()=>{
+  const getPopularListAsync = async () => {
+    try{
+      const response = await getPopularList();
+      //若未成功取得status不等於success，lists useState 保持為空陣列
+      if(response.status === 200){
+        setLists(()=>{
+          return[
+            ...response.data
+          ]
+        });
+      } else {
+        return
+      }
+    }catch(error){
+      console.error(error)
+    }
+  }
+  getPopularListAsync()
+},[])
 
   // 檢查是否有 token
   // 沒有 -> 登入頁

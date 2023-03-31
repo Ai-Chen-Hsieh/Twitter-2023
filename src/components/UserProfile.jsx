@@ -1,6 +1,9 @@
+//需要用到userProfile的頁面需加上isFollowing參數
+
 import styled from "styled-components"
 import { Button, Avatar } from "."
 import { useNavigate, useParams } from "react-router-dom"
+import { useAuth } from "../contexts/AuthContext"
 
 
 const StyledUserProfileContainer = styled.div`
@@ -24,10 +27,6 @@ const StyledUserProfileContainer = styled.div`
     border: 4px solid #fff;
     border-radius: 50%;
   }
-  .user-info {
-    width: 95px;
-    height: 48px;
-  }
 `
 
 const StyledUserInfo =styled.div`
@@ -41,10 +40,7 @@ const StyledButtonWrapper =styled.div`
    position: absolute;
    right: 16px;
    top: 216px;
-   z-index:1;
-   Button {
-     z-index: 99;  
-    }   
+   z-index: 1;
 `
       
 const StyledUserInfoContainer = styled.div`
@@ -73,10 +69,30 @@ const StyledFollowContainer = styled.div`
   }
 `
 
-const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, followingCount, followerCount}) => {
-  
+const ButtonPanel = ({isFollowing}) => {
+  if(isFollowing){
+    return (
+      <Button
+        text="正在追隨"
+
+      />
+    )
+  }else {
+    return(
+      <Button
+        text="追隨"
+        styled="outlined"
+      />
+    )
+  }
+}
+
+const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, followingCount, followerCount, isFollowing, onToggleFollow}) => {
   const navigate = useNavigate();
   const { user_id } = useParams();
+  const { currentRegistrant } = useAuth()
+  //是否正在瀏覽自己的個人頁面
+  const isPageOwner = Number(user_id) === currentRegistrant.id
   
     return (
         <StyledUserProfileContainer>
@@ -86,9 +102,21 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
           <div className="avatar">
             <Avatar imageUrl={imageUrl}/>
           </div>
-          <StyledButtonWrapper>
-            <Button text='編輯個人資料' styled='outlined'/>
-          </StyledButtonWrapper>  
+          {isPageOwner ? (
+            <StyledButtonWrapper>
+              <Button text='編輯個人資料' styled='outlined'/>
+            </StyledButtonWrapper>
+          ) : (
+            <StyledButtonWrapper
+              onClick={()=>{
+                onToggleFollow(user_id)
+              }}
+            >
+              <ButtonPanel
+                isFollowing={isFollowing}
+              />
+            </StyledButtonWrapper>  
+          )}
           <StyledUserInfoContainer> 
              <StyledUserInfo>  
                <div className ="user-info">

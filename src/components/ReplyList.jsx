@@ -9,6 +9,7 @@ const StyledReplyList = styled.div`
         font-size: 1.6rem;
         text-align: center;
         padding-top: 20px;
+        color: var(--secondary);
     }
 `
 
