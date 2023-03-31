@@ -1,12 +1,13 @@
 {
   "files": {
     "main.css": "/Twitter-2023/static/css/main.af06cc04.css",
-    "main.js": "/Twitter-2023/static/js/main.89b9e0ae.js",
+    "main.js": "/Twitter-2023/static/js/main.694e9b02.js",
     "static/js/787.f649083d.chunk.js": "/Twitter-2023/static/js/787.f649083d.chunk.js",
     "static/media/icon_setting.svg": "/Twitter-2023/static/media/icon_setting.c5b0a2ca7596d4af6e64b5079b43d0c9.svg",
     "static/media/ac-logo.svg": "/Twitter-2023/static/media/ac-logo.86cb7878aa3912fe7937c392959c88cb.svg",
     "static/media/icon_home.svg": "/Twitter-2023/static/media/icon_home.cd23a825145e8a6606bcb9061380d090.svg",
     "static/media/icon_log-out.svg": "/Twitter-2023/static/media/icon_log-out.5aca5b6e4583238eb30dd233d30664a1.svg",
+    "static/media/icon_image.svg": "/Twitter-2023/static/media/icon_image.6da3794d4502b6135dec05acd97fec25.svg",
     "static/media/icon_user.svg": "/Twitter-2023/static/media/icon_user.9f751244beb85673e745c1214fee09a2.svg",
     "static/media/comment.svg": "/Twitter-2023/static/media/comment.eb3675d8f832f6929f8834ca13ea5ff8.svg",
     "static/media/like.svg": "/Twitter-2023/static/media/like.c5e62fb966490545fbf36231b5b08da1.svg",
@@ -15,11 +16,11 @@
     "index.html": "/Twitter-2023/index.html",
     "static/media/liked.svg": "/Twitter-2023/static/media/liked.5e5d892842ae545d6d81b84cec2019b6.svg",
     "main.af06cc04.css.map": "/Twitter-2023/static/css/main.af06cc04.css.map",
-    "main.89b9e0ae.js.map": "/Twitter-2023/static/js/main.89b9e0ae.js.map",
+    "main.694e9b02.js.map": "/Twitter-2023/static/js/main.694e9b02.js.map",
     "787.f649083d.chunk.js.map": "/Twitter-2023/static/js/787.f649083d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.af06cc04.css",
-    "static/js/main.89b9e0ae.js"
+    "static/js/main.694e9b02.js"
   ]
 }
