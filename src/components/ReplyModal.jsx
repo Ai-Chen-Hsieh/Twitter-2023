@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalWarning } from "components/common/modal.styled";
-import { Button, Avatar, TweetInput } from ".";
+import { Button, Avatar, TweetInput, DateDiffFormatter } from ".";
 
 const StyledReplyContainer= styled.div`
     min-height: 150px;
@@ -80,12 +80,12 @@ const TweetContent = ({user}) => {
             <StyledReplyBlock>
                 <StyledUser>
                     <span className="name">{user.name}</span>
-                    <span className="account">@{user.account}·{user.createdAt}</span>
+                    <span className="account">@{user.account}・<DateDiffFormatter date={user.createdAt} /></span>
                 </StyledUser>
                 <StyledReplyContent>
                     {user.description}
                 </StyledReplyContent>
-                <StyledReplyTo>回覆給<span className="replyAccount">@{user.account}</span></StyledReplyTo>
+                <StyledReplyTo>回覆給<span className="replyAccount"> @{user.account}</span></StyledReplyTo>
 
             </StyledReplyBlock>
         </StyledReplyContainer>

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Avatar } from "."
+import { Avatar, DateDiffFormatter } from "."
 import { ReactComponent as Comment } from "assets/images/comment.svg"
 import { ReactComponent as Like } from "assets/images/like.svg"
 import { ReactComponent as Liked } from "assets/images/liked.svg"
@@ -142,7 +142,7 @@ const TweetItem = ({item, onLikeToggle, onShowReplyModal}) => {
                         >
                             {item.name}
                         </Link>
-                        <span className="account">@{item.account} · {item.createdAt}</span>
+                        <span className="account">@{item.account}・<DateDiffFormatter date={item.createdAt}/></span>
                     </div>
 
                     <Link

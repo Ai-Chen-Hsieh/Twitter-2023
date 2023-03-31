@@ -5,6 +5,7 @@ import { LikeIcon, TweetIcon } from "assets/images"
 
 const StyledUserItem = styled.div`
     width: 100%;
+    height: 100%;
     border-radius: 10px;
     overflow: hidden;
     background-color: #F6F7F8;
@@ -32,6 +33,7 @@ const StyledUserItemBody = styled.div`
     position: relative;
     padding: 24px;
     text-align:center;
+    word-break: break-all;
 `
 
 const StyledUserAvatarWrap = styled.div`

@@ -4,6 +4,7 @@ import AdminUserItem from "./AdminUserItem";
 import AdminUserList from "./AdminUserList";
 import Avatar from "./Avatar";
 import Button from "./Button";
+import DateDiffFormatter from "./DateDiffFormatter";
 import FollowItem from "./FollowItem";
 import FollowList from "./FollowList";
 import Header from "./Header";
@@ -42,6 +43,7 @@ export {
     AdminUserList, 
     Avatar,
     Button,
+    DateDiffFormatter,
     FollowItem,
     FollowList,
     Header,
