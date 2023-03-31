@@ -5,6 +5,7 @@ import { useAuth } from "contexts/AuthContext"
 import { getUserTweets } from "api/userTweets"
 import { likeTweet, unlikeTweet, replyTweet } from "api/tweets"
 import { getUserInfo } from "../api/api_userPageInfo";
+import { addFollowing, cancelFollowing } from "../api/api_followShip"
 import styled from "styled-components"
 import { UserHeader, TabList, TabItem, UserProfile, TweetList, ReplyModal } from "components"
 import Swal from "sweetalert2"
@@ -73,6 +74,11 @@ const UserPage = () => {
             });
         }
     }, [replyTweetResAlert])
+
+    //處理追蹤使用者
+    function handleFollowing (id) {
+        console.log(id)
+    }
 
     // 處理收藏/取消收藏推文
     async function handleLikeToggle(id) {
@@ -231,6 +237,8 @@ const UserPage = () => {
                 imageUrl={userInfo.avatar}
                 followingCount={userInfo.followingCount}
                 followerCount={userInfo.followerCount}
+                isFollowing={userInfo.isFollowing}
+                onToggleFollow={handleFollowing}
             />
             <TabList>
                 <TabItem to={`/user/${user_id}`} text="推文" />

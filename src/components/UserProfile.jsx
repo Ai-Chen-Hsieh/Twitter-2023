@@ -68,14 +68,12 @@ const StyledFollowContainer = styled.div`
   }
 `
 
-const ButtonPanel = ({isFollowing, id, onToggleFollow}) => {
+const ButtonPanel = ({isFollowing}) => {
   if(isFollowing){
     return (
       <Button
         text="正在追蹤"
-        onClick={(e)=>{
-          onToggleFollow(id)
-      }}
+
       />
     )
   }else {
@@ -83,9 +81,6 @@ const ButtonPanel = ({isFollowing, id, onToggleFollow}) => {
       <Button
         text="追蹤"
         styled="outlined"
-        onClick={(e)=>{
-          onToggleFollow(id)
-      }}
       />
     )
   }
@@ -95,6 +90,8 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
   const navigate = useNavigate();
   const { user_id } = useParams();
   const { currentRegistrant } = useAuth()
+  //是否正在瀏覽自己的個人頁面
+  const isPageOwner = Number(user_id) === currentRegistrant.id
   
     return (
         <StyledUserProfileContainer>
@@ -105,13 +102,14 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
             <Avatar imageUrl={imageUrl}/>
           </div>
           <StyledButtonWrapper>
-            {(Number(user_id) === currentRegistrant.id) ? (
+            {isPageOwner ? (
               <Button text='編輯個人資料' styled='outlined'/>
             ) : (
               <ButtonPanel
-                isFollowing={true}
-                id={user_id}
-                onToggleFollow={onToggleFollow}
+                isFollowing={isFollowing}
+                onClick={()=>{
+                  onToggleFollow(user_id)
+                }}
               />
             )}
           </StyledButtonWrapper>  
