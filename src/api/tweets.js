@@ -70,3 +70,18 @@ export const replyTweet = async (payload) => {
     return data
   }
 }
+
+export const addTweet = async (description) => {
+  try {
+    const response = await axiosInstance.post(`${baseUrl}/api/tweets`, {
+      description
+    });
+    const data = getData(response)
+    return data
+
+  } catch (error) {
+    const response = error.response
+    const data = getData(response)
+    return data
+  }
+}

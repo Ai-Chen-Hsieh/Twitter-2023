@@ -1,6 +1,8 @@
-import { Header, TweetModal, Button, ReplyModal } from "components";
+import { Header, TweetModal, Button, ReplyModal, UserEditModal } from "components";
+
 import { createPortal } from "react-dom";
 import { useState } from "react";
+import { dummyUserProfile } from "../testData/dummyUserProfile";
 
 
 /**
@@ -10,6 +12,7 @@ import { useState } from "react";
 const DemoPage = () => {
   const [showModal, setShowModal] = useState(false)
   const [ showReplyModal, setShowReplyModal ] = useState(false)
+  const [ showEditModal, setShowEditModal ] = useState(false)
 
   return (
     <div className="container">
@@ -29,7 +32,6 @@ const DemoPage = () => {
             document.body
           )}
 
-          <br />
           <Button
             text="回覆推文"
              onClick={()=>{
@@ -40,6 +42,20 @@ const DemoPage = () => {
             <ReplyModal onClose={() => setShowReplyModal(false)}/>,
             document.body
           )}
+          <br />
+          <Button
+            text="編輯個人資料"
+             onClick={()=>{
+              setShowEditModal(true)
+            }}
+          />
+          {showEditModal && createPortal(
+            <UserEditModal 
+              userInfo={dummyUserProfile}
+              onClose={() => setShowEditModal(false)}/>,
+            document.body
+          )}
+
         </div>
       </div>
     </div>

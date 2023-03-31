@@ -1,9 +1,7 @@
-//尚未完成推文不能空白
 import { useState } from "react";
 import styled from "styled-components";
 import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalContent, ModalFooter, ModalWarning } from "../components/common/modal.styled";
 import { Button, Avatar, TweetInput } from "../components"
-
 
 const StyledTweetModal = styled.div`
     .modalInput{
@@ -39,7 +37,14 @@ const StyledTweetModal = styled.div`
     }
 `
 
-const TweetModal = ({onClose, userInfo}) => {
+/**
+ * 
+ * @param {function} onClose - 處理關閉彈跳視窗
+ * @param {object} userInfo - 使用者資訊
+ * @param {function} onAddTweet - 新增 Tweet
+ * @returns 
+ */
+const TweetModal = ({onClose, userInfo, onAddTweet}) => {
     const [ inputValue, setInputValue ] = useState('')
     const [ errorMessage, setErrorMessage ] = useState('')
 
@@ -52,6 +57,7 @@ const TweetModal = ({onClose, userInfo}) => {
             return
         } else {
             setErrorMessage('')
+            onAddTweet(inputValue)
         }
     }
 
