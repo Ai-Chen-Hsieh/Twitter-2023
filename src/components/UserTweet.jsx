@@ -30,6 +30,7 @@ const StyledText = styled.textarea`
     flex: 1;
     font-weight: 700;
     font-size: 1.4rem;
+    background-color: transparent;
 `
 
 const StyledButton = styled.div`
@@ -51,6 +52,7 @@ const UserTweet = ({item, onClick}) => {
             <StyledTextContainer>
                 <StyledText 
                     placeholder="有什麼新鮮事?"
+                    disabled={true}
                 />
                 <StyledButton>
                     <Button
