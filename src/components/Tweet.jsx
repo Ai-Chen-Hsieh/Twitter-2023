@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import moment from "moment"
 import { Link } from "react-router-dom"
 import { Avatar } from "."
 import { ReactComponent as Comment } from "assets/images/comment.svg"
@@ -167,8 +168,8 @@ const Tweet = ({tweet, onToggleLike, onShowReplyModal}) => {
                     {tweet.description}
                 </StyledTweet>
                 <StyledCreatedAt>
-                        {tweet.createdAt}
-                    </StyledCreatedAt>
+                    {`${(moment(tweet.createdAt).format('A') === 'AM') ? '上午' : '下午'} ${moment(tweet.createdAt).format('hh:mm[・]YYYY[年]MM[月]DD[日]')}`}
+                </StyledCreatedAt>
                 <StyledCountBlock>
                     <StyledCount>
                         <span className="count">{tweet.repliedCount}</span>

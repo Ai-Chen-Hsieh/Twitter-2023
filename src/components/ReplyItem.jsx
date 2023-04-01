@@ -1,7 +1,5 @@
-//後端Api回覆資料待確認
-
 import styled from "styled-components"
-import { Avatar } from "."
+import { Avatar, DateDiffFormatter } from "."
 
 const StyledListItem = styled.div`
     width: 100%;
@@ -80,7 +78,7 @@ const ReplyItem = ({item}) => {
                 <div className="post-item">
                     <div className="account-info">
                         <span className="name">{item.replyName}</span>
-                        <span className="account">@{item.replyAccount} · {item.createdAt}</span>
+                        <span className="account">@{item.replyAccount}・<DateDiffFormatter date={item.createdAt}/></span>
                     </div>
                     <span className="reply">回覆 <span className="tagged">@{item.tweetAuthorAccount}</span></span>
                     <div className="content">{item.comment}</div>

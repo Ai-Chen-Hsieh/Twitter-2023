@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Avatar } from "."
+import { Avatar, DateDiffFormatter } from "."
 
 const StyledItemContainer = styled.div`
     position: relative;
@@ -83,7 +83,7 @@ const AdminTweetItem = ({ item, onDelete }) => {
                 <header className="mb-2">
                     <h6 className="d-inline-block me-2">{item.name}</h6>
                     <span className="text-fz-secondary color-secondary">
-                        @{item.account}・{item.createdAt}
+                        @{item.account}・<DateDiffFormatter date={item.createdAt} />
                     </span>
                 </header>
                 <p>{description}</p>
