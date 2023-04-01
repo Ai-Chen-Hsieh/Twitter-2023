@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }) => {
         } else {
           prevPath = !(adminPaths.includes(pathname)) ? pathname : '/main'
         }
+        localStorage.setItem('prevPath', prevPath)
         setPrevPath(prevPath)
       }
     }
