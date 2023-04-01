@@ -1,10 +1,11 @@
-//需要用到userProfile的頁面需加上isFollowing參數
-
 import styled from "styled-components"
-import { Button, Avatar } from "."
+import { Button, Avatar, UserEditModal } from "."
 import { useNavigate, useParams } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
-
+import { createPortal } from "react-dom"
+import { useState } from "react"
+import { ReactComponent as Notify } from "assets/images/icon_notify.svg"
+import { ReactComponent as Msg } from "assets/images/icon_msg.svg"
 
 const StyledUserProfileContainer = styled.div`
   width: 100%;
@@ -37,10 +38,13 @@ const StyledUserInfo =styled.div`
 `
 
 const StyledButtonWrapper =styled.div`
-   position: absolute;
-   right: 16px;
-   top: 216px;
-   z-index: 1;
+  position: absolute;
+  right: 16px;
+  top: 216px;
+  z-index: 1;
+  button {
+    vertical-align: middle;
+  }
 `
       
 const StyledUserInfoContainer = styled.div`
@@ -69,12 +73,26 @@ const StyledFollowContainer = styled.div`
   }
 `
 
+//訊息 icon
+const StyledNotify = styled(Notify)`
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  vertical-align: middle;
+`
+
+const StyledMsg = styled(Msg)`
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  vertical-align: middle;
+`
+
 const ButtonPanel = ({isFollowing}) => {
   if(isFollowing){
     return (
       <Button
         text="正在追隨"
-
       />
     )
   }else {
@@ -91,10 +109,21 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
   const navigate = useNavigate();
   const { user_id } = useParams();
   const { currentRegistrant } = useAuth()
+  const [ showEditModal, setShowEditModal ] = useState(false)
+
+  //個人檔案資訊
+  const userProfileInfo = {
+    name: name,
+    avatar: imageUrl,
+    cover: backgroundImageUrl,
+    introduction: description
+  }
+
   //是否正在瀏覽自己的個人頁面
   const isPageOwner = Number(user_id) === currentRegistrant.id
   
     return (
+      <>
         <StyledUserProfileContainer>
           <div className="background-image">
             <img src={backgroundImageUrl} alt='' />
@@ -102,8 +131,13 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
           <div className="avatar">
             <Avatar imageUrl={imageUrl}/>
           </div>
+            
           {isPageOwner ? (
-            <StyledButtonWrapper>
+            <StyledButtonWrapper
+              onClick={()=>{
+                setShowEditModal(true)
+              }}
+            >
               <Button text='編輯個人資料' styled='outlined'/>
             </StyledButtonWrapper>
           ) : (
@@ -112,6 +146,8 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
                 onToggleFollow(user_id)
               }}
             >
+              <StyledNotify className="me-4"/>
+              <StyledMsg className="me-4"/>
               <ButtonPanel
                 isFollowing={isFollowing}
               />
@@ -137,6 +173,13 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
              </StyledUserInfo>   
            </StyledUserInfoContainer>          
         </StyledUserProfileContainer>
+        {showEditModal && createPortal(
+            <UserEditModal 
+              userInfo={userProfileInfo}
+              onClose={() => setShowEditModal(false)}/>,
+            document.body
+          )}
+      </>
     )
 };
 

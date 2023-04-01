@@ -6,8 +6,8 @@ import { Button } from "."
 
 const StyledPopularContainer = styled.div`
     height: 60px;
-    padding: 7px 10px;
-    margin: 8px 0;
+    padding: 5px 10px;
+    margin: 7px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,7 +31,7 @@ const StyledPopularItem = styled.div`
     .popular-item-content{
         display: flex;
         flex-direction: column;
-        max-width: 100px;
+        max-width: 90px;
         margin: 0 7px;
         .name{
             color: var(--dark-100);
@@ -62,7 +62,7 @@ const StyledPopularItem = styled.div`
 
 const StyledButton = styled.div`
     text-align: end;
-    min-width: 96px;
+    width: 96px;
 `
 
 

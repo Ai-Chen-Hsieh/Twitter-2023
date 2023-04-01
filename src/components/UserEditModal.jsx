@@ -3,6 +3,9 @@ import styled from "styled-components"
 import { ModalWrapper, Modal, ModalHeader, ModalCloseButton, ModalTitle, ModalContent,  } from "../components/common/modal.styled";
 import { Avatar, Button, Input, TextArea } from ".";
 import { ReactComponent as Photo } from "assets/images/icon_image.svg"
+import { editUserProfile } from "../api/api_editModal";
+import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const StyledEditContainer = styled.div`
     min-height: 500px;
@@ -107,17 +110,32 @@ const BannerCoverMask = styled.label`
         position: absolute;
     }
 `
-const UserEditModal = ({onClose, userInfo}) => {
 
-    //假資料
+const UserEditModal = ({onClose, userInfo}) => {
+    const { user_id } = useParams()
     const [ info, setInfo ] = useState(userInfo)
     const [ inputError, setInputError ] = useState({
         name: '',
         introduction: ''
     })
-    //avatar&cover資料
+    //預覽avatar&cover資料
     const [previewCoverUrl, setPreviewCoverUrl] = useState(info.cover)
     const [previewAvatarUrl, setPreviewAvatarUrl] = useState(info.avatar)
+
+    const submitUserInfoData = () => {
+        const form = new FormData();
+
+        form.append('name', info.name)
+        form.append('introduction', info.introduction)
+        
+        //判斷使用者是否更換avatar&cover, 未更換時type為string；更換後type為object
+        if(typeof info.avatar !== 'string'){
+            form.append('avatar', info.avatar, info.avatar.name)
+        } else if (typeof info.cover !== 'string'){
+            form.append('cover', info.cover, info.cover.name)
+        }
+        return form
+    }
 
     //處理名稱&自我介紹欄位input
     function handleChange(e){
@@ -158,14 +176,39 @@ const UserEditModal = ({onClose, userInfo}) => {
          })
     }
     //處理儲存按鈕
-    function handleClick (e){
+    async function handleClick (e){
         const {name, introduction } = inputError
         if((name.length > 0) || (introduction.length > 0)){
             console.log('error')
             return
         } else {
-            console.log('save')
-            onClose()
+            try{
+                const editUserProfileAsync = await editUserProfile(user_id, submitUserInfoData())
+                if(editUserProfileAsync.status === 200){
+                    Swal.fire({
+                        title: '儲存成功!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        html: `<p>${editUserProfileAsync.message}</p>`,
+                        timer: 1000,
+                        position: 'top',
+                    });
+                    console.log(editUserProfileAsync.message)
+                    onClose()
+                }else{
+                    console.log(editUserProfileAsync.message)
+                }
+            }catch(error){
+                Swal.fire({
+                    title: '儲存失敗!',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    html: `<p>請重新操作</p>`,
+                    timer: 1000,
+                    position: 'top',
+                });
+                console.log(error,'編輯個人檔案失敗')
+            }
         }
     }
     //處理預覽cover
@@ -176,8 +219,17 @@ const UserEditModal = ({onClose, userInfo}) => {
         if (file) {
             const reader = new FileReader()
 
+            //將圖片資訊存入userinfo
+            setInfo((prevInfo)=>{
+                return{
+                    ...prevInfo,
+                    cover: file
+                }
+            })
+
             reader.onload = (e) => {
                 setPreviewCoverUrl(e.target.result)
+                
             }
             
             reader.readAsDataURL(file);
@@ -193,9 +245,17 @@ const UserEditModal = ({onClose, userInfo}) => {
 
         if (file) {
             const reader = new FileReader()
+            
+            //將圖片資訊存入userinfo
+            setInfo((prevInfo)=>{
+                return{
+                    ...prevInfo,
+                    avatar: file
+                }
+            })
 
             reader.onload = (e) => {
-                setPreviewAvatarUrl(e.target.result)
+                setPreviewAvatarUrl(e.target.result)                
             }
             
             reader.readAsDataURL(file);
