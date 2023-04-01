@@ -124,16 +124,17 @@ const UserEditModal = ({onClose, userInfo}) => {
 
     const submitUserInfoData = () => {
         const form = new FormData();
-        
+
         form.append('name', info.name)
         form.append('introduction', info.introduction)
-        form.append('avatar', info.avatar, info.avatar.name)
-        form.append('cover', info.cover, info.cover.name)
+        
+        
+        // form.append('avatar', info.avatar, info.avatar.name)
+        // form.append('cover', info.cover, info.cover.name)
         return form
     }
 
     console.log(info)
-    console.log(info.avatar)
 
     //處理名稱&自我介紹欄位input
     function handleChange(e){
