@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom"
 import { UserHeader, TabList, TabItem, FollowList } from "components"
-// import { dummyFollowings } from "testData/dummyFollowings"
 import { useState, useEffect } from "react"
 import { getUserInfo } from "../api/api_userPageInfo"
 import { getFollowing } from "api/api_folllow"
+import { addFollowing, cancelFollowing } from "api/api_followShip"
 
 
 /**
@@ -42,11 +42,11 @@ const UserPageFollowingList = () => {
             }
         }
 
-         // 取得使用者的跟隨者清單
+         // 取得使用者的跟隨中清單
          const getUserFollowingAsync = async () => {
             try{
                 const userFollowingList = await getFollowing(user_id)
-                //成功取得回覆，則更新follower list；否則return
+                //成功取得回覆，則更新 userFollowingList；否則return
                 if (userFollowingList.status === 200) {
                     setUserFollowingList(()=>{
                         return[
@@ -64,19 +64,63 @@ const UserPageFollowingList = () => {
         getUserFollowingAsync()
     },[user_id])
 
-
-    function handleFollow(followId) {
-        setUserFollowingList((followings) => {
-            return followings.map((following) => {
-              if(following.followId ===  followId) {
-                return {
-                 ...following,
-                 isFollowing: !following.isFollowing
+    // 追蹤，取消追蹤
+    function handleFollow(id) {
+        const currentItem = userFollowingList.find(user => user.followId === id)
+        // 判斷 isFollowing 是否為true，若 true 則執行cancel following
+        if(currentItem.isFollowing) {
+            const cancelFollowingAsync = async(id)=>{
+              try{
+                const cancelResponse = await cancelFollowing(id)
+                // 成功取消則更新 userFollowingList, 否則return
+                if (cancelResponse.status ===200){
+                    setUserFollowingList((prevUser) => {
+                     return prevUser.map((user) => {
+                        if(user.followId ===  id) {
+                          return {
+                               ...user,
+                             isFollowing: !currentItem.isFollowing
+                             }
+                          }
+                          return user
+                        })
+                    })
+              } else {
+                  return
                 }
+              }catch(error){
+                console.error(error)
               }
-              return following
-            })
-        }) 
+            }
+            cancelFollowingAsync(id)
+            // 若isFollowing 為false, 則執行 add following
+        } else {
+            const addFollowingAsync =async(id) => {
+                try {
+                    const addResponse = await addFollowing(id)
+                    // 若成功追蹤，則更新 UserFollowingList
+                    if(addResponse.status === 200){
+                    setUserFollowingList((prevUser) => {
+                     return prevUser.map((user) => {
+                        if(user.followId ===  id) {
+                          return {
+                             ...user,
+                             isFollowing: !currentItem.isFollowing
+                             }
+                          }
+                          return user
+                        })
+                    })
+                } else {
+                    return
+                    }
+
+                }catch(error) {
+                    console.error(error)
+                }
+            }
+            addFollowingAsync(id)    
+        }     
     }
 
     return (
