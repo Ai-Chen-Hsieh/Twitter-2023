@@ -126,10 +126,13 @@ const UserEditModal = ({onClose, userInfo}) => {
         
         form.append('name', info.name)
         form.append('introduction', info.introduction)
-        form.append('avatar', info.avatar)
-        form.append('cover', info.cover)
+        form.append('avatar', info.avatar, info.avatar.name)
+        form.append('cover', info.cover, info.cover.name)
         return form
     }
+
+    console.log(info)
+
     //處理名稱&自我介紹欄位input
     function handleChange(e){
         if(e.target.value.length === 50){
@@ -177,7 +180,7 @@ const UserEditModal = ({onClose, userInfo}) => {
         } else {
             console.log('save')
             const editUserProfileAsync = await editUserProfile(user_id, submitUserInfoData())
-            console.log(editUserProfileAsync)
+            editUserProfileAsync()
             onClose()
         }
     }
@@ -186,19 +189,20 @@ const UserEditModal = ({onClose, userInfo}) => {
         const file = e.target.files[0]
         console.log(file)
 
-        //將圖片資訊存入userinfo
-        setInfo((prevInfo)=>{
-            return{
-                ...prevInfo,
-                cover: file
-            }
-        })
-
         if (file) {
             const reader = new FileReader()
 
+            //將圖片資訊存入userinfo
+            setInfo((prevInfo)=>{
+                return{
+                    ...prevInfo,
+                    cover: file
+                }
+            })
+
             reader.onload = (e) => {
                 setPreviewCoverUrl(e.target.result)
+                
             }
             
             reader.readAsDataURL(file);
@@ -212,19 +216,19 @@ const UserEditModal = ({onClose, userInfo}) => {
         const file = e.target.files[0]
         console.log(file)
 
-        //將圖片資訊存入userinfo
-        setInfo((prevInfo)=>{
-            return{
-                ...prevInfo,
-                avatar: file
-            }
-        })
-
         if (file) {
             const reader = new FileReader()
+            
+            //將圖片資訊存入userinfo
+            setInfo((prevInfo)=>{
+                return{
+                    ...prevInfo,
+                    avatar: file
+                }
+            })
 
             reader.onload = (e) => {
-                setPreviewAvatarUrl(e.target.result)
+                setPreviewAvatarUrl(e.target.result)                
             }
             
             reader.readAsDataURL(file);

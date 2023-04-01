@@ -2,12 +2,11 @@ import { baseUrl, axiosInstance } from "./base";
 
 export const editUserProfile = async (id, formData) => {
     try {
-        const res = await axiosInstance.fetch(`${baseUrl}/api/users/${id}/account`, { 
-            method: 'PUT',
-            headers: {
-            'Content-Type': 'multipart/form-data'
-          },
-          body: formData
+      console.log(id, formData)
+        const res = await axiosInstance.put(`${baseUrl}/api/users/${id}`, formData, { 
+
+          
+          
         })
         console.log(res)
         return res

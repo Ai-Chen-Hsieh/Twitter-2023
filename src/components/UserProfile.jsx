@@ -95,7 +95,6 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
 
   const userProfileInfo = {
     name: name,
-    account: account,
     avatar: imageUrl,
     cover: backgroundImageUrl,
     introduction: description
