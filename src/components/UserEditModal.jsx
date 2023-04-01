@@ -196,17 +196,17 @@ const UserEditModal = ({onClose, userInfo}) => {
                     console.log(editUserProfileAsync.message)
                     onClose()
                 }else{
+                    Swal.fire({
+                        title: '儲存失敗!',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        html: `<p>${editUserProfileAsync.message}</p>`,
+                        timer: 3000,
+                        position: 'top',
+                    });
                     console.log(editUserProfileAsync.message)
                 }
             }catch(error){
-                Swal.fire({
-                    title: '儲存失敗!',
-                    icon: 'error',
-                    showConfirmButton: false,
-                    html: `<p>請重新操作</p>`,
-                    timer: 1000,
-                    position: 'top',
-                });
                 console.log(error,'編輯個人檔案失敗')
             }
         }
