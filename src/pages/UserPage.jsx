@@ -6,6 +6,7 @@ import { getUserTweets } from "api/userTweets"
 import { likeTweet, unlikeTweet, replyTweet } from "api/tweets"
 import { getUserInfo } from "../api/api_userPageInfo";
 import { UserHeader, TabList, TabItem, UserProfile, TweetList, ReplyModal } from "components"
+import { addFollowing, cancelFollowing } from "../api/api_followShip"
 import { ResponseEmpty } from "components/common/response.styled"
 import Swal from "sweetalert2"
 
@@ -66,6 +67,48 @@ const UserPage = () => {
             });
         }
     }, [replyTweetResAlert])
+
+    //處理追蹤使用者
+    function handleFollowing (id) {
+        //新增追蹤者
+        const addFollowingAsync = async () => {
+            const response = await addFollowing(id)
+            console.log(response)
+            //成功追蹤
+            if(response.status === 200){
+                setUserInfo((prevUserInfo)=>{
+                    return{
+                        ...prevUserInfo,
+                        isFollowing: !prevUserInfo.isFollowing
+                    }
+                })
+            }else{
+                return
+            }
+        }
+        //取消追蹤
+        const cancelFollowingAsync = async () => {
+            const response = await cancelFollowing(id)
+            console.log(response,"handle")
+            if(response.status === 200){
+                setUserInfo((prevUserInfo)=>{
+                    return{
+                        ...prevUserInfo,
+                        isFollowing: !prevUserInfo.isFollowing
+                    }
+                })
+            }else{
+                return
+            }
+        
+        }
+        //判斷是否追蹤
+        if(userInfo.isFollowing){
+            cancelFollowingAsync()
+        } else {
+            addFollowingAsync()
+        }
+    }
 
     // 處理收藏/取消收藏推文
     async function handleLikeToggle(id) {
@@ -224,6 +267,8 @@ const UserPage = () => {
                 imageUrl={userInfo.avatar}
                 followingCount={userInfo.followingCount}
                 followerCount={userInfo.followerCount}
+                isFollowing={userInfo.isFollowing}
+                onToggleFollow={handleFollowing}
             />
             <TabList>
                 <TabItem to={`/user/${user_id}`} text="推文" />
