@@ -5,6 +5,7 @@ import { Avatar, Button, Input, TextArea } from ".";
 import { ReactComponent as Photo } from "assets/images/icon_image.svg"
 import { editUserProfile } from "../api/api_editModal";
 import { useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const StyledEditContainer = styled.div`
     min-height: 500px;
@@ -132,6 +133,7 @@ const UserEditModal = ({onClose, userInfo}) => {
     }
 
     console.log(info)
+    console.log(info.avatar)
 
     //處理名稱&自我介紹欄位input
     function handleChange(e){
@@ -178,10 +180,33 @@ const UserEditModal = ({onClose, userInfo}) => {
             console.log('error')
             return
         } else {
-            console.log('save')
-            const editUserProfileAsync = await editUserProfile(user_id, submitUserInfoData())
-            editUserProfileAsync()
-            onClose()
+            try{
+                const editUserProfileAsync = await editUserProfile(user_id, submitUserInfoData())
+                if(editUserProfileAsync.status === 200){
+                    Swal.fire({
+                        title: '儲存成功!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        html: `<p>${editUserProfileAsync.message}</p>`,
+                        timer: 3000,
+                        position: 'top',
+                    });
+                    console.log(editUserProfileAsync.message)
+                    onClose()
+                }else{
+                    console.log(editUserProfileAsync.message)
+                }
+            }catch(error){
+                Swal.fire({
+                    title: '儲存失敗!',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    html: `<p>請重新操作</p>`,
+                    timer: 3000,
+                    position: 'top',
+                });
+                console.log(error,'編輯個人檔案失敗')
+            }
         }
     }
     //處理預覽cover
