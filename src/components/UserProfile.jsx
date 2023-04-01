@@ -93,12 +93,14 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
   const { currentRegistrant } = useAuth()
   const [ showEditModal, setShowEditModal ] = useState(false)
 
+  //個人檔案資訊
   const userProfileInfo = {
     name: name,
     avatar: imageUrl,
     cover: backgroundImageUrl,
     introduction: description
   }
+
   //是否正在瀏覽自己的個人頁面
   const isPageOwner = Number(user_id) === currentRegistrant.id
   

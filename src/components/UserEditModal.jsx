@@ -128,13 +128,14 @@ const UserEditModal = ({onClose, userInfo}) => {
         form.append('name', info.name)
         form.append('introduction', info.introduction)
         
-        
-        // form.append('avatar', info.avatar, info.avatar.name)
-        // form.append('cover', info.cover, info.cover.name)
+        //判斷使用者是否更換avatar&cover, 未更換時type為string；更換後type為object
+        if(typeof info.avatar !== 'string'){
+            form.append('avatar', info.avatar, info.avatar.name)
+        } else if (typeof info.cover !== 'string'){
+            form.append('cover', info.cover, info.cover.name)
+        }
         return form
     }
-
-    console.log(info)
 
     //處理名稱&自我介紹欄位input
     function handleChange(e){
@@ -189,7 +190,7 @@ const UserEditModal = ({onClose, userInfo}) => {
                         icon: 'success',
                         showConfirmButton: false,
                         html: `<p>${editUserProfileAsync.message}</p>`,
-                        timer: 3000,
+                        timer: 1000,
                         position: 'top',
                     });
                     console.log(editUserProfileAsync.message)
@@ -203,7 +204,7 @@ const UserEditModal = ({onClose, userInfo}) => {
                     icon: 'error',
                     showConfirmButton: false,
                     html: `<p>請重新操作</p>`,
-                    timer: 3000,
+                    timer: 1000,
                     position: 'top',
                 });
                 console.log(error,'編輯個人檔案失敗')
