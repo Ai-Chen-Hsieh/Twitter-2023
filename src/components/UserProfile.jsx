@@ -4,7 +4,8 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import { createPortal } from "react-dom"
 import { useState } from "react"
-
+import { ReactComponent as Notify } from "assets/images/icon_notify.svg"
+import { ReactComponent as Msg } from "assets/images/icon_msg.svg"
 
 const StyledUserProfileContainer = styled.div`
   width: 100%;
@@ -37,10 +38,13 @@ const StyledUserInfo =styled.div`
 `
 
 const StyledButtonWrapper =styled.div`
-   position: absolute;
-   right: 16px;
-   top: 216px;
-   z-index: 1;
+  position: absolute;
+  right: 16px;
+  top: 216px;
+  z-index: 1;
+  button {
+    vertical-align: middle;
+  }
 `
       
 const StyledUserInfoContainer = styled.div`
@@ -69,12 +73,26 @@ const StyledFollowContainer = styled.div`
   }
 `
 
+//訊息 icon
+const StyledNotify = styled(Notify)`
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  vertical-align: middle;
+`
+
+const StyledMsg = styled(Msg)`
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  vertical-align: middle;
+`
+
 const ButtonPanel = ({isFollowing}) => {
   if(isFollowing){
     return (
       <Button
         text="正在追隨"
-
       />
     )
   }else {
@@ -113,6 +131,7 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
           <div className="avatar">
             <Avatar imageUrl={imageUrl}/>
           </div>
+            
           {isPageOwner ? (
             <StyledButtonWrapper
               onClick={()=>{
@@ -127,6 +146,8 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
                 onToggleFollow(user_id)
               }}
             >
+              <StyledNotify className="me-4"/>
+              <StyledMsg className="me-4"/>
               <ButtonPanel
                 isFollowing={isFollowing}
               />
