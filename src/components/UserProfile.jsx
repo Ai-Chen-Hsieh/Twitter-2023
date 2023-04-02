@@ -1,9 +1,7 @@
 import styled from "styled-components"
-import { Button, Avatar, UserEditModal } from "."
+import { Button, Avatar } from "."
 import { useNavigate, useParams } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
-import { createPortal } from "react-dom"
-import { useState } from "react"
 import { ReactComponent as Notify } from "assets/images/icon_notify.svg"
 import { ReactComponent as Msg } from "assets/images/icon_msg.svg"
 
@@ -22,6 +20,7 @@ const StyledUserProfileContainer = styled.div`
   .avatar {
     width:140px;
     height:140px;
+    background-color: var(--dark-20);
     position:absolute;
     top:124px;
     left:16px;
@@ -105,19 +104,10 @@ const ButtonPanel = ({isFollowing}) => {
   }
 }
 
-const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, followingCount, followerCount, isFollowing, onToggleFollow}) => {
+const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, followingCount, followerCount, isFollowing, onUserInfo, onShowEditModal ,onToggleFollow}) => {
   const navigate = useNavigate();
   const { user_id } = useParams();
   const { currentRegistrant } = useAuth()
-  const [ showEditModal, setShowEditModal ] = useState(false)
-
-  //個人檔案資訊
-  const userProfileInfo = {
-    name: name,
-    avatar: imageUrl,
-    cover: backgroundImageUrl,
-    introduction: description
-  }
 
   //是否正在瀏覽自己的個人頁面
   const isPageOwner = Number(user_id) === currentRegistrant.id
@@ -135,7 +125,7 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
           {isPageOwner ? (
             <StyledButtonWrapper
               onClick={()=>{
-                setShowEditModal(true)
+                onShowEditModal?.()
               }}
             >
               <Button text='編輯個人資料' styled='outlined'/>
@@ -173,12 +163,6 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
              </StyledUserInfo>   
            </StyledUserInfoContainer>          
         </StyledUserProfileContainer>
-        {showEditModal && createPortal(
-            <UserEditModal 
-              userInfo={userProfileInfo}
-              onClose={() => setShowEditModal(false)}/>,
-            document.body
-          )}
       </>
     )
 };

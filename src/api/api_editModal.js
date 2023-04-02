@@ -14,8 +14,8 @@ export const editUserProfile = async (id, formData) => {
         return response
       }catch(error){
         const errorResponse = {
-          status: error.status,
-          message: error.data.message
+          status: error.message,
+          message: error.response.data.message
         }
         console.error(error)
         return errorResponse

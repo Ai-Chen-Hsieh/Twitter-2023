@@ -111,7 +111,7 @@ const BannerCoverMask = styled.label`
     }
 `
 
-const UserEditModal = ({onClose, userInfo}) => {
+const UserEditModal = ({onClose, userInfo, onSaveUserInfo}) => {
     const { user_id } = useParams()
     const [ info, setInfo ] = useState(userInfo)
     const [ inputError, setInputError ] = useState({
@@ -184,6 +184,7 @@ const UserEditModal = ({onClose, userInfo}) => {
         } else {
             try{
                 const editUserProfileAsync = await editUserProfile(user_id, submitUserInfoData())
+                //資料更改成功顯示成功提示
                 if(editUserProfileAsync.status === 200){
                     Swal.fire({
                         title: '儲存成功!',
@@ -193,20 +194,28 @@ const UserEditModal = ({onClose, userInfo}) => {
                         timer: 1000,
                         position: 'top',
                     });
+                    //儲存成功將儲存資訊傳回userPage
+                    onSaveUserInfo({
+                        saveName: info.name,
+                        saveIntroduction: info.introduction,
+                        saveAvatar: previewAvatarUrl,
+                        saveCover: previewCoverUrl
+                    })
                     console.log(editUserProfileAsync.message)
                     onClose()
                 }else{
+                    //資料更改失敗顯示失敗提示
+                    Swal.fire({
+                        title: '儲存失敗!',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        html: `<p>${editUserProfileAsync.message}</p>`,
+                        timer: 3000,
+                        position: 'top',
+                    });
                     console.log(editUserProfileAsync.message)
                 }
             }catch(error){
-                Swal.fire({
-                    title: '儲存失敗!',
-                    icon: 'error',
-                    showConfirmButton: false,
-                    html: `<p>請重新操作</p>`,
-                    timer: 1000,
-                    position: 'top',
-                });
                 console.log(error,'編輯個人檔案失敗')
             }
         }

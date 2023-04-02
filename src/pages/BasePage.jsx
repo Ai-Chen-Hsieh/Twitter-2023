@@ -82,6 +82,7 @@ useEffect(()=>{
           ]
         });
       } else {
+        console.log(response)
         return
       }
     }catch(error){
@@ -109,7 +110,6 @@ useEffect(()=>{
         const response = await getPopularList();
         //若未成功取得status不等於success，lists useState 保持為空陣列
         if(response.status === 200){
-          console.log(response)
           setLists(()=>{
             return[
               ...response.data
