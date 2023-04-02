@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import { useParams } from "react-router-dom"
 import { useAuth } from "contexts/AuthContext"
-import { UserHeader, TabList, TabItem, TweetList, UserProfile, ReplyModal } from "components"
+import { UserHeader, TabList, TabItem, TweetList, UserProfile, ReplyModal, UserEditModal } from "components"
 import { getUserInfo } from "../api/api_userPageInfo";
 import { addFollowing, cancelFollowing } from "../api/api_followShip";
 import { likeTweet, unlikeTweet, replyTweet } from "api/tweets"
@@ -18,11 +18,20 @@ const UserPageLikeList = () => {
     const [ userInfo, setUserInfo ] = useState('')
     const [ tweets, setTweets ] = useState([])
     const [ emptyMsg, setEmptyMsg ] = useState('')
+    const [ showUserEditModal, setShowUserEditModal ] = useState(false)
     const [ showReplyModal, setShowReplyModal ] = useState(false)
     const [ tweetForReplyModal, setTweetForReplyModal ] = useState(null)
     const [ replyTweetResAlert, setReplyTweetResAlert] = useState(null)
     const { user_id } = useParams()
     const { logout, currentRegistrant } = useAuth()
+
+    //editModal資料 
+    const userProfileInfo = {
+        name: userInfo.name,
+        avatar: userInfo.avatar,
+        cover: userInfo.cover,
+        introduction: userInfo.introduction
+    }
 
      //處理追蹤使用者
      function handleFollowing (id) {
@@ -278,6 +287,24 @@ const UserPageLikeList = () => {
         }
     }
 
+    //顯示編輯視窗
+    function handleShowEditModal(){
+        setShowUserEditModal(true)
+    }
+
+    //處理更新使用者資料
+    function handleSaveUserInfo ({saveName, saveIntroduction, saveAvatar, saveCover}){
+        setUserInfo((prevInfo)=>{
+            return{
+                ...prevInfo,
+                name: saveName,
+                introduction: saveIntroduction,
+                cover: saveCover,
+                avatar: saveAvatar,
+            }
+        })
+    }
+
     return (
         <>
             <UserHeader
@@ -294,6 +321,8 @@ const UserPageLikeList = () => {
                 followerCount={userInfo.followerCount}
                 isFollowing={userInfo.isFollowing}
                 onToggleFollow={handleFollowing}
+                onShowEditModal={handleShowEditModal}
+
             />
             <TabList>
                 <TabItem to={`/user/${user_id}`} text="推文" />
@@ -317,6 +346,16 @@ const UserPageLikeList = () => {
                     tweet={tweetForReplyModal}
                     onClose={() => setShowReplyModal(false)}
                     onReplyTweet={handleReplyTweet}
+                />,
+                document.body
+            )}
+
+             {/* 編輯個人檔案彈跳視窗 */}
+             {showUserEditModal && createPortal(
+                <UserEditModal
+                    userInfo={userProfileInfo}
+                    onSaveUserInfo={handleSaveUserInfo}
+                    onClose={() => setShowUserEditModal(false)}
                 />,
                 document.body
             )}

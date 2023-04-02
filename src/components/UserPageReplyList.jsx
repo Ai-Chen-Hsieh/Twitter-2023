@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useParams } from "react-router-dom"
-import { UserHeader, TabList, TabItem, ReplyList, UserProfile } from "components"
+import { UserHeader, TabList, TabItem, ReplyList, UserProfile, UserEditModal } from "components"
 import { getUserInfo } from "../api/api_userPageInfo";
 import { getUserReply } from "../api/api_userPageReply";
 import { addFollowing, cancelFollowing } from "../api/api_followShip";
@@ -13,8 +14,17 @@ import { addFollowing, cancelFollowing } from "../api/api_followShip";
 const UserPageReplyList = () => {
     const [ userInfo, setUserInfo ] = useState('')
     const [ userReplyList, setUserReplyList ] = useState('')
+    const [ showUserEditModal, setShowUserEditModal ] = useState(false)
     const { user_id } = useParams();
 
+    //editModal資料 
+    const userProfileInfo = {
+        name: userInfo.name,
+        avatar: userInfo.avatar,
+        cover: userInfo.cover,
+        introduction: userInfo.introduction
+    }
+    
     //處理追蹤使用者
     function handleFollowing (id) {
         console.log(id)
@@ -56,6 +66,24 @@ const UserPageReplyList = () => {
         } else {
             addFollowingAsync()
         }
+    }
+
+    //顯示編輯視窗
+    function handleShowEditModal(){
+        setShowUserEditModal(true)
+    }
+
+    //處理更新使用者資料
+    function handleSaveUserInfo ({saveName, saveIntroduction, saveAvatar, saveCover}){
+        setUserInfo((prevInfo)=>{
+            return{
+                ...prevInfo,
+                name: saveName,
+                introduction: saveIntroduction,
+                cover: saveCover,
+                avatar: saveAvatar,
+            }
+        })
     }
 
     useEffect(()=>{
@@ -120,6 +148,7 @@ const UserPageReplyList = () => {
                 followerCount={userInfo.followerCount}
                 isFollowing={userInfo.isFollowing}
                 onToggleFollow={handleFollowing}
+                onShowEditModal={handleShowEditModal}
             />
             <TabList>
                 <TabItem to={`/user/${user_id}`} text="推文" />
@@ -128,7 +157,16 @@ const UserPageReplyList = () => {
             </TabList>
 
             <ReplyList repliedList={userReplyList}/>
-            
+            {/* 編輯個人檔案彈跳視窗 */}
+
+            {showUserEditModal && createPortal(
+                <UserEditModal
+                    userInfo={userProfileInfo}
+                    onSaveUserInfo={handleSaveUserInfo}
+                    onClose={() => setShowUserEditModal(false)}
+                />,
+                document.body
+            )}
         </>
     )
 }
