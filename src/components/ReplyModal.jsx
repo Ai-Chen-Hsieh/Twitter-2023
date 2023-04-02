@@ -105,7 +105,7 @@ const ReplyModal = ({userInfo, tweet ,onClose, onReplyTweet}) => {
         } else {
             setErrorMessage('')
             await onReplyTweet({
-                tweetId: tweet.id,
+                tweet: tweet,
                 comment: inputValue
             })
         }

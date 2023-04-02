@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AdminMainPage, AdminPage, AdminUserPage, LoginPage, MainPage, RegisterPage, SettingPage, UserPage, DemoPage, BasePage, AdminBasePage, StyleGuidePage, HomePage } from 'pages'
 import { UserPageLikeList, UserPageFollowingList, UserPageReplyList, UserPageFollowerList, UserPageTweet} from 'components'
 import { AuthProvider } from 'contexts/AuthContext'
+import { ModalProvider } from 'contexts/ModalContext'
 
 const basename = window.location.host.includes('localhost')
   ? ''
@@ -15,6 +16,7 @@ function App() {
     <div>
       <BrowserRouter basename={basename}>
         <AuthProvider>
+        <ModalProvider>
           <Routes>
             {/* 前台 */}
             <Route path='login' element={<LoginPage />} />
@@ -50,6 +52,7 @@ function App() {
             <Route path='demo' element={<DemoPage />} />
             <Route path='style_guide' element={<StyleGuidePage />} />
           </Routes>
+        </ModalProvider>
         </AuthProvider>
       </BrowserRouter>
     </div>

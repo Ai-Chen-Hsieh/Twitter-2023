@@ -1,13 +1,13 @@
+import styled from "styled-components"
 import { useState, useEffect } from "react"
 import { useAuth } from "contexts/AuthContext"
 import { Link, useParams } from "react-router-dom"
-import { createPortal } from "react-dom"
-import { ReplyList, Tweet, ReplyModal } from "."
+import { ReplyList, Tweet } from "."
 import { HeaderContainer } from "./common/header.styled"
-import { likeTweet, unlikeTweet, replyTweet } from "api/tweets"
+// api 串接
+import { likeTweet, unlikeTweet } from "api/tweets"
 import { getUserPageTweet, getUserTweetReply } from "../api/api_userPagetweet"
-import styled from "styled-components"
-import Swal from "sweetalert2"
+import { useModal } from "contexts/ModalContext"
 
 const StyledContainer = styled.div`
     display:flex;
@@ -82,10 +82,8 @@ const StyledHeaderTitle = styled.div`
 const UserPageTweet = () => {
     const [ tweet, setTweet ] = useState('')
     const [ tweetReplyList, setTweetReplyList ] = useState('')
-    const [ showReplyModal, setShowReplyModal ] = useState(false)
-    const [ tweetForReplyModal, setTweetForReplyModal ] = useState(null)
-    const [ replyTweetResAlert, setReplyTweetResAlert] = useState(null)
-    const { logout, currentRegistrant } = useAuth()
+    const { logout } = useAuth()
+    const { newReply, handleShowReplyModal } = useModal()
     const { tweet_id } = useParams()
 
     useEffect(()=>{
@@ -127,20 +125,26 @@ const UserPageTweet = () => {
         getUserPageTweetReplyAsync()
     },[tweet_id])
 
-    // 顯示回覆推文成功與否的彈跳視窗
-    useEffect(() => {
-        if (replyTweetResAlert) {
-            Swal.fire({
-                title: replyTweetResAlert.title,
-                icon: replyTweetResAlert.icon,
-                html: (replyTweetResAlert.html) ? replyTweetResAlert.html : '',
-                showConfirmButton: false,
-                timer: 3000,
-                position: 'top',
-            });
-        }
-    }, [replyTweetResAlert])
+    // 有新回覆
+    useEffect(()=>{
+        if (newReply) {
+            setTweetReplyList((prevReplyList) => {
+                return [
+                    {
+                        ...newReply
+                    },
+                    ...prevReplyList
+                ]
+            })
 
+            setTweet((prevTweet) => {
+                return {
+                    ...prevTweet,
+                    repliedCount: prevTweet.repliedCount + 1
+                }
+            })
+        }
+    },[newReply])
 
     // 處理收藏/取消收藏推文
     async function handleLikeToggle(tweet) {
@@ -188,104 +192,23 @@ const UserPageTweet = () => {
         }
     }
 
-    // 處理顯示回覆彈跳視窗
-    function handleShowReplyModal (tweet) {
-        setTweetForReplyModal(tweet)
-        setShowReplyModal(true)
-    }
-
-    // 處理回覆推文
-    async function handleReplyTweet({ tweetId, comment }){
-        try {
-            const response = await replyTweet({
-                tweetId,
-                comment
-            })
-            const logoutStatus = [401, 403]
-            
-            if (logoutStatus.includes(response.status)) {
-                logout(response.data.message)
-
-            } else if (response.status === 200) {
-                const tempReply = response.data.reply
-
-                setReplyTweetResAlert({
-                    title: '回覆成功!',
-                    icon: 'success',
-                    html: `<p>${response.data.message}</p>`
-                })
-                
-                setTweetReplyList((prevReplyList) => {
-                    return [
-                        {
-                            id: tempReply.id,
-                            TweetId: tempReply.TweetId,
-                            comment: tempReply.comment,
-                            createdAt: tempReply.createdAt,
-                            tweetAuthorId: tweet.UserId,
-                            tweetAuthorAccount: tweet.account,
-                            replyUserId: currentRegistrant.id,
-                            replyAccount: currentRegistrant.account,
-                            replyName: currentRegistrant.name,
-                            replyAvatar: currentRegistrant.avatar
-                        },
-                        ...prevReplyList
-                    ]
-                })
-
-                setTweet((prevTweet) => {
-                    return {
-                        ...prevTweet,
-                        repliedCount: prevTweet.repliedCount + 1
-                    }
-                })
-
-                setShowReplyModal(false)
-                
-            } else {
-                setReplyTweetResAlert({
-                    title: '回覆失敗!',
-                    icon: 'error',
-                    html: `<p>${response.data.message}</p>`
-                })
-                setShowReplyModal(false)
-            }
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     return (
-        <>
-            <StyledContainer>
-                <HeaderContainer>
-                    <StyledHeaderLink to="/main" aria-label="回首頁" title="回首頁">
-                        <StyledHeaderArrow/>
-                    </StyledHeaderLink>
-                    <StyledHeaderTitle>
-                        <h5>推文</h5>
-                    </StyledHeaderTitle>
-                </HeaderContainer>
-                <Tweet 
-                    tweet={tweet}
-                    onToggleLike={handleLikeToggle}
-                    onShowReplyModal={handleShowReplyModal}
-                />
-                <ReplyList repliedList={tweetReplyList}/>
-            </StyledContainer>
-
-            {/* 回覆彈跳視窗 */}
-            {(showReplyModal && tweetForReplyModal) && createPortal(
-                <ReplyModal 
-                    userInfo={currentRegistrant}
-                    tweet={tweetForReplyModal}
-                    onClose={() => setShowReplyModal(false)}
-                    onReplyTweet={handleReplyTweet}
-                />,
-                document.body
-            )}
-        </>
+        <StyledContainer>
+            <HeaderContainer>
+                <StyledHeaderLink to="/main" aria-label="回首頁" title="回首頁">
+                    <StyledHeaderArrow/>
+                </StyledHeaderLink>
+                <StyledHeaderTitle>
+                    <h5>推文</h5>
+                </StyledHeaderTitle>
+            </HeaderContainer>
+            <Tweet 
+                tweet={tweet}
+                onToggleLike={handleLikeToggle}
+                onShowReplyModal={handleShowReplyModal}
+            />
+            <ReplyList repliedList={tweetReplyList}/>
+        </StyledContainer>
     )
 }
 
