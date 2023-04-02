@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { getUserInfo } from "../api/api_userPageInfo"
 import { getFollowing } from "api/api_folllow"
 import { addFollowing, cancelFollowing } from "api/api_followShip"
+import { useAuth } from "contexts/AuthContext"
 
 
 /**
@@ -15,6 +16,7 @@ const UserPageFollowingList = () => {
     // const [users, setUsers] = useState(dummyFollowings)
     const [ userInfo, setUserInfo ] = useState('')
     const [userFollowingList, setUserFollowingList] = useState('')
+    const {currentRegistrant} = useAuth()
     
     useEffect(()=>{
         // 取得使用者資訊
@@ -66,7 +68,9 @@ const UserPageFollowingList = () => {
 
     // 追蹤，取消追蹤
     function handleFollow(id) {
+        const isCurrentRegistrant = (currentRegistrant.id.toString() === user_id)? true:false 
         const currentItem = userFollowingList.find(user => user.followId === id)
+
         // 判斷 isFollowing 是否為true，若 true 則執行cancel following
         if(currentItem.isFollowing) {
             const cancelFollowingAsync = async(id)=>{
@@ -74,17 +78,27 @@ const UserPageFollowingList = () => {
                 const cancelResponse = await cancelFollowing(id)
                 // 成功取消則更新 userFollowingList, 否則return
                 if (cancelResponse.status ===200){
-                    setUserFollowingList((prevUser) => {
-                     return prevUser.map((user) => {
+                     // 如果是登入者本人，按取消追隨後讓該項被點擊的追隨中項目從追隨中清單消失
+                    if(isCurrentRegistrant) {
+                        setUserFollowingList((prevUser)=>{
+                            return prevUser.filter((user)=>{
+                                return user.followId !== id
+                            })
+                        })
+                    } else {
+                        setUserFollowingList((prevUser) => {
+                              return prevUser.map((user) => {
                         if(user.followId ===  id) {
                           return {
                                ...user,
-                             isFollowing: !currentItem.isFollowing
+                             isFollowing: !currentItem.isFollowing,
+                             followCount: currentItem.followCount - 1
                              }
                           }
                           return user
                         })
                     })
+                }
               } else {
                   return
                 }
@@ -105,7 +119,8 @@ const UserPageFollowingList = () => {
                         if(user.followId ===  id) {
                           return {
                              ...user,
-                             isFollowing: !currentItem.isFollowing
+                             isFollowing: !currentItem.isFollowing,
+                             followCount: currentItem.followCount + 1
                              }
                           }
                           return user
