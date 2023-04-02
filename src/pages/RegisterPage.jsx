@@ -30,6 +30,9 @@ const RegisterPage = () => {
             } else {
                 navigate('/main');
             }
+            
+        } else {
+            localStorage.removeItem('passHomePage')
         }
     }, [hasToken, navigate, currentRegistrant])
 
