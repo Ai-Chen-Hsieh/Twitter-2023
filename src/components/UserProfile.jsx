@@ -136,8 +136,8 @@ const UserProfile = ({name, account, description, backgroundImageUrl, imageUrl, 
                 onToggleFollow(user_id)
               }}
             >
-              <StyledNotify className="me-4"/>
               <StyledMsg className="me-4"/>
+              <StyledNotify className="me-4"/>
               <ButtonPanel
                 isFollowing={isFollowing}
               />

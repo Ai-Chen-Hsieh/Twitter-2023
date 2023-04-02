@@ -11,7 +11,6 @@ const defaultAuthContext = {
   adminLogin: null, // [管理者] 登入
   register: null, // [使用者] 註冊
   logout: null, // 登出
-  prevPath: null // 上一頁路徑
 }
 const AuthContext = createContext(defaultAuthContext)
 
@@ -29,7 +28,6 @@ export const useAuth = () => useContext(AuthContext)
 export const AuthProvider = ({ children }) => {
   const [hasToken, setHasToken] = useState(false) // 是否有 token
   const [payload, setPayload] = useState(null) // token 解析後 payload 帶的資訊
-  const [prevPath, setPrevPath] = useState('/main') // 上一頁路徑
   const [logoutAlertMsg, setLogoutAlertMsg] = useState('')
   const { pathname } = useLocation()
 
@@ -46,16 +44,36 @@ export const AuthProvider = ({ children }) => {
       setPayload(tempPayload)
       
       // 紀錄上一頁路徑
-      const landingPaths = ['/admin', '/login', '/register', '/']
-      if (!(landingPaths.includes(pathname))) {
-        const adminPaths = ['/admin_main', '/admin_users']
-        let prevPath = ''
-        if (tempPayload.role === 'admin') {
-          prevPath = adminPaths.includes(pathname) ? pathname : '/admin_main'
-        } else {
-          prevPath = !(adminPaths.includes(pathname)) ? pathname : '/main'
+      const setPrevPath = () => {
+        const landingPaths = ['/admin', '/login', '/register', '/']
+        if (!(landingPaths.includes(pathname))) {
+          const adminPaths = ['/admin_main', '/admin_users']
+          let prevPath = ''
+          if (tempPayload.role === 'admin') {
+            prevPath = adminPaths.includes(pathname) ? pathname : '/admin_main'
+          } else {
+            prevPath = !(adminPaths.includes(pathname)) ? pathname : '/main'
+          }
+          localStorage.setItem('prevPath', prevPath)
         }
-        setPrevPath(prevPath)
+      }
+
+      const isPassHomePage = localStorage.getItem('passHomePage')
+      if (!isPassHomePage) {
+        // 沒有經過 Home page，重新紀錄上一頁路徑
+        setPrevPath()
+
+      } else {
+        // 有經過 Home page
+        const prevPath = localStorage.getItem('prevPath')
+        // 有沒有紀錄上一頁？　
+        if (!prevPath) {
+          // 無 -> 重新紀錄上一頁路徑
+          setPrevPath()
+        } else {
+          // 有－＞ 清掉經過 home page 的紀錄
+          localStorage.removeItem('passHomePage')
+        }
       }
     }
 
@@ -98,7 +116,7 @@ export const AuthProvider = ({ children }) => {
 
             setPayload(tempPayload)
             setHasToken(true)
-            setPrevPath('/main')
+            localStorage.setItem('prevPath', '/main')
             localStorage.setItem('token', token)
 
           } else {
@@ -124,7 +142,7 @@ export const AuthProvider = ({ children }) => {
 
             setPayload(tempPayload)
             setHasToken(true)
-            setPrevPath('/admin_main')
+            localStorage.setItem('prevPath', '/admin_main')
             localStorage.setItem('token', token)
 
           } else {
@@ -155,9 +173,7 @@ export const AuthProvider = ({ children }) => {
           setPayload(null)
           setHasToken(false)
           setLogoutAlertMsg(msg)
-        },
-        // 上一頁路徑
-        prevPath
+        }
       }}
     >
       { children }

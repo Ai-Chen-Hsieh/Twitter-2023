@@ -1,19 +1,16 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "contexts/AuthContext"
 
 const HomePage = () => {
-    const { hasToken, prevPath } = useAuth()
     let navigate = useNavigate()
     
     // 檢查是否有 token
     useEffect(() => {
-        if (!hasToken) {
-            navigate('/login')
-        } else {
-            navigate(prevPath)
-        }
-    }, [navigate, hasToken, prevPath])
+        console.log('Home page.')
+        const prevPath = (localStorage.getItem('prevPath')) ? localStorage.getItem('prevPath') : '/main'
+        localStorage.setItem('passHomePage', 'true')
+        navigate(prevPath)
+    }, [navigate])
 }
 
 export default HomePage

@@ -90,6 +90,17 @@ npm start
 ```
 
 ---
+### Contributor - 開發人員
+**Back-end**
+- [Emily](https://github.com/yy933)
+- [Abbie](https://github.com/abbie930)
+
+**Front-end**
+- [Anna](https://github.com/b10332040)
+- [Evan](https://github.com/Ai-Chen-Hsieh)
+- [Tammy](https://github.com/TammyKao)
+
+---
 
 # Getting Started with Create React App
 

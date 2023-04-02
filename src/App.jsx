@@ -6,9 +6,11 @@ import { AdminMainPage, AdminPage, AdminUserPage, LoginPage, MainPage, RegisterP
 import { UserPageLikeList, UserPageFollowingList, UserPageReplyList, UserPageFollowerList, UserPageTweet} from 'components'
 import { AuthProvider } from 'contexts/AuthContext'
 
-function App() {
-  const basename = process.env.PUBLIC_URL;
+const basename = window.location.host.includes('localhost')
+  ? ''
+  : process.env.PUBLIC_URL;
 
+function App() {
   return (
     <div>
       <BrowserRouter basename={basename}>

@@ -20,15 +20,27 @@ const AdminPage = () => {
     const [account, setAccount] = useState('')
     const [password, setPassword] = useState('')
     const [disabledSubmitBtn, setDisabledSubmitBtn] = useState(false)
-    const { hasToken, adminLogin, prevPath} = useAuth()
+    const { hasToken, adminLogin, currentRegistrant} = useAuth()
     let navigate = useNavigate()
 
     // 檢查是否有 token
     useEffect(() => {
         if (hasToken) {
+            let prevPath = localStorage.getItem('prevPath')
+
+            if (!prevPath) {
+                if (currentRegistrant.role === 'admin') {
+                    prevPath = '/admin_main'
+                } else {
+                    prevPath = '/main'
+                }
+            }
             navigate(prevPath);
+            
+        } else {
+            localStorage.removeItem('passHomePage')
         }
-    }, [navigate, hasToken, prevPath]);
+    }, [navigate, hasToken, currentRegistrant]);
 
     // 阻止表單提交
     function handleSubmit(e) {
