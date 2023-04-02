@@ -5,7 +5,7 @@ import { useAuth } from "contexts/AuthContext"
 import { getUserTweets } from "api/userTweets"
 import { likeTweet, unlikeTweet, replyTweet } from "api/tweets"
 import { getUserInfo } from "../api/api_userPageInfo";
-import { UserHeader, TabList, TabItem, UserProfile, TweetList, ReplyModal } from "components"
+import { UserHeader, TabList, TabItem, UserProfile, TweetList, ReplyModal, UserEditModal } from "components"
 import { addFollowing, cancelFollowing } from "../api/api_followShip"
 import { ResponseEmpty } from "components/common/response.styled"
 import Swal from "sweetalert2"
@@ -18,11 +18,20 @@ const UserPage = () => {
     const [ userInfo, setUserInfo ] = useState('')
     const [ tweets, setTweets ] = useState([])
     const [ emptyMsg, setEmptyMsg ] = useState('')
+    const [ showUserEditModal, setShowUserEditModal ] = useState(false)
     const [ showReplyModal, setShowReplyModal ] = useState(false)
     const [ tweetForReplyModal, setTweetForReplyModal ] = useState(null)
     const [ replyTweetResAlert, setReplyTweetResAlert] = useState(null)
     const { user_id } = useParams()
     const { logout, currentRegistrant } = useAuth()
+
+    //editModal資料 
+    const userProfileInfo = {
+        name: userInfo.name,
+        avatar: userInfo.avatar,
+        cover: userInfo.cover,
+        introduction: userInfo.introduction
+    }
 
     // 取得特定使用者發過的推文
     useEffect(() => {
@@ -224,6 +233,24 @@ const UserPage = () => {
             console.log(error)
         }
     }
+
+    //顯示編輯視窗
+    function handleShowEditModal(){
+        setShowUserEditModal(true)
+    }
+
+    //處理更新使用者資料
+    function handleSaveUserInfo ({saveName, saveIntroduction, saveAvatar, saveCover}){
+        setUserInfo((prevInfo)=>{
+            return{
+                ...prevInfo,
+                name: saveName,
+                introduction: saveIntroduction,
+                cover: saveCover,
+                avatar: saveAvatar,
+            }
+        })
+    }
     
     //取得使用者資訊
     useEffect(()=>{
@@ -269,6 +296,7 @@ const UserPage = () => {
                 followerCount={userInfo.followerCount}
                 isFollowing={userInfo.isFollowing}
                 onToggleFollow={handleFollowing}
+                onShowEditModal={handleShowEditModal}
             />
             <TabList>
                 <TabItem to={`/user/${user_id}`} text="推文" />
@@ -292,6 +320,16 @@ const UserPage = () => {
                     tweet={tweetForReplyModal}
                     onClose={() => setShowReplyModal(false)}
                     onReplyTweet={handleReplyTweet}
+                />,
+                document.body
+            )}
+
+            {/* 編輯個人檔案彈跳視窗 */}
+            {showUserEditModal && createPortal(
+                <UserEditModal
+                    userInfo={userProfileInfo}
+                    onSaveUserInfo={handleSaveUserInfo}
+                    onClose={() => setShowUserEditModal(false)}
                 />,
                 document.body
             )}
