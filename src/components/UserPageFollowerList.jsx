@@ -15,6 +15,7 @@ const UserPageFollowerList = () => {
     // const [users, setUsers] = useState(dummyFollowings)
     const [ userInfo, setUserInfo ] = useState('')
     const [userFollowerList, setUserFollowerList] = useState('')
+    
        
    
     useEffect(()=> {
@@ -68,7 +69,7 @@ const UserPageFollowerList = () => {
 
 
      // 追蹤，取消追蹤
-     function handleFollow(id) {
+     function handleFollow(id) {  
         const currentItem = userFollowerList.find(user => user.followId === id)
         // 判斷 isFollowing 是否為true，若 true 則執行cancel following
         if(currentItem.isFollowing) {
@@ -91,14 +92,14 @@ const UserPageFollowerList = () => {
               } else {
                   return
                 }
-              }catch(error){
+        } catch(error){
                 console.error(error)
               }
             }
             cancelFollowingAsync(id)
             // 若isFollowing 為false, 則執行 add following
         } else {
-            const addFollowingAsync =async(id) => {
+            const addFollowingAsync = async(id) => {
                 try {
                     const addResponse = await addFollowing(id)
                     // 若成功追蹤，則更新 UserFollowerList
@@ -108,7 +109,7 @@ const UserPageFollowerList = () => {
                         if(user.followId ===  id) {
                           return {
                              ...user,
-                             isFollowing: !currentItem.isFollowing
+                             isFollowing: !currentItem.isFollowing,
                              }
                           }
                           return user
@@ -122,9 +123,9 @@ const UserPageFollowerList = () => {
                     console.error(error)
                 }
             }
-            addFollowingAsync(id)    
-        }     
-    }
+            addFollowingAsync(id)
+            }    
+        } 
   
     return (
         <>
@@ -142,4 +143,3 @@ const UserPageFollowerList = () => {
 }
 
 export default UserPageFollowerList
-

@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { Button, Avatar } from "."
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "contexts/AuthContext"
 
 const StyledFollowItemContainer = styled.div`
   width: 100%;
@@ -41,8 +42,8 @@ const StyledFollowItem = styled.div`
 `
 
 const FollowItem = ({item, onToggleFollow}) => {
-
     const navigate = useNavigate()
+    const { currentRegistrant } = useAuth()
 
     return(
         <StyledFollowItemContainer>
@@ -50,7 +51,9 @@ const FollowItem = ({item, onToggleFollow}) => {
              <Avatar imageUrl={item.followAvatar}/>
           </div>
           <StyledFollowButtonWrapper>
-            { item.isFollowing ?
+            { (item.followId !== currentRegistrant.id) &&
+              (
+              item.isFollowing ?
               <Button 
                  text='正在追隨'
                  onClick = {(e) => {
@@ -63,7 +66,8 @@ const FollowItem = ({item, onToggleFollow}) => {
                  onClick = {(e) => {
                    onToggleFollow(item.followId)
                  }}
-              />                 
+              />
+              )            
             }  
           </StyledFollowButtonWrapper>
           <StyledFollowItem> 
