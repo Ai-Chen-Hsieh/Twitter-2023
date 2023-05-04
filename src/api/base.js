@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const baseUrl = "http://twitter-api-2020-dev.us-east-1.elasticbeanstalk.com"
+export const baseUrl = "https://simple-twitter-x2y3.onrender.com"
 
 export const getData = (response) => {
   // console.log(response)
