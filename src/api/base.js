@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const baseUrl = "https://safe-cliffs-81319.herokuapp.com"
+export const baseUrl = "http://twitter-api-2020-dev.us-east-1.elasticbeanstalk.com"
 
 export const getData = (response) => {
   // console.log(response)
